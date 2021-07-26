@@ -2,9 +2,9 @@
  * Extra JavaScripts Functions
  *
  *  Includes:
- *   - Handy math functions
+ *   - Handy math shortcuts and functions
  *   - DOM functions
- *   - Recreations of some PJS functions
+ *   - Canvas functions
  *
  */
 
@@ -538,7 +538,7 @@ function getOuter(id) {
 //}
 
 /*
- * Recreation of (some) PJS functions
+ * Canvas functions
  */
 // create canvas
 var $canvas, $ctx, width, height, pmouseX, pmouseY, mouseX, mouseY, mousePressed, keyCode, key, keyPressed, mouseMove, mouseDown, mouseUp, mouseClick, keyDown, keyUp, keyPress, Input = {};
