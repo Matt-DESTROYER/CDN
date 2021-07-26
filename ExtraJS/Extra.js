@@ -70,7 +70,6 @@ let pow = Math.pow,
 	asin = Math.asin,
 	acos = Math.acos,
 	atan = Math.atan;
-}
 
 // generate random number between min and max inclusive
 function random(min, max) {
