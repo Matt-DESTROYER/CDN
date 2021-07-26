@@ -58,10 +58,18 @@ document.addEventListener("click", function (e) {
 });
 document.addEventListener("mousemove", function (e) {
 	e = e || window.event;
-	pmouseX = mouseX;
-	pmouseY = mouseY;
-	mouseX = e.x;
-	mouseY = e.y;
+	if ($canvas) {
+		let rect = $canvas.getBoundingClientRect();
+		pmouseX = mouseX;
+		pmouseY = mouseY;
+		mouseX = e.clientx - rect.left;
+		mouseY = e.clienty - rect.top;
+	} else {
+		pmouseX = mouseX;
+		pmouseY = mouseY;
+		mouseX = e.x;
+		mouseY = e.y;
+	}
 	mouseMove();
 });
 
