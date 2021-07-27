@@ -13,9 +13,13 @@ let Input = {},
 		y: 0
 	},
 	Time = {
+		startTime: Date.now(),
 		_dt: 0,
 		get deltaTime() {
 			return Date.now() - this._dt;
+		},
+		get now() {
+			return Date.now();
 		}
 	};
 
