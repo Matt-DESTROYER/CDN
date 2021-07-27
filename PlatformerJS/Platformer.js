@@ -631,11 +631,6 @@ function dist(x1, y1, x2, y2) {
 	return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 }
 
-// dist() but for 3D points (x1, y1, z1 and x2, y2, z2)
-function dist3D(x1, y1, z1, x2, y2, z2) {
-	return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2));
-}
-
 // convert degrees to radians
 function degreesToRadians(degrees) {
 	return degrees * Math.PI / 180;
