@@ -203,6 +203,12 @@ class Vector2 {
 	}
 }
 
+class Point extends Vector2 {
+	constructor(x, y) {
+		super(x, y);
+	}
+}
+
 class Line {
 	constructor(point1, point2) {
 		this.point1 = point1;
