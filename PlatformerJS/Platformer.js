@@ -21,7 +21,6 @@ let Input = {},
 
 let keyDown, keyUp, keyPress, mouseDown, mouseUp, mouseClick, mouseMove;
 keyDown = keyUp = keyPress = mouseDown = mouseUp = mouseClick = mouseMove = function () { };
-let mouseX, mouseY, pmouseX, pmouseY;
 document.addEventListener("keydown", function (e) {
 	e = e || window.event;
 	Input[e.keyCode] = true;
@@ -56,15 +55,15 @@ document.addEventListener("mousemove", function (e) {
 	e = e || window.event;
 	if ($canvas) {
 		let rect = $canvas.getBoundingClientRect();
-		pmouseX = mouseX;
-		pmouseY = mouseY;
-		mouseX = e.clientx - rect.left;
-		mouseY = e.clienty - rect.top;
+		Input.pmouseX = Input.mouseX;
+		Input.pmouseY = Input.mouseY;
+		Input.mouseX = e.clientx - rect.left;
+		Input.mouseY = e.clienty - rect.top;
 	} else {
-		pmouseX = mouseX;
-		pmouseY = mouseY;
-		mouseX = e.x;
-		mouseY = e.y;
+		Input.pmouseX = Input.mouseX;
+		Input.pmouseY = Input.mouseY;
+		Input.mouseX = e.x;
+		Input.mouseY = e.y;
 	}
 	mouseMove();
 });
