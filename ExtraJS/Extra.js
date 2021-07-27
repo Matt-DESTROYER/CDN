@@ -56,7 +56,7 @@ function radiansToDegrees(radians) {
 }
 
 // math shortcuts
-let pow = Math.pow,
+var pow = Math.pow,
 	sqrt = Math.sqrt,
 	round = Math.round,
 	floor = Math.floor,
