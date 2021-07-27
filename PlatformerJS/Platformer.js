@@ -687,3 +687,5 @@ function lerp(value1, value2, amount) {
 	}
 	return value1 + (value2 - value1) * amount;
 }
+
+console.log("Loaded PlatformerJS by Matt-DESTROYER");
