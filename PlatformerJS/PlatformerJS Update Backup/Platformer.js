@@ -644,10 +644,8 @@ function radiansToDegrees(radians) {
 }
 
 // math shortcuts
-function pi() {
-	return Math.PI;
-}
-let pow = Math.pow,
+let pi = Math.PI,
+	pow = Math.pow,
 	log = Math.log,
 	sqrt = Math.sqrt,
 	round = Math.round,
