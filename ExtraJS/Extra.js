@@ -1,1 +1,747 @@
-function add(t,e){return t+e}function subtract(t,e){return t-e}function multiply(t,e){return t*e}function divide(t,e){return t/e}function dist(t,e,i,s){return Math.sqrt(Math.pow(i-t,2)+Math.pow(s-e,2))}function dist3D(t,e,i,s,n,h){return Math.sqrt(Math.pow(s-t,2)+Math.pow(n-e,2)+Math.pow(h-i,2))}function degreesToRadians(t){return t*Math.PI/180}function radiansToDegrees(t){return 180*t/Math.PI}var pi=Math.PI,pow=Math.pow,sqrt=Math.sqrt,round=Math.round,floor=Math.floor,ceil=Math.ceil,min=Math.min,max=Math.max,abs=Math.abs,sin=Math.sin,cos=Math.cos,tan=Math.tan,asin=Math.asin,acos=Math.acos,atan=Math.atan;function random(t,e){return Math.random()*(e-t)+t}function randomInt(t,e){return Math.floor(Math.random()*(e-t))+t}function isPrime(t){if(t<2)return!1;if(2===t)return!0;if(t%2==0)return!1;if(t<10)return 3===t||5===t||7===t;for(var e=3;e<Math.floor(Math.sqrt(t));e+=2)if(t%e==0)return!1;return!0}function lerp(t,e,i){return i<0?i=0:i>1&&(i=1),t+(e-t)*i}function constrain(t,e,i){return t>e?e:t<i?i:t}class Vector2{constructor(t,e){this.x=t,this.y=e}getX(){return this.x}getY(){return this.y}setX(t){this.x=t}setY(t){this.y=t}add(t){this.x+=t.x,this.y+=t.y}sub(t){this.x-=t.x,this.y-=t.y}mult(t){this.x*=t.x,this.y*=t.y}div(t){this.x/=t.x,this.y/=t.y}dist(t){return sqrt(pow(t.x-this.x,2)+pow(t.y-this.y,2))}dot(t){return this.x*t.x+this.y*t.y}mag(){return sqrt(this.x*this.x+this.y*this.y)}normalize(){let t=sqrt(this.x*this.x+this.y*this.y);return[this.x/t,this.y/t]}array(){return[this.x,this.y]}static dist(t,e){return sqrt(pow(e.x-t.x,2)+pow(e.y-t.y,2))}static dot(t,e){return t.x*e.x+t.y*e.y}static array(t){return[t.x,t.y]}static Zero(){return new Vector2(0,0)}}class Vector3{constructor(t,e,i){this.x=t,this.y=e,this.z=i}getX(){return this.x}getY(){return this.y}getZ(){return this.z}setX(t){this.x=t}setY(t){this.y=t}setZ(t){this.z=t}add(t){this.x+=t.x,this.y+=t.y,this.z+=t.z}sub(t){this.x-=t.x,this.y-=t.y,this.z-=t.z}mult(t){this.x*=t.x,this.y*=t.y,this.z*=t.z}div(t){this.x/=t.x,this.y/=t.y,this.z/=t.z}dist(t){return sqrt(pow(t.x-this.x,2)+pow(t.y-this.y,2)+pow(t.z-this.z,2))}dot(t){return this.x*t.x+this.y*t.y+this.z*t.z}mag(){return sqrt(this.x*this.x+this.y*this.y+this.z*this.z)}normalize(){let t=sqrt(this.x*this.x+this.y*this.y+this.z*this.z);return[this.x/t,this.y/t,this.z/t]}array(){return[this.x,this.y,this.z]}static dist(t,e){return sqrt(pow(e.x-t.x,2)+pow(e.y-t.y,2)+pow(e.z-t.z,2))}static dot(t,e){return t.x*e.x+t.y*e.y+t.z*e.z}static array(t){return[t.x,t.y,t.z]}static Zero(){return new Vector3(0,0,0)}}class Color{constructor(t,e,i,s=1){this.r=t,this.g=e,this.b=i,this.a=s}toString(){return"rgba("+this.r+","+this.g+","+this.b+","+this.a+")"}getRed(){return this.r}getGreen(){return this.g}getBlue(){return this.b}getAlpha(){return this.a}setRed(t=0){this.r=t}setGreen(t=0){this.g=t}setBlue(t=0){this.b=t}setAlpha(t=1){this.a=t}}class Line{constructor(t=0,e=0,i=0,s=0){this.x1=t,this.y1=e,this.x2=i,this.y2=s}pointOnLine(t){let e=(this.y2-this.y1)/(this.x2-this.x1),i=this.y1-e*this.x1;return t.y===e*t.x+i}pointInLine(t){return this.x1<this.x2?this.y1<this.y2?this.pointOnLine(t)&&t.x>=this.x1&&t.x<=this.x2&&t.y>=this.y1&&t.y<=this.y2:this.pointOnLine(t)&&t.x>=this.x1&&t.x<=this.x2&&t.y>=this.y2&&t.y<=this.y1:this.y1<this.y2?this.pointOnLine(t)&&t.x>=this.x2&&t.x<=this.x1&&t.y>=this.y1&&t.y<=this.y2:this.pointOnLine(t)&&t.x>=this.x2&&t.x<=this.x1&&t.y>=this.y2&&t.y<=this.y1}intersects(t){if(this.pointInLine(t.point1)||this.pointInLine(t.point2))return!0;let e=(this.x2-this.x1)*(t.y2-t.y1)-(t.x2-t.x1)*(this.y2-this.y1);if(0===e)return!1;let i=((t.y2-t.y1)*(t.x2-this.x1)+(t.x1-t.x2)*(t.y2-this.y1))/e,s=((this.y1-this.y2)*(t.x2-this.x1)+(this.x2-this.x1)*(t.y2-this.y1))/e;return i>0&&i<1&&s>0&&s<1}}class Rectangle{constructor(t,e,i,s,n=new Color(0,0,0,0),h){this.x=t,this.y=e,this.width=i,this.w=i,this.height=s,this.h=s,this.color=n,this.render=h||function(){$ctx.fillStyle=n.string,$ctx.rect(this.x,this.y,this.w,this.h)}}getX(){return this.x}getY(){return this.y}getWidth(){return this.width}getHeight(){return this.height}setX(t=0){this.x=t}setY(t=0){this.y=t}setWidth(t=0){this.width=t,this.w=t}setHeight(t=0){this.height=t,this.h=t}changeX(t=0){this.x+=t}changeY(t=0){this.y+=t}changeWidth(t=0){this.width+=t,this.w+=t}changeHeight(t=0){this.height+=t,this.h+=t}}class Polygon{constructor(t){this.lines=[],this.maxX=0;for(let e=0;e<t.length-1;e++)this.maxX=Math.max(this.maxX,t[e].x),this.maxX=Math.max(this.maxX,t[e+1].x),this.lines.push(new Line(t[e],t[e+1]));this.lines.push(new Line(t[t.length-1],t[0])),this.maxX=abs(this.maxX)}pointInPolygon(t){let e=new Line(t,new Vector2(2*this.maxX+1,t.y)),i=!1;for(let t=0;t<this.lines.length;t++)this.lines[t].intersects(e)&&(i=!i);return i}collision(t){for(let e=0;e<this.lines.length;e++)if(t.pointInPolygon(new Vector2(this.lines[e].x1,this.lines[e].y1)))return!0;for(let e=0;e<t.lines.length;e++)if(this.pointInPolygon(new Vector2(t.lines[e].x1,t.lines[e].y1)))return!0;return!1}changeX(t){for(let e=0;e<this.lines.length;e++)this.lines[e].x1+=t,this.lines[e].x2+=t;this.maxX+=t}changeY(t){for(let e=0;e<this.lines.length;e++)this.lines[e].y1+=t,this.lines[e].y2+=t}getMidpoint(){let t=new Vector2(0,0);for(let e=0;e<this.lines.length;e++)t.x+=this.lines[e].x1,t.y+=this.lines[e].y1;return t.x/=this.lines.length,t.y/=this.lines.length,t}rotate(t){let e=this.getMidpoint();this.changeX(-e.x),this.changeY(-e.y);for(let e=0;e<this.lines.length;e++){let i=this.lines[e].x1,s=this.lines[e].y1;this.lines[e].x1=i*Math.cos(t)-s*Math.sin(t),this.lines[e].y1=i*Math.sin(t)+s*Math.cos(t),this.maxX=Math.max(this.maxX,this.lines[e].x1),i=this.lines[e].x2,s=this.lines[e].y2,this.lines[e].x2=i*Math.cos(t)-s*Math.sin(t),this.lines[e].y2=i*Math.sin(t)+s*Math.cos(t),this.maxX=Math.max(this.maxX,this.lines[e].x2)}this.changeX(e.x),this.changeY(e.y)}render(t="black"){$ctx.beginPath(),$ctx.fillStyle=t,$ctx.moveTo(this.lines[0].x1,this.lines[0].y1);for(let t=0;t<this.lines.length;t++)$ctx.lineTo(this.lines[t].x2,this.lines[t].y2);$ctx.lineTo(this.lines[0].x2,this.lines[0].y2),$ctx.fill(),$ctx.closePath()}}function getID(t){return document.getElementById(t)}function getCTX(t){return document.getElementById(t).getContext("2d")}function getText(t){return document.getElementById(t).textContent}function getInner(t){return document.getElementById(t).innerHTML}function getOuter(t){return document.getElementById(t).outerHTML}var $canvas,$ctx,width,height,pmouseX,pmouseY,mouseX,mouseY,mousePressed,keyCode,key,keyPressed,mouseMove,mouseDown,mouseUp,mouseClick,keyDown,keyUp,keyPress,Input={};function createCanvas(t=400,e=400){($canvas=document.createElement("canvas")).setAttribute("id","canvas"),document.body.appendChild($canvas),$canvas.width=t,$canvas.height=e,width=$canvas.width,height=$canvas.height,$ctx=$canvas.getContext("2d"),$canvas.addEventListener("mousemove",t=>{let e=$canvas.getBoundingClientRect();pmouseX=mouseX,pmouseY=mouseY,mouseX=t.clientx-e.left,mouseY=t.clienty-e.top,mouseMove()}),$canvas.addEventListener("mousedown",t=>{mousePressed=!0,mouseDown()}),$canvas.addEventListener("mouseup",t=>{mousePressed=!1,mouseUp()}),$canvas.addEventListener("click",t=>{mouseClick()}),$canvas.addEventListener("keydown",t=>{Input[t.keyCode]=!0,Input[t.key]=!0,Input.keyCode=t.keyCode,Input.key=t.key,Input.keyPressed=!0,keyDown()}),$canvas.addEventListener("keyup",t=>{Input[t.keyCode]=!1,Input[t.key]=!1,t.keyCode===keyCode&&(Input.keyPressed=!1),keyUp()})}keyPressed=mouseMove=mouseDown=mouseUp=mouseClick=keyDown=keyUp=keyPress=function(){};let sw=1;function strokeweight(){return $ctx.lineWidth}function noStroke(){$ctx.lineWidth=0}function strokeWeight(t){$ctx.lineWidth=t}function fill(t){$ctx.fillStyle="rgba("+t.r+", "+t.g+", "+t.b+", "+t.a+")"}function fill(t,e,i,s=1){$ctx.fillStyle="rgba("+t+", "+green+", "+i+", "+s+")"}function stroke(t){$ctx.strokeStyle="rgba("+t.r+", "+t.g+", "+t.b+", "+t.a+")"}function stroke(t,e,i,s=1){$ctx.strokeStyle="rgba("+t+", "+green+", "+i+", "+s+")"}function rect(t,e,i,s){$ctx.beginPath(),$ctx.rect(t,e,i,s),$ctx.fill(),strokeweight()||$ctx.stroke(),$ctx.closePath()}function rect(t,e,i){$ctx.beginPath(),$ctx.rect(t,e,i,i),$ctx.fill(),strokeweight()||$ctx.stroke(),$ctx.closePath()}function point(t,e){$ctx.beginPath(),$ctx.moveTo(t,e),$ctx.lineTo(t+1,e+1),$ctx.closePath()}function circle(t,e,i){$ctx.beginPath(),arc(t,e,i,0,2*Math.PI),$ctx.fill(),strokeweight()||$ctx.stroke(),$ctx.closePath()}function arc(t,e,i,s,n){$ctx.beginPath(),$ctx.arc(t,e,i,degreesToRadians(s),degreesToRadians(n)),$ctx.fill(),strokeweight()||$ctx.stroke(),$ctx.closePath()}function ellipse(t,e,i,s){$ctx.beginPath(),$ctx.ellipse(100,100,i,s,0,0,2*Math.PI),$ctx.fill(),$ctx.stroke(),strokeweight()||$ctx.stroke(),$ctx.closePath()}function triangle(t,e,i,s,n,h){$ctx.beginPath(),$ctx.moveTo(t,e),$ctx.lineTo(i,s),$ctx.lineTo(n,h),$ctx.lineTo(t,e),$ctx.lineTo(i,s),$ctx.fill(),strokeweight()||$ctx.stroke(),$ctx.closePath()}function quad(t,e,i,s,n,h,r,o){$ctx.beginPath(),$ctx.moveTo(t,e),$ctx.lineTo(i,s),$ctx.lineTo(n,h),$ctx.lineTo(r,o),$ctx.lineTo(t,e),$ctx.lineTo(i,s),$ctx.fill(),strokeweight()||$ctx.stroke(),$ctx.closePath()}function line(t,e,i,s){$ctx.beginPath(),$ctx.moveTo(t,e),$ctx.lineTo(i,s);let n=0;0!==strokeWeight()&&(n=strokeweight(),$ctx.strokeWeight=1),$ctx.stroke(),$ctx.strokeWeight=n,$ctx.closePath()}function text(t,e,i){$ctx.beginPath(),$ctx.fillText(t,e,i),$ctx.closePath()}function textSize(t){$ctx.font=$ctx.font.replace(/\d+px/,t+"px")}function background(t){$ctx.openPath(),fill(t),$ctx.rect(0,0,$canvas.width,$canvas.height),$ctx.fill(),$ctx.closePath()}function background(t,e,i,s=1){$ctx.openPath(),fill(t,e,i,s),$ctx.rect(0,0,$canvas.width,$canvas.height),$ctx.fill(),$ctx.closePath()}function clear(){$ctx.beginPath(),$ctx.clearRect(0,0,$canvas.width,$canvas.height),$ctx.closePath()}function rotate(t){$ctx.rotate(degreesToRadians(t))}console.log("Loaded Extra JS by Matt-DESTROYER");
+/*
+ * Extra JavaScripts Functions
+ *
+ *  Includes:
+ *   - Handy math shortcuts and functions
+ *   - DOM functions
+ *   - Canvas functions
+ *
+ */
+
+/*
+ * Math functions
+ */
+
+// add function (doubt anyone will need this)
+function add(number1, number2) {
+	return number1 + number2;
+}
+
+// subtract function (doubt anyone will need this)
+function subtract(number1, number2) {
+	return number1 - number2;
+}
+
+// multiply function (doubt anyone will need this)
+function multiply(number1, number2) {
+	return number1 * number2;
+}
+
+// divide function (doubt anyone will need this)
+function divide(number1, number2) {
+	return number1 / number2;
+}
+
+function dist(x1, y1, x2, y2) {
+	return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+}
+
+// dist() but for 3d points (x1, y1, z1 and x2, y2, z2)
+function dist3D(x1, y1, z1, x2, y2, z2) {
+	return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2));
+}
+
+// convert degrees to radians
+function degreesToRadians(degrees) {
+	return degrees * Math.PI / 180;
+}
+
+// convert radians to degrees
+function radiansToDegrees(radians) {
+	return radians * 180 / Math.PI;
+}
+
+// math shortcuts
+var pi = Math.PI,
+	pow = Math.pow,
+	sqrt = Math.sqrt,
+	round = Math.round,
+	floor = Math.floor,
+	ceil = Math.ceil,
+	min = Math.min,
+	max = Math.max,
+	abs = Math.abs,
+	sin = Math.sin,
+	cos = Math.cos,
+	tan = Math.tan,
+	asin = Math.asin,
+	acos = Math.acos,
+	atan = Math.atan;
+
+// generate random number between min and max inclusive
+function random(min, max) {
+	return Math.random() * (max - min) + min;
+}
+
+// generate random whole number between min and max inclusive
+function randomInt(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+// returns true or false depending on whether or not the input is prime
+function isPrime(num) {
+	if (num < 2) return false;
+	else if (num === 2) return true;
+	else if (num % 2 === 0) return false;
+	else if (num < 10) {
+		if (num === 3 || num === 5 || num === 7) return true;
+		return false;
+	}
+	for (var i = 3; i < Math.floor(Math.sqrt(num)); i += 2)
+		if (num % i === 0) return false;
+	return true;
+}
+
+// returns a value between two values
+function lerp(value1, value2, amount) {
+	if (amount < 0) amount = 0;
+	else if (amount > 1) amount = 1;
+	return value1 + (value2 - value1) * amount;
+}
+
+// constrain
+// returns the input value however if it is not between the specifications it will return the highest/lowest possible value
+function constrain(value, max, min) {
+	if (value > max) return max;
+	else if (value < min) return min;
+	return value;
+}
+
+/*
+ * Data types
+ */
+// handy data type for 2D positions: new Vector2(x, y);
+class Vector2 {
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+	}
+	getX() {
+		return this.x;
+	}
+	getY() {
+		return this.y;
+	}
+	setX(x) {
+		this.x = x;
+	}
+	setY(y) {
+		this.y = y;
+	}
+	add(point) {
+		this.x += point.x;
+		this.y += point.y;
+	}
+	sub(point) {
+		this.x -= point.x;
+		this.y -= point.y;
+	}
+	mult(point) {
+		this.x *= point.x;
+		this.y *= point.y;
+	}
+	div(point) {
+		this.x /= point.x;
+		this.y /= point.y;
+	}
+	dist(point) {
+		return sqrt(pow(point.x - this.x, 2) + pow(point.y - this.y, 2));
+	}
+	dot(point) {
+		return this.x * point.x + this.y * point.y;
+	}
+	mag() {
+		return sqrt(this.x * this.x + this.y * this.y);
+	}
+	normalize() {
+		let mag = sqrt(this.x * this.x + this.y * this.y);
+		return [this.x / mag, this.y / mag];
+	}
+	array() {
+		return [this.x, this.y];
+	}
+	static dist(point1, point2) {
+		return sqrt(pow(point2.x - point1.x, 2) + pow(point2.y - point1.y, 2));
+	}
+	static dot(point1, point2) {
+		return point1.x * point2.x + point1.y * point2.y;
+	}
+	static array(point) {
+		return [point.x, point.y];
+	}
+	static Zero() {
+		return new Vector2(0, 0);
+	}
+}
+
+// handy data type for 3D positions: Vector3(x, y, z);
+class Vector3 {
+	constructor(x, y, z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+	getX() {
+		return this.x;
+	}
+	getY() {
+		return this.y;
+	}
+	getZ() {
+		return this.z;
+	}
+	setX(x) {
+		this.x = x;
+	}
+	setY(y) {
+		this.y = y;
+	}
+	setZ(z) {
+		this.z = z;
+	}
+	add(point) {
+		this.x += point.x;
+		this.y += point.y;
+		this.z += point.z;
+	}
+	sub(point) {
+		this.x -= point.x;
+		this.y -= point.y;
+		this.z -= point.z;
+	}
+	mult(point) {
+		this.x *= point.x;
+		this.y *= point.y;
+		this.z *= point.z;
+	}
+	div(point) {
+		this.x /= point.x;
+		this.y /= point.y;
+		this.z /= point.z;
+	}
+	dist(point) {
+		return sqrt(pow(point.x - this.x, 2) + pow(point.y - this.y, 2) + pow(point.z - this.z, 2));
+	}
+	dot(point) {
+		return this.x * point.x + this.y * point.y + this.z * point.z;
+	}
+	mag() {
+		return sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+	}
+	normalize() {
+		let mag = sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+		return [this.x / mag, this.y / mag, this.z / mag];
+	}
+	array() {
+		return [this.x, this.y, this.z];
+	}
+	static dist(point1, point2) {
+		return sqrt(pow(point2.x - point1.x, 2) + pow(point2.y - point1.y, 2) + pow(point2.z - point1.z, 2));
+	}
+	static dot(point1, point2) {
+		return point1.x * point2.x + point1.y * point2.y + point1.z * point2.z;
+	}
+	static array(point) {
+		return [point.x, point.y, point.z];
+	}
+	static Zero() {
+		return new Vector3(0, 0, 0);
+	}
+}
+
+// color data type color(r, g, b);
+class Color {
+	constructor(red, green, blue, alpha = 1) {
+		this.r = red;
+		this.g = green;
+		this.b = blue;
+		this.a = alpha;
+	}
+	toString() {
+		return "rgba(" + this.r + "," + this.g + "," + this.b + "," + this.a + ")";
+	}
+	getRed() {
+		return this.r;
+	}
+	getGreen() {
+		return this.g;
+	}
+	getBlue() {
+		return this.b;
+	}
+	getAlpha() {
+		return this.a;
+	}
+	setRed(red = 0) {
+		this.r = red;
+	}
+	setGreen(green = 0) {
+		this.g = green;
+	}
+	setBlue(blue = 0) {
+		this.b = blue;
+	}
+	setAlpha(alpha = 1) {
+		this.a = alpha;
+	}
+}
+
+// line data type line(x1, y1, x2, y2)
+class Line {
+	constructor(x1 = 0, y1 = 0, x2 = 0, y2 = 0) {
+		this.x1 = x1;
+		this.y1 = y1;
+		this.x2 = x2;
+		this.y2 = y2;
+	}
+	pointOnLine(point) {
+		let m = (this.y2 - this.y1) / (this.x2 - this.x1);
+		let c = this.y1 - m * this.x1;
+		return point.y === m * point.x + c;
+	}
+	pointInLine(point) {
+		if (this.x1 < this.x2) {
+			if (this.y1 < this.y2) {
+				return this.pointOnLine(point) && (point.x >= this.x1 && point.x <= this.x2) && (point.y >= this.y1 && point.y <= this.y2);
+			}
+			return this.pointOnLine(point) && (point.x >= this.x1 && point.x <= this.x2) && (point.y >= this.y2 && point.y <= this.y1);
+		}
+		if (this.y1 < this.y2) {
+			return this.pointOnLine(point) && (point.x >= this.x2 && point.x <= this.x1) && (point.y >= this.y1 && point.y <= this.y2);
+		}
+		return this.pointOnLine(point) && (point.x >= this.x2 && point.x <= this.x1) && (point.y >= this.y2 && point.y <= this.y1);
+	}
+	intersects(other) {
+		if (this.pointInLine(other.point1) || this.pointInLine(other.point2)) {
+			return true;
+		}
+		let det = (this.x2 - this.x1) * (other.y2 - other.y1) - (other.x2 - other.x1) * (this.y2 - this.y1);
+		if (det === 0) {
+			return false;
+		}
+		let lambda = ((other.y2 - other.y1) * (other.x2 - this.x1) + (other.x1 - other.x2) * (other.y2 - this.y1)) / det;
+		let gamma = ((this.y1 - this.y2) * (other.x2 - this.x1) + (this.x2 - this.x1) * (other.y2 - this.y1)) / det;
+		return (lambda > 0 && lambda < 1) && (gamma > 0 && gamma < 1);
+	}
+}
+
+// rectangle data type Rectangle(x, y, width, height, color, render)
+class Rectangle {
+	constructor(x, y, width, height, color = new Color(0, 0, 0, 0), render) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.w = width;
+		this.height = height;
+		this.h = height;
+		this.color = color;
+		this.render = render || function() {
+			$ctx.fillStyle = color.string;
+			$ctx.rect(this.x, this.y, this.w, this.h)
+		}
+	}
+	getX() {
+		return this.x;
+	}
+	getY() {
+		return this.y;
+	}
+	getWidth() {
+		return this.width;
+	}
+	getHeight() {
+		return this.height;
+	}
+	setX(value = 0) {
+		this.x = value;
+	}
+	setY(value = 0) {
+		this.y = value;
+	}
+	setWidth(value = 0) {
+		this.width = value;
+		this.w = value;
+	}
+	setHeight(amount = 0) {
+		this.height = amount;
+		this.h = amount;
+	}
+	changeX(amount = 0) {
+		this.x += amount;
+	}
+	changeY(amount = 0) {
+		this.y += amount;
+	}
+	changeWidth(amount = 0) {
+		this.width += amount;
+		this.w += amount;
+	}
+	changeHeight(amount = 0) {
+		this.height += amount;
+		this.h += amount;
+	}
+}
+
+// polygon data type Polygon(points)
+class Polygon {
+	constructor(points) {
+		this.lines = [];
+		this.maxX = 0;
+		for (let i = 0; i < points.length - 1; i++) {
+			this.maxX = Math.max(this.maxX, points[i].x);
+			this.maxX = Math.max(this.maxX, points[i + 1].x);
+			this.lines.push(new Line(points[i], points[i + 1]));
+		}
+		this.lines.push(new Line(points[points.length - 1], points[0]));
+		this.maxX = abs(this.maxX);
+	}
+	pointInPolygon(point) {
+		let _testLine = new Line(point, new Vector2(this.maxX * 2 + 1, point.y));
+		let result = false;
+		for (let i = 0; i < this.lines.length; i++) {
+			if (this.lines[i].intersects(_testLine)) {
+				result = !result;
+			}
+		}
+		return result;
+	}
+	collision(other) {
+		for (let i = 0; i < this.lines.length; i++) {
+			if (other.pointInPolygon(new Vector2(this.lines[i].x1, this.lines[i].y1))) {
+				return true;
+			}
+		}
+		for (let i = 0; i < other.lines.length; i++) {
+			if (this.pointInPolygon(new Vector2(other.lines[i].x1, other.lines[i].y1))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	changeX(distance) {
+		for (let i = 0; i < this.lines.length; i++) {
+			this.lines[i].x1 += distance;
+			this.lines[i].x2 += distance;
+		}
+		this.maxX += distance;
+	}
+	changeY(distance) {
+		for (let i = 0; i < this.lines.length; i++) {
+			this.lines[i].y1 += distance;
+			this.lines[i].y2 += distance;
+		}
+	}
+	getMidpoint() {
+		let midpoint = new Vector2(0, 0);
+		for (let i = 0; i < this.lines.length; i++) {
+			midpoint.x += this.lines[i].x1;
+			midpoint.y += this.lines[i].y1;
+		}
+		midpoint.x /= this.lines.length;
+		midpoint.y /= this.lines.length;
+		return midpoint;
+	}
+	rotate(degree) {
+		let mid = this.getMidpoint();
+		this.changeX(-mid.x);
+		this.changeY(-mid.y);
+		for (let i = 0; i < this.lines.length; i++) {
+			let x = this.lines[i].x1,
+				y = this.lines[i].y1;
+			this.lines[i].x1 = x * Math.cos(degree) - y * Math.sin(degree);
+			this.lines[i].y1 = x * Math.sin(degree) + y * Math.cos(degree);
+			this.maxX = Math.max(this.maxX, this.lines[i].x1);
+			x = this.lines[i].x2;
+			y = this.lines[i].y2;
+			this.lines[i].x2 = x * Math.cos(degree) - y * Math.sin(degree);
+			this.lines[i].y2 = x * Math.sin(degree) + y * Math.cos(degree);
+			this.maxX = Math.max(this.maxX, this.lines[i].x2);
+		}
+		this.changeX(mid.x);
+		this.changeY(mid.y);
+	}
+	render(colour = "black") {
+		$ctx.beginPath();
+		$ctx.fillStyle = colour;
+		$ctx.moveTo(this.lines[0].x1, this.lines[0].y1);
+		for (let i = 0; i < this.lines.length; i++) {
+			$ctx.lineTo(this.lines[i].x2, this.lines[i].y2);
+		}
+		$ctx.lineTo(this.lines[0].x2, this.lines[0].y2);
+		$ctx.fill();
+		$ctx.closePath();
+	}
+}
+
+/*
+ * DOM functions
+ */
+// get element by id
+function getID(id) {
+	return document.getElementById(id);
+}
+
+// get ctx from canvas by id
+function getCTX(id) {
+	return document.getElementById(id).getContext("2d");
+}
+
+// get textContent
+function getText(id) {
+	return document.getElementById(id).textContent;
+}
+
+// get innerHTML
+function getInner(id) {
+	return document.getElementById(id).innerHTML;
+}
+
+// get outer HTML
+function getOuter(id) {
+	return document.getElementById(id).outerHTML;
+}
+//}
+
+/*
+ * Canvas functions
+ */
+// create canvas
+var $canvas, $ctx, width, height, pmouseX, pmouseY, mouseX, mouseY, mousePressed, keyCode, key, keyPressed, mouseMove, mouseDown, mouseUp, mouseClick, keyDown, keyUp, keyPress, Input = {};
+keyPressed = mouseMove = mouseDown = mouseUp = mouseClick = keyDown = keyUp = keyPress = function() {};
+
+function createCanvas(canvasWidth = 400, canvasHeight = 400) {
+	$canvas = document.createElement("canvas");
+	$canvas.setAttribute("id", "canvas");
+	document.body.appendChild($canvas);
+	$canvas.width = canvasWidth;
+	$canvas.height = canvasHeight;
+	width = $canvas.width;
+	height = $canvas.height;
+	$ctx = $canvas.getContext("2d");
+	$canvas.addEventListener("mousemove", e => {
+		let rect = $canvas.getBoundingClientRect();
+		pmouseX = mouseX;
+		pmouseY = mouseY;
+		mouseX = e.clientx - rect.left;
+		mouseY = e.clienty - rect.top;
+		mouseMove();
+	});
+	$canvas.addEventListener("mousedown", e => {
+		mousePressed = true;
+		mouseDown();
+	});
+	$canvas.addEventListener("mouseup", e => {
+		mousePressed = false;
+		mouseUp();
+	});
+	$canvas.addEventListener("click", e => {
+		mouseClick();
+	});
+	$canvas.addEventListener("keydown", e => {
+		Input[e.keyCode] = true;
+		Input[e.key] = true;
+		Input.keyCode = e.keyCode;
+		Input.key = e.key;
+		Input.keyPressed = true;
+		keyDown();
+	});
+	$canvas.addEventListener("keyup", e => {
+		Input[e.keyCode] = false;
+		Input[e.key] = false;
+		if (e.keyCode === keyCode) {
+			Input.keyPressed = false;
+		}
+		keyUp();
+	});
+}
+
+// check stroke weight
+let sw = 1;
+
+function strokeweight() {
+	return $ctx.lineWidth;
+}
+
+// noStroke()
+function noStroke() {
+	$ctx.lineWidth = 0;
+}
+
+// strokeWidth(thickness)
+function strokeWeight(thickness) {
+	$ctx.lineWidth = thickness;
+}
+
+// fill(color)
+function fill(color) {
+	$ctx.fillStyle = "rgba(" + color.r + ", " + color.g + ", " + color.b + ", " + color.a + ")";
+}
+
+// fill(r, g, b, *a)
+function fill(red, gren, blue, alpha = 1) {
+	$ctx.fillStyle = "rgba(" + red + ", " + green + ", " + blue + ", " + alpha + ")";
+}
+
+// stroke(color)
+function stroke(color) {
+	$ctx.strokeStyle = "rgba(" + color.r + ", " + color.g + ", " + color.b + ", " + color.a + ")";
+}
+
+// stroke(r, g, b, *a)
+function stroke(red, gren, blue, alpha = 1) {
+	$ctx.strokeStyle = "rgba(" + red + ", " + green + ", " + blue + ", " + alpha + ")";
+}
+
+// rectangle at position x, y with width, height
+function rect(x, y, width, height) {
+	$ctx.beginPath();
+	$ctx.rect(x, y, width, height);
+	$ctx.fill();
+	if (!strokeweight()) {
+		$ctx.stroke();
+	}
+	$ctx.closePath();
+}
+
+// square at position x, y with width)
+function rect(x, y, width) {
+	$ctx.beginPath();
+	$ctx.rect(x, y, width, width);
+	$ctx.fill();
+	if (!strokeweight()) {
+		$ctx.stroke();
+	}
+	$ctx.closePath();
+}
+
+// point(x, y)
+function point(x, y) {
+	$ctx.beginPath();
+	$ctx.moveTo(x, y);
+	$ctx.lineTo(x + 1, y + 1);
+	$ctx.closePath();
+}
+
+// circle(x, y, radius)
+function circle(x, y, radius) {
+	$ctx.beginPath();
+	arc(x, y, radius, 0, 2 * Math.PI);
+	$ctx.fill();
+	if (!strokeweight()) {
+		$ctx.stroke();
+	}
+	$ctx.closePath();
+}
+
+// arc(x, y, radius, startDegrees, endDegrees)
+function arc(x, y, radius, startDegrees, endDegrees) {
+	$ctx.beginPath();
+	$ctx.arc(x, y, radius, degreesToRadians(startDegrees), degreesToRadians(endDegrees));
+	$ctx.fill();
+	if (!strokeweight()) {
+		$ctx.stroke();
+	}
+	$ctx.closePath();
+}
+
+// ellipse(x, y, radiusX, radiusY)
+function ellipse(x, y, radiusX, radiusY) {
+	$ctx.beginPath();
+	$ctx.ellipse(100, 100, radiusX, radiusY, 0, 0, 2 * Math.PI);
+	$ctx.fill();
+	$ctx.stroke();
+	if (!strokeweight()) {
+		$ctx.stroke();
+	}
+	$ctx.closePath();
+}
+
+// triangle(x1, y1, x2, y2, x3, y3)
+function triangle(x1, y1, x2, y2, x3, y3) {
+	$ctx.beginPath();
+	$ctx.moveTo(x1, y1);
+	$ctx.lineTo(x2, y2);
+	$ctx.lineTo(x3, y3);
+	$ctx.lineTo(x1, y1);
+	$ctx.lineTo(x2, y2);
+	$ctx.fill();
+	if (!strokeweight()) {
+		$ctx.stroke();
+	}
+	$ctx.closePath();
+}
+
+// quad(x1, y1, x2, y2, x3, y3, x4, y4)
+function quad(x1, y1, x2, y2, x3, y3, x4, y4) {
+	$ctx.beginPath();
+	$ctx.moveTo(x1, y1);
+	$ctx.lineTo(x2, y2);
+	$ctx.lineTo(x3, y3);
+	$ctx.lineTo(x4, y4);
+	$ctx.lineTo(x1, y1);
+	$ctx.lineTo(x2, y2);
+	$ctx.fill();
+	if (!strokeweight()) {
+		$ctx.stroke();
+	}
+	$ctx.closePath();
+}
+
+// line(x1, y1, x2, y2)
+function line(x1, y1, x2, y2) {
+	$ctx.beginPath();
+	$ctx.moveTo(x1, y1);
+	$ctx.lineTo(x2, y2);
+	let strw = 0;
+	if (strokeWeight() !== 0) {
+		strw = strokeweight();
+		$ctx.strokeWeight = 1;
+	}
+	$ctx.stroke();
+	$ctx.strokeWeight = strw;
+	$ctx.closePath();
+}
+
+// text(message, x, y)
+function text(message, x, y) {
+	$ctx.beginPath();
+	$ctx.fillText(message, x, y);
+	$ctx.closePath();
+}
+
+// textSize(size)
+function textSize(size) {
+	$ctx.font = $ctx.font.replace(/\d+px/, size + "px");
+}
+
+// background(color)
+function background(color) {
+	$ctx.openPath();
+	fill(color);
+	$ctx.rect(0, 0, $canvas.width, $canvas.height);
+	$ctx.fill();
+	$ctx.closePath();
+}
+
+// background(r, g, b, *a)
+function background(r, g, b, a = 1) {
+	$ctx.openPath();
+	fill(r, g, b, a);
+	$ctx.rect(0, 0, $canvas.width, $canvas.height);
+	$ctx.fill();
+	$ctx.closePath();
+}
+
+// clear()
+function clear() {
+	$ctx.beginPath();
+	$ctx.clearRect(0, 0, $canvas.width, $canvas.height);
+	$ctx.closePath();
+}
+
+// rotate(degrees)
+function rotate(degrees) {
+	$ctx.rotate(degreesToRadians(degrees));
+}
+
+console.log("Loaded ExtraJS by Matt-DESTROYER");
