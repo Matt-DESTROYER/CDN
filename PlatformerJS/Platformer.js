@@ -518,6 +518,7 @@ class Player {
 	}
 	collisionX() {
 		let _tempLevel = $levels[currentLevel]._objects;
+		let distance = this._xVel > 0 ? 1 : this._xVel < 0 ? -1 : 0;
 		_tempLevel.map(x => {
 			if (x.type > 0) {
 				this._mesh.move(this.x, this.y);
@@ -567,6 +568,7 @@ class Player {
 		let _tempLevel = $levels[currentLevel]._objects;
 		this.touchingGround = false;
 		this.inWater = false;
+		let distance = this._yVel > 0 ? 1 : this._yVel < 0 ? -1 : 0;
 		_tempLevel.map(x => {
 			if (x.type > 0) {
 				this._mesh.move(this.x, this.y);
