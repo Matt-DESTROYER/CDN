@@ -3,10 +3,6 @@
  * 2D Platformer Engine!
  * 
  * Version: v1.0
- * 
- * Coming Soon:
- *  - Polygon meshes for more complex
- *    objects and collisions
  */
 
 let $canvas, $ctx, $player, $previousFrame = Date.now(), $previousFrameReading = Date.now(), $frameRate = 60, $frameCount = 0, FPS = 0, $levels = [], currentLevel = 0, width, height;
@@ -536,8 +532,6 @@ class Player {
 						case 4:
 							this.inWater = true;
 							this._xVel *= 0.4;
-							this._mesh.move(-this.x, -this.y);
-							x._mesh.move(-x.x, -x.y);
 							return;
 						case 9:
 							currentLevel++;
