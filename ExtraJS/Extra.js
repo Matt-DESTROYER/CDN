@@ -11,10 +11,6 @@
 /*
  * Math functions
  */
-// shortcut pi
-function pi() {
-	return Math.PI;
-}
 
 // add function (doubt anyone will need this)
 function add(number1, number2) {
@@ -56,7 +52,8 @@ function radiansToDegrees(radians) {
 }
 
 // math shortcuts
-var pow = Math.pow,
+var pi = Math.PI,
+	pow = Math.pow,
 	sqrt = Math.sqrt,
 	round = Math.round,
 	floor = Math.floor,
