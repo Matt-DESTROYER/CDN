@@ -515,6 +515,8 @@ class Player {
 	}
 	changeX(distance) {
 		this._x += distance;
+	}
+	collisionX() {
 		let _tempLevel = $levels[currentLevel]._objects;
 		_tempLevel.map(x => {
 			if (x.type > 0) {
@@ -527,15 +529,11 @@ class Player {
 						case 1:
 							this._x -= distance / Math.abs(distance);
 							if (!this.inWater && this.wallJump && (Input[87] || Input[38] || Input[32])) {
-								if (this._xVel > 0) {
-									this._xVel = -16;
-								} else {
-									this._xVel = 16;
-								}
+								if (this._xVel > 0) this._xVel = -16;
+								else this._xVel = 16;
 								this._yVel = -12;
-							} else {
-								this._xVel = 0;
 							}
+							else this._xVel = 0;
 							break;
 						case 2:
 							this.reset();
@@ -564,6 +562,8 @@ class Player {
 	}
 	changeY(distance) {
 		this._y += distance;
+	}
+	collisionY() {
 		let _tempLevel = $levels[currentLevel]._objects;
 		this.touchingGround = false;
 		this.inWater = false;
@@ -577,11 +577,8 @@ class Player {
 					switch (x.type) {
 						case 1:
 							this._y -= distance / Math.abs(distance);
-							if (this._yVel > 0) {
-								this.touchingGround = true;
-							} else {
-								this.touchingGround = false;
-							}
+							if (this._yVel > 0) this.touchingGround = true;
+							else this.touchingGround = false;
 							this._yVel = 0;
 							break;
 						case 2:
@@ -589,11 +586,8 @@ class Player {
 							break;
 						case 3:
 							this._y -= distance / Math.abs(distance);
-							if (this._yVel > 0) {
-								this._yVel = -24;
-							} else {
-								this._yVel = 0;
-							}
+							if (this._yVel > 0) this._yVel = -24;
+							else this._yVel = 0;
 							this.touchingGround = false;
 							break;
 						case 4:
@@ -618,8 +612,10 @@ class Player {
 	physicsTick() {
 		this._xVel *= this.resistance * this.velocityMultiplier;
 		this.changeX(this._xVel);
+		this.collisionX();
 		this._yVel += this.gravityIncrease * this.gravityMultiplier;
 		this.changeY(this._yVel);
+		this.collisionY();
 	}
 	render() {
 		this._mesh.move(this._x - Camera.x, this._y - Camera.y);
