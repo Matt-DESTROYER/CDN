@@ -384,6 +384,9 @@ class PObject {
 	set mesh(newMesh) {
 		this._mesh = newMesh;
 	}
+	rotate(degrees) {
+		this._mesh.rotate(degrees);
+	}
 	render() {
 		$ctx.fillStyle = this.colour;
 		this._mesh.move(this.x - Camera.x, this.y - Camera.y);
@@ -506,6 +509,9 @@ class Player {
 		this._xVel = 0;
 		this._yVel = 0;
 		this.touchingGround = false;
+	}
+	rotate(degrees) {
+		this._mesh.rotate(degrees);
 	}
 	changeX(distance) {
 		this._x += distance;
