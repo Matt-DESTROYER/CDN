@@ -130,16 +130,6 @@ class Platformer {
 	}
 }
 
-class RectangleMesh {
-	constructor(width, height) {
-		this.width = width;
-		this.height = height;
-	}
-	static collision(x1, y1, mesh1, x2, y2, mesh2) {
-		return (x1 < x2 + mesh2.width && x1 + mesh1.width > x2 && y1 < y2 + mesh2.height && y1 + mesh1.height > y2);
-	}
-}
-
 class Vector2 {
 	constructor(x, y) {
 		this.x = x;
@@ -330,24 +320,43 @@ class PolygonMesh {
 		return false;
 	}
 	render(colour) {
-		ctx.fillStyle = colour;
-		ctx.beginPath();
-		ctx.moveTo(this.lines[0].x1, this.lines[0].y1);
+		$ctx.fillStyle = colour;
+		$ctx.beginPath();
+		$ctx.moveTo(this.lines[0].x1, this.lines[0].y1);
 		for (let i = 0; i < this.lines.length; i++) {
-			ctx.lineTo(this.lines[i].x2, this.lines[i].y2);
+			$ctx.lineTo(this.lines[i].x2, this.lines[i].y2);
 		}
-		ctx.lineTo(this.lines[0].x1, this.lines[0].y1);
-		ctx.closePath();
+		$ctx.lineTo(this.lines[0].x1, this.lines[0].y1);
+		$ctx.fill();
+		$ctx.closePath();
+	}
+}
+
+class RectangleMesh extends PolygonMesh {
+	constructor(rectWidth, rectHeight, centered = true) {
+		if (centered) {
+			super([
+				new Vector2(-rectWidth / 2, -rectHeight / 2),
+				new Vector2(rectWidth / 2, -rectHeight / 2),
+				new Vector2(rectWidth / 2, rectHeight / 2),
+				new Vector2(-rectWidth / 2, rectHeight / 2)
+			]);
+		} else {
+			super([
+				new Vector2(0, 0),
+				new Vector2(rectWidth, 0),
+				new Vector2(rectWidth, rectHeight),
+				new Vector2(0, rectHeight)
+			]);
+		}
 	}
 }
 
 class PObject {
-	constructor(x, y, width, height, colour, type, update) {
+	constructor(x, y, mesh, colour, type, update) {
 		this.x = x;
 		this.y = y;
-		this._width = width;
-		this._height = height
-		this._mesh = new RectangleMesh(this.width, this.height);
+		this._mesh = mesh;
 		this.colour = colour;
 		this.type = type;
 		this._doesUpdate = false;
@@ -365,30 +374,31 @@ class PObject {
 	get width() {
 		return this._width;
 	}
-	get height() {
-		return this._height;
+	get mesh() {
+		return this._mesh;
 	}
-	set width(value) {
-		this._width = value;
-		this._mesh = new RectangleMesh(this._width, this._height);
-	}
-	set height(value) {
-		this._height = value;
-		this._mesh = new RectangleMesh(this._width, this._height);
+	set mesh(newMesh) {
+		this._mesh = newMesh;
 	}
 	render() {
 		$ctx.fillStyle = this.colour;
-		$ctx.fillRect(this.x - Camera.x, this.y - Camera.y, this.width, this.height);
+		this._mesh.move(this.x - Camera.x, this.y - Camera.y);
+		this._mesh.render();
+		this._mesh.move(-(this.x - Camera.x), -(this.y - Camera.y));
 	}
 }
 
 class PText {
-	constructor(message, font, fontSize, x, y, colour, type, update) {
+	constructor(message, font, size, x, y, colour, type, update) {
 		this.message = message;
 		this.font = font;
-		this.fontSize = fontSize;
+		this.size = size;
 		this.x = x;
 		this.y = y;
+		this._mesh = new PolygonMesh([
+			new Vector2(0, 0),
+			new Vector2(0, 0)
+		]);
 		this.colour = colour;
 		this.type = type;
 		this._doesUpdate = false;
@@ -399,7 +409,7 @@ class PText {
 	}
 	render() {
 		$ctx.fillStyle = this.colour;
-		$ctx.font = this.fontSize + "px " + this.font;
+		$ctx.font = this.size + "px " + this.font;
 		$ctx.fillText(this.message, this.x - Camera.x, this.y - Camera.y);
 	}
 }
@@ -430,14 +440,12 @@ class Level {
 }
 
 class Player {
-	constructor(x, y, width, height, colour, canWalljump = false, update = function () { }) {
+	constructor(x, y, mesh, colour, canWalljump = false, update = function () { }) {
 		this._x = x;
 		this._y = y;
 		this._startX = x;
 		this._startY = y;
-		this._width = width;
-		this._height = height;
-		this._mesh = new RectangleMesh(width, height);
+		this._mesh = mesh;
 		this._colour = colour;
 		this._xVel = 0;
 		this.velocityMultiplier = 1;
@@ -462,19 +470,8 @@ class Player {
 	set y(value) {
 		this._y = value;
 	}
-	get width() {
-		return this._width;
-	}
-	set width(value) {
-		this._width = value;
-		this._mesh = new RectangleMesh(this._width, this._height);
-	}
-	get height() {
-		return this._height;
-	}
-	set height(value) {
-		this._height = value;
-		this._mesh = new RectangleMesh(this._width, this._height);
+	get mesh() {
+		return this._mesh;
 	}
 	get colour() {
 		return this._colour;
@@ -511,7 +508,11 @@ class Player {
 		let _tempLevel = $levels[currentLevel]._objects;
 		_tempLevel.map(x => {
 			if (x.type > 0) {
-				while (RectangleMesh.collision(this._x, this._y, this._mesh, x.x, x.y, x._mesh)) {
+				this._mesh.move(this.x, this.y);
+				x._mesh.move(x.x, x.y);
+				while (this._mesh.collision(x._mesh)) {
+					this._mesh.move(-this.x, -this.y);
+					x._mesh.move(-x.x, -x.y);
 					switch (x.type) {
 						case 1:
 							this._x -= distance / Math.abs(distance);
@@ -535,6 +536,8 @@ class Player {
 						case 4:
 							this.inWater = true;
 							this._xVel *= 0.4;
+							this._mesh.move(-this.x, -this.y);
+							x._mesh.move(-x.x, -x.y);
 							return;
 						case 9:
 							currentLevel++;
@@ -543,7 +546,11 @@ class Player {
 						default:
 							break;
 					}
+					this._mesh.move(this.x, this.y);
+					x._mesh.move(x.x, x.y);
 				}
+				this._mesh.move(-this.x, -this.y);
+				x._mesh.move(-x.x, -x.y);
 			}
 		});
 	}
@@ -554,7 +561,11 @@ class Player {
 		this.inWater = false;
 		_tempLevel.map(x => {
 			if (x.type > 0) {
-				while (RectangleMesh.collision(this._x, this._y, this._mesh, x.x, x.y, x._mesh)) {
+				this._mesh.move(this.x, this.y);
+				x._mesh.move(x.x, x.y);
+				while (this._mesh.collision(x._mesh)) {
+					this._mesh.move(-this.x, -this.y);
+					x._mesh.move(-x.x, -x.y);
 					switch (x.type) {
 						case 1:
 							this._y -= distance / Math.abs(distance);
@@ -588,7 +599,11 @@ class Player {
 						default:
 							break;
 					}
+					this._mesh.move(this.x, this.y);
+					x._mesh.move(x.x, x.y);
 				}
+				this._mesh.move(-this.x, -this.y);
+				x._mesh.move(-x.x, -x.y);
 			}
 		});
 	}
@@ -599,10 +614,9 @@ class Player {
 		this.changeY(this._yVel);
 	}
 	render() {
-		$ctx.fillStyle = this._colour;
-		$ctx.fillRect(this._x - Camera.x, this._y - Camera.y, this._width, this._height);
-		$ctx.beginPath();
-		$ctx.closePath();
+		this._mesh.move(this._x - Camera.x, this._y - Camera.y);
+		this._mesh.render(this._colour);
+		this._mesh.move(-(this._x - Camera.x), -(this._y - Camera.y));
 	}
 }
 
@@ -631,8 +645,8 @@ function radiansToDegrees(radians) {
 	return radians * 180 / Math.PI;
 }
 
-// shortcuts
-var pi = Math.PI,
+// math shortcuts
+let pi = Math.PI,
 	pow = Math.pow,
 	log = Math.log,
 	sqrt = Math.sqrt,
@@ -647,14 +661,14 @@ var pi = Math.PI,
 	acos = Math.acos,
 	atan = Math.atan;
 
-// generate random number between min and max
+// generate random number between min and max inclusive
 function random(min, max) {
-	return Math.random() * (max - min) + min;
+	return Math.random() * (max - min + 1) + min;
 }
 
-// generate random whole number between min and max
+// generate random whole number between min and max inclusive
 function randomInt(min, max) {
-	return Math.floor(Math.random() * (max - min)) + min;
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // returns true or false depending on whether or not the input is prime
@@ -663,12 +677,12 @@ function isPrime(num) {
 		return false;
 	} else if (num === 2) {
 		return true;
-	} else if (num % 2 === 0) {
-		return false;
 	} else if (num < 10) {
 		if (num === 3 || num === 5 || num === 7) {
 			return true;
 		}
+		return false;
+	} else if (num % 3 === 0 || num % 5 === 0 || num % 7 === 0) {
 		return false;
 	}
 	for (var i = 3; i < Math.floor(Math.sqrt(num)); i += 2) {
