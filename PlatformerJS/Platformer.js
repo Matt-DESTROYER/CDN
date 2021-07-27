@@ -96,6 +96,7 @@ class Platformer {
 			$frameCount = 0;
 		}
 		if (Date.now() - $previousFrame >= 1000 / $frameRate) {
+			$levels[currentLevel].update();
 			$player.physicsTick();
 			$player.update();
 			Platformer.Render();
