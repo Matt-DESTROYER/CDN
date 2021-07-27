@@ -667,28 +667,6 @@ function randomInt(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// returns true or false depending on whether or not the input is prime
-function isPrime(num) {
-	if (num < 2) {
-		return false;
-	} else if (num === 2) {
-		return true;
-	} else if (num < 10) {
-		if (num === 3 || num === 5 || num === 7) {
-			return true;
-		}
-		return false;
-	} else if (num % 3 === 0 || num % 5 === 0 || num % 7 === 0) {
-		return false;
-	}
-	for (var i = 3; i < Math.floor(Math.sqrt(num)); i += 2) {
-		if (num % i === 0) {
-			return false;
-		}
-	}
-	return true;
-}
-
 // restrains a number by two numbers
 let contrain, clamp;
 constrain = clamp = function (num, min, max) {
