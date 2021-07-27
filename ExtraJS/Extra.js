@@ -338,124 +338,128 @@ class Rectangle {
 		this.render = render || function() {
 			$ctx.fillStyle = color.string;
 			$ctx.rect(this.x, this.y, this.w, this.h)
-		};
+		}
 	}
-	
 	getX() {
 		return this.x;
 	}
-	
 	getY() {
 		return this.y;
 	}
-	
 	getWidth() {
 		return this.width;
 	}
-	
 	getHeight() {
 		return this.height;
 	}
-	
 	setX(value = 0) {
 		this.x = value;
 	}
-	
 	setY(value = 0) {
 		this.y = value;
 	}
-	
 	setWidth(value = 0) {
 		this.width = value;
 		this.w = value;
 	}
-	
 	setHeight(amount = 0) {
 		this.height = amount;
 		this.h = amount;
 	}
-	
 	changeX(amount = 0) {
 		this.x += amount;
 	}
-	
 	changeY(amount = 0) {
 		this.y += amount;
 	}
-	
 	changeWidth(amount = 0) {
 		this.width += amount;
 		this.w += amount;
 	}
-	
 	changeHeight(amount = 0) {
 		this.height += amount;
 		this.h += amount;
 	}
 }
 
-// polygon data type Polygon(xPositions, yPositions)
-// example (square) new Polygon([0, 1, 1, 0], [0, 0, 1, 1])
+// polygon data type Polygon(points)
 class Polygon {
-	constructor(xPositions, yPositions) {
+	constructor(points) {
 		this.lines = [];
-		for (let i = 0; i < xPositions.length; i++) {
-			if (i === xPositions.length - 1) {
-				this.lines.push(new Line(xPositions[xPositions.length - 1], yPositions[yPositions.length - 1], xPositions[0], yPositions[0]));
-				break;
-			}
-			this.lines.push(new Line(xPositions[i], yPositions[i], xPositions[i + 1], yPositions[i + 1]));
+		this.maxX = 0;
+		for (let i = 0; i < points.length - 1; i++) {
+			this.maxX = Math.max(this.maxX, points[i].x);
+			this.maxX = Math.max(this.maxX, points[i + 1].x);
+			this.lines.push(new Line(points[i], points[i + 1]));
 		}
+		this.lines.push(new Line(points[points.length - 1], points[0]));
+		this.maxX = abs(this.maxX);
 	}
-	
-	intersects(other) {
+	pointInPolygon(point) {
+		let _testLine = new Line(point, new Vector2(this.maxX * 2 + 1, point.y));
+		let result = false;
 		for (let i = 0; i < this.lines.length; i++) {
-			if (this.pointInside(other.lines[0].x2, other.lines[0].y2)) {
+			if (this.lines[i].intersects(_testLine)) {
+				result = !result;
+			}
+		}
+		return result;
+	}
+	collision(other) {
+		for (let i = 0; i < this.lines.length; i++) {
+			if (other.pointInPolygon(new Vector2(this.lines[i].x1, this.lines[i].y1))) {
 				return true;
 			}
-			for (let j = 0; j < other.lines.length; j++) {
-				if (this.lines[i].intersects(other.lines[j]) || this.pointInside(other.lines[j].x2, other.lines[j].y2)) {
-					return true;
-				}
+		}
+		for (let i = 0; i < other.lines.length; i++) {
+			if (this.pointInPolygon(new Vector2(other.lines[i].x1, other.lines[i].y1))) {
+				return true;
 			}
 		}
 		return false;
 	}
-	
-	pointInside(x, y) {
-		let x1 = this.lines[0].x1,
-			x2 = this.lines[0].x2;
-		for (let i = 0; i < this.lines.length; i++) {
-			if (this.lines[i].x2 < x1) {
-				x1 = this.lines[i].x2;
-			} else if (this.lines[i].x2 > x2) {
-				x2 = this.lines[i].x2;
-			}
-		}
-		let lineCheck = new Line(x, y, Math.abs(x2 - x1), y);
-		let intersections = 0
-		for (let i = 0; i < this.lines.length; i++) {
-			if (this.lines[i].intersects(lineCheck)) {
-				intersections++;
-			}
-		}
-		return intersections % 2 != 0;
-	}
-	
-	changeX(distance = 0) {
+	changeX(distance) {
 		for (let i = 0; i < this.lines.length; i++) {
 			this.lines[i].x1 += distance;
 			this.lines[i].x2 += distance;
 		}
+		this.maxX += distance;
 	}
-	
-	changeY(distance = 0) {
+	changeY(distance) {
 		for (let i = 0; i < this.lines.length; i++) {
 			this.lines[i].y1 += distance;
 			this.lines[i].y2 += distance;
 		}
 	}
-	
+	getMidpoint() {
+		let midpoint = new Vector2(0, 0);
+		for (let i = 0; i < this.lines.length; i++) {
+			midpoint.x += this.lines[i].x1;
+			midpoint.y += this.lines[i].y1;
+		}
+		midpoint.x /= this.lines.length;
+		midpoint.y /= this.lines.length;
+		return midpoint;
+	}
+	rotate(degree) {
+		let mid = this.getMidpoint();
+		this.changeX(-mid.x);
+		this.changeY(-mid.y);
+		for (let i = 0; i < this.lines.length; i++) {
+			let x = this.lines[i].x1,
+				y = this.lines[i].y1;
+			this.lines[i].x1 = x * Math.cos(degree) - y * Math.sin(degree);
+			this.lines[i].y1 = x * Math.sin(degree) + y * Math.cos(degree);
+			this.maxX = Math.max(this.maxX, this.lines[i].x1);
+			x = this.lines[i].x2;
+			y = this.lines[i].y2;
+			this.lines[i].x2 = x * Math.cos(degree) - y * Math.sin(degree);
+			this.lines[i].y2 = x * Math.sin(degree) + y * Math.cos(degree);
+			this.maxX = Math.max(this.maxX, this.lines[i].x2);
+		}
+		this.changeX(mid.x);
+		this.changeY(mid.y);
+	}
 	render(colour = "black") {
 		$ctx.beginPath();
 		$ctx.fillStyle = colour;
