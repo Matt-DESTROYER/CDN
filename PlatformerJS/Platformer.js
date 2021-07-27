@@ -13,8 +13,11 @@ let Input = {},
 		y: 0
 	},
 	Time = {
-		startTime: Date.now(),
+		startTime: 0,
 		_dt: 0,
+		get timeElapsed() {
+			return Date.now() - this.startTime;
+		},
 		get deltaTime() {
 			return Date.now() - this._dt;
 		},
@@ -80,6 +83,7 @@ class Platformer {
 			} else if (!$player) {
 				throw "Platformer Error: No player. (Create a player before calling Start new Player(x, y, width, height, colour))";
 			}
+			Time.startTime = Date.now();
 			window.requestAnimationFrame(Platformer.Update);
 		} else {
 			throw "Platformer Error: No context. (Call Platformer.initCanvas(id, ?fullscreen))";
