@@ -1,1 +1,687 @@
-let $canvas,$ctx,$player,width,height,keyDown,keyUp,keyPress,mouseDown,mouseUp,mouseClick,mouseMove,$previousFrame=Date.now(),$previousFrameReading=Date.now(),$frameRate=60,$frameCount=0,FPS=0,$levels=[],currentLevel=0,Input={},Camera={x:0,y:0},Time={startTime:0,_dt:0,get timeElapsed(){return Date.now()-this.startTime},get deltaTime(){return Date.now()-this._dt},get now(){return Date.now()}};keyDown=keyUp=keyPress=mouseDown=mouseUp=mouseClick=mouseMove=function(){},document.addEventListener("keydown",function(t){t=t||window.event,Input[t.keyCode]=!0,Input[t.key.toString().toUpperCase()]=!0,Input.keyCode=t.keyCode,Input.key=t.key,keyDown()}),document.addEventListener("keyup",function(t){t=t||window.event,Input[t.keyCode]=!1,Input[t.key.toString().toUpperCase()]=!1,keyUp()}),document.addEventListener("keypress",function(t){t=t||window.event,keyPress()}),document.addEventListener("mousedown",function(t){t=t||window.event,mouseDown()}),document.addEventListener("mouseup",function(t){t=t||window.event,mouseUp()}),document.addEventListener("click",function(t){t=t||window.event,mouseClick()}),document.addEventListener("mousemove",function(t){t=t||window.event,Input.pmouseX=Input.mouseX,Input.pmouseY=Input.mouseY,Input.mouseX=t.x,Input.mouseY=t.y,mouseMove()});class Platformer{static Start(){if(!$ctx)throw"Platformer Error: No context. (Call Platformer.initCanvas(id, ?fullscreen))";if($levels.length<1)throw"Platformer Error: No levels. (Create at least one level new Level(objects))";if(!$player)throw"Platformer Error: No player. (Create a player before calling Start new Player(x, y, width, height, colour))";Time.startTime=Date.now(),window.requestAnimationFrame(Platformer.Update)}static Update(){$frameCount++,Date.now()-$previousFrameReading>=1e3&&(FPS=$frameCount,$frameCount=0),Date.now()-$previousFrame>=1e3/$frameRate&&($levels[currentLevel].update(),$player.physicsTick(),$player.update(),Platformer.Render(),$previousFrame=Date.now()),Time._dt=Date.now(),window.requestAnimationFrame(Platformer.Update)}static Render(){this._backgroundColour?($ctx.fillStyle=this._backgroundColour,$ctx.beginPath(),$ctx.rect(0,0,$canvas.width,$canvas.height),$ctx.fill(),$ctx.closePath()):$ctx.clearRect(0,0,$canvas.width,$canvas.height),$levels[currentLevel].render(),$player.render()}static initCanvas(t,e=!0){$canvas=document.getElementById(t),e&&($canvas.width=window.innerWidth,$canvas.height=window.innerHeight),width=$canvas.width,height=$canvas.height,($ctx=$canvas.getContext("2d")).lineWidth=0}static background(t){this._backgroundColour=t}}class Vector2{constructor(t,e){this.x=t,this.y=e}getX(){return this.x}getY(){return this.y}setX(t){this.x=t}setY(t){this.y=t}add(t){this.x+=t.x,this.y+=t.y}sub(t){this.x-=t.x,this.y-=t.y}mult(t){this.x*=t.x,this.y*=t.y}div(t){this.x/=t.x,this.y/=t.y}dist(t){return sqrt(pow(t.x-this.x,2)+pow(t.y-this.y,2))}dot(t){return this.x*t.x+this.y*t.y}mag(){return sqrt(this.x*this.x+this.y*this.y)}normalize(){let t=sqrt(this.x*this.x+this.y*this.y);return[this.x/t,this.y/t]}array(){return[this.x,this.y]}static dist(t,e){return sqrt(pow(e.x-t.x,2)+pow(e.y-t.y,2))}static dot(t,e){return t.x*e.x+t.y*e.y}static array(t){return[t.x,t.y]}static Zero(){return new Vector2(0,0)}}class Point extends Vector2{constructor(t,e){super(t,e)}}class Line{constructor(t,e){this.point1=t,this.point2=e,this.x1=t.x,this.y1=t.y,this.x2=e.x,this.y2=e.y}pointOnLine(t){let e=(this.y2-this.y1)/(this.x2-this.x1),s=this.y1-e*this.x1;return t.y===e*t.x+s}pointInLine(t){return this.x1<this.x2?this.y1<this.y2?this.pointOnLine(t)&&t.x>=this.x1&&t.x<=this.x2&&t.y>=this.y1&&t.y<=this.y2:this.pointOnLine(t)&&t.x>=this.x1&&t.x<=this.x2&&t.y>=this.y2&&t.y<=this.y1:this.y1<this.y2?this.pointOnLine(t)&&t.x>=this.x2&&t.x<=this.x1&&t.y>=this.y1&&t.y<=this.y2:this.pointOnLine(t)&&t.x>=this.x2&&t.x<=this.x1&&t.y>=this.y2&&t.y<=this.y1}intersects(t){if(this.pointInLine(t.point1)||this.pointInLine(t.point2))return!0;let e=(this.x2-this.x1)*(t.y2-t.y1)-(t.x2-t.x1)*(this.y2-this.y1);if(0===e)return!1;let s=((t.y2-t.y1)*(t.x2-this.x1)+(t.x1-t.x2)*(t.y2-this.y1))/e,i=((this.y1-this.y2)*(t.x2-this.x1)+(this.x2-this.x1)*(t.y2-this.y1))/e;return s>0&&s<1&&i>0&&i<1}}class PolygonMesh{constructor(t){this.lines=[],this.maxX=0;for(let e=0;e<t.length-1;e++)this.maxX+=Math.abs(t[e].x),this.maxX+=Math.abs(t[e+1].x),this.lines.push(new Line(t[e],t[e+1]));this.lines.push(new Line(t[t.length-1],t[0])),this.maxX*=10}changeX(t){this.lines.map(e=>{e.x1+=t,e.x2+=t}),this.maxX+=t}changeY(t){this.lines.map(e=>{e.y1+=t,e.y2+=t})}move(t,e){this.changeX(t),this.changeY(e)}getMidpoint(){let t=new Vector2(0,0);for(let e=0;e<this.lines.length;e++)t.x+=this.lines[e].x1,t.y+=this.lines[e].y1;return t.x/=this.lines.length,t.y/=this.lines.length,t}rotate(t){let e=this.getMidpoint();this.changeX(-e.x),this.changeY(-e.y);for(let e=0;e<this.lines.length;e++){let s=this.lines[e].x1,i=this.lines[e].y1;this.lines[e].x1=s*Math.cos(t)-i*Math.sin(t),this.lines[e].y1=s*Math.sin(t)+i*Math.cos(t),this.maxX=Math.max(this.maxX,this.lines[e].x1),s=this.lines[e].x2,i=this.lines[e].y2,this.lines[e].x2=s*Math.cos(t)-i*Math.sin(t),this.lines[e].y2=s*Math.sin(t)+i*Math.cos(t),this.maxX=Math.max(this.maxX,this.lines[e].x2)}this.changeX(e.x),this.changeY(e.y)}pointInPolygon(t){let e=new Line(t,new Vector2(10*this.maxX,t.y)),s=!1;for(let t=0;t<this.lines.length;t++)this.lines[t].intersects(e)&&(s=!s);return s}collision(t){for(let e=0;e<this.lines.length;e++)if(t.pointInPolygon(new Vector2(this.lines[e].x1,this.lines[e].y1)))return!0;for(let e=0;e<t.lines.length;e++)if(this.pointInPolygon(new Vector2(t.lines[e].x1,t.lines[e].y1)))return!0;return!1}render(t){$ctx.fillStyle=t,$ctx.beginPath(),$ctx.moveTo(this.lines[0].x1,this.lines[0].y1);for(let t=0;t<this.lines.length;t++)$ctx.lineTo(this.lines[t].x2,this.lines[t].y2);$ctx.lineTo(this.lines[0].x1,this.lines[0].y1),$ctx.fill(),$ctx.closePath()}}class RectangleMesh extends PolygonMesh{constructor(t,e,s=!0){super(s?[new Vector2(-t/2,-e/2),new Vector2(t/2,-e/2),new Vector2(t/2,e/2),new Vector2(-t/2,e/2)]:[new Vector2(0,0),new Vector2(t,0),new Vector2(t,e),new Vector2(0,e)])}}class PObject{constructor(t,e,s,i,h,n){this.x=t,this.y=e,this._mesh=s,this.colour=i,this.type=h,this._doesUpdate=!1,n&&(this._doesUpdate=!0,this.update=n)}get color(){return this.color}set color(t){this.color=t}get width(){return this._width}get mesh(){return this._mesh}set mesh(t){this._mesh=t}rotate(t){this._mesh.rotate(t)}render(){$ctx.fillStyle=this.colour,this._mesh.move(this.x-Camera.x,this.y-Camera.y),this._mesh.render(),this._mesh.move(-(this.x-Camera.x),-(this.y-Camera.y))}}class PText{constructor(t,e,s,i,h,n,r){this.message=t,this.font=e,this.size=s,this.x=i,this.y=h,this.type=0,this.colour=n,this._doesUpdate=!1,r&&(this._doesUpdate=!0,this.update=r)}get color(){return this.colour}set color(t){return this.colour}render(){$ctx.fillStyle=this.colour,$ctx.font=this.size+"px "+this.font,$ctx.fillText(this.message,this.x-Camera.x,this.y-Camera.y)}}class CustomPObject{constructor(t,e,s=function(){},i=function(){}){this.x=t,this.y=e,this._doesUpdate=!0,this.update=s,this.render=i}}class Level{constructor(t){this._objects=t,$levels.push(this)}update(){this._objects.map(t=>{t._doesUpdate&&t.update()})}render(){this._objects.map(t=>t.render())}}class Player{constructor(t,e,s,i,h=!1,n=function(){}){this._x=t,this._y=e,this._startX=t,this._startY=e,this._mesh=s,this._colour=i,this._xVel=0,this.velocityMultiplier=1,this.resistance=.8,this._yVel=0,this.gravityMultiplier=1,this.gravityIncrease=1,this.wallJump=h,this.touchingGround=!1,this.update=n,$player=this}get x(){return this._x}set x(t){this._x=t}get y(){return this._y}set y(t){this._y=t}get mesh(){return this._mesh}get colour(){return this._colour}set colour(t){this._colour=t}get color(){return this._colour}set color(t){this._colour=t}readyMesh(){this._mesh.move(this.x,this.y)}centerMesh(){this._mesh.move(-this.x,-this.y)}jump(){this.touchingGround?this._yVel=-14:this.inWater&&(this._yVel=-4)}addForce(t,e){this._xVel+=t,this._yVel+=e}reset(){this._x=this._startX,this._y=this._startY,this._xVel=0,this._yVel=0,this.touchingGround=!1}rotate(t){this._mesh.rotate(t)}changeX(t){this._x+=t}collisionX(){let t=$levels[currentLevel]._objects;this.inWater=!1;for(let e of t)if(4===e.type){if(this.readyMesh(),e._mesh.move(e.x,e.y),this._mesh.collision(e._mesh)){this.inWater=!0,this._yVel*=.4,this._yVel>2?this._yVel=2:this._yVel<-2&&(this._yVel=-2);break}this.centerMesh(),e._mesh.move(-e.x,-e.y)}let e=this._xVel>0?1:this._xVel<0?-1:0;t.map(t=>{if(t.type>0&&4!==t.type){for(this.readyMesh(),t._mesh.move(t.x,t.y);this._mesh.collision(t._mesh);){switch(this.centerMesh(),t.type){case 1:this._x-=e,!this.inWater&&this.wallJump&&(Input[87]||Input[38]||Input[32])?(this._xVel=1===e?-16:16,this._yVel=-12):this._xVel=0;break;case 2:this.reset();break;case 3:this._x-=e;break;case 9:currentLevel++,this.reset()}this.readyMesh()}this.centerMesh(),t._mesh.move(-t.x,-t.y),this.inWater=!1}})}changeY(t){this._y+=t}collisionY(){let t=$levels[currentLevel]._objects;this.inWater=!1;for(let e of t)if(4===e.type){if(this.readyMesh(),e._mesh.move(e.x,e.y),this._mesh.collision(e._mesh)){this.inWater=!0,this._yVel*=.4,this._yVel>2?this._yVel=2:this._yVel<-2&&(this._yVel=-2);break}this.centerMesh(),e._mesh.move(-e.x,-e.y)}this.touchingGround=!1;let e=this._yVel>0?1:this._yVel<0?-1:0;t.map(t=>{if(t.type>0){for(this.readyMesh(),t._mesh.move(t.x,t.y);this._mesh.collision(t._mesh);){switch(this.centerMesh(),t.type){case 1:this._y-=e,1===e||0===this.dir?this.touchingGround=!0:this.touchingGround=!1,this._yVel=0;break;case 2:this.reset();break;case 3:this._y-=e,this._yVel=1===e?-24:0,this.touchingGround=!1;break;case 9:currentLevel++,this.reset()}this.readyMesh()}this.centerMesh(),t._mesh.move(-t.x,-t.y)}})}physicsTick(){this._xVel*=this.resistance*this.velocityMultiplier,this._xVel>10&&(this._xVel=10),this._xVel<-10&&(this._xVel=-10),this.changeX(this._xVel),this.collisionX(),this._yVel+=this.gravityIncrease*this.gravityMultiplier,this._yVel>50&&(this._xVel=50),this._yVel<-50&&(this._xVel=-50),this.changeY(this._yVel),this.collisionY()}render(){this._mesh.move(this._x-Camera.x,this._y-Camera.y),this._mesh.render(this._colour),this._mesh.move(-(this._x-Camera.x),-(this._y-Camera.y))}}function frameRate(t=60){$frameRate=t}function dist(t,e,s,i){return Math.sqrt(Math.pow(s-t,2)+Math.pow(i-e,2))}function degreesToRadians(t){return t*Math.PI/180}function radiansToDegrees(t){return 180*t/Math.PI}let contrain,clamp,pi=Math.PI,pow=Math.pow,log=Math.log,sqrt=Math.sqrt,round=Math.round,min=Math.min,max=Math.max,abs=Math.abs,sin=Math.sin,cos=Math.cos,tan=Math.tan,asin=Math.asin,acos=Math.acos,atan=Math.atan;function random(t,e){return Math.random()*(e-t+1)+t}function randomInt(t,e){return Math.floor(Math.random()*(e-t+1))+t}function lerp(t,e,s){return s<0?s=0:s>1&&(s=1),t+(e-t)*s}constrain=clamp=function(t,e,s){return t<e?e:t>s?s:t},console.log("Loaded PlatformerJS by Matt-DESTROYER");
+/*
+ * MattDESTROYER's/Matthew James's
+ * 2D Platformer Engine!
+ * 
+ * Version: v1.0
+ */
+
+let $canvas, $ctx, $player, $previousFrame = Date.now(), $previousFrameReading = Date.now(), $frameRate = 60, $frameCount = 0, FPS = 0, $levels = [], currentLevel = 0, width, height;
+
+let Input = {},
+	Camera = {
+		x: 0,
+		y: 0
+	},
+	Time = {
+		startTime: 0,
+		_dt: 0,
+		get timeElapsed() {
+			return Date.now() - this.startTime;
+		},
+		get deltaTime() {
+			return Date.now() - this._dt;
+		},
+		get now() {
+			return Date.now();
+		}
+	};
+
+let keyDown, keyUp, keyPress, mouseDown, mouseUp, mouseClick, mouseMove;
+keyDown = keyUp = keyPress = mouseDown = mouseUp = mouseClick = mouseMove = function () { };
+document.addEventListener("keydown", function (e) {
+	e = e || window.event;
+	Input[e.keyCode] = true;
+	Input[e.key.toString().toUpperCase()] = true;
+	Input.keyCode = e.keyCode;
+	Input.key = e.key;
+	keyDown();
+});
+document.addEventListener("keyup", function (e) {
+	e = e || window.event;
+	Input[e.keyCode] = false;
+	Input[e.key.toString().toUpperCase()] = false;
+	keyUp();
+});
+document.addEventListener("keypress", function (e) {
+	e = e || window.event;
+	keyPress();
+});
+document.addEventListener("mousedown", function (e) {
+	e = e || window.event;
+	mouseDown();
+});
+document.addEventListener("mouseup", function (e) {
+	e = e || window.event;
+	mouseUp();
+});
+document.addEventListener("click", function (e) {
+	e = e || window.event;
+	mouseClick();
+});
+document.addEventListener("mousemove", function (e) {
+	e = e || window.event;
+	Input.pmouseX = Input.mouseX;
+	Input.pmouseY = Input.mouseY;
+	Input.mouseX = e.x;
+	Input.mouseY = e.y;
+	mouseMove();
+});
+
+class Platformer {
+	static Start() {
+		if ($ctx) {
+			if ($levels.length < 1) {
+				throw "Platformer Error: No levels. (Create at least one level new Level(objects))";
+			} else if (!$player) {
+				throw "Platformer Error: No player. (Create a player before calling Start new Player(x, y, width, height, colour))";
+			}
+			Time.startTime = Date.now();
+			window.requestAnimationFrame(Platformer.Update);
+		} else {
+			throw "Platformer Error: No context. (Call Platformer.initCanvas(id, ?fullscreen))";
+		}
+	}
+	static Update() {
+		$frameCount++;
+		if (Date.now() - $previousFrameReading >= 1000) {
+			FPS = $frameCount;
+			$frameCount = 0;
+		}
+		if (Date.now() - $previousFrame >= 1000 / $frameRate) {
+			$levels[currentLevel].update();
+			$player.physicsTick();
+			$player.update();
+			Platformer.Render();
+			$previousFrame = Date.now();
+		}
+		Time._dt = Date.now();
+		window.requestAnimationFrame(Platformer.Update);
+	}
+	static Render() {
+		if (this._backgroundColour) {
+			$ctx.fillStyle = this._backgroundColour;
+			$ctx.beginPath();
+			$ctx.rect(0, 0, $canvas.width, $canvas.height);
+			$ctx.fill();
+			$ctx.closePath();
+		} else {
+			$ctx.clearRect(0, 0, $canvas.width, $canvas.height);
+		}
+		$levels[currentLevel].render();
+		$player.render();
+	}
+	static initCanvas(id, fullscreen = true) {
+		$canvas = document.getElementById(id);
+		if (fullscreen) {
+			$canvas.width = window.innerWidth;
+			$canvas.height = window.innerHeight;
+		}
+		width = $canvas.width;
+		height = $canvas.height;
+		$ctx = $canvas.getContext("2d");
+		$ctx.lineWidth = 0;
+	}
+	static background(colour) {
+		this._backgroundColour = colour;
+	}
+}
+
+class Vector2 {
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+	}
+	getX() {
+		return this.x;
+	}
+	getY() {
+		return this.y;
+	}
+	setX(x) {
+		this.x = x;
+	}
+	setY(y) {
+		this.y = y;
+	}
+	add(point) {
+		this.x += point.x;
+		this.y += point.y;
+	}
+	sub(point) {
+		this.x -= point.x;
+		this.y -= point.y;
+	}
+	mult(point) {
+		this.x *= point.x;
+		this.y *= point.y;
+	}
+	div(point) {
+		this.x /= point.x;
+		this.y /= point.y;
+	}
+	dist(point) {
+		return sqrt(pow(point.x - this.x, 2) + pow(point.y - this.y, 2));
+	}
+	dot(point) {
+		return this.x * point.x + this.y * point.y;
+	}
+	mag() {
+		return sqrt(this.x * this.x + this.y * this.y);
+	}
+	normalize() {
+		let mag = sqrt(this.x * this.x + this.y * this.y);
+		return [this.x / mag, this.y / mag];
+	}
+	array() {
+		return [this.x, this.y];
+	}
+	static dist(point1, point2) {
+		return sqrt(pow(point2.x - point1.x, 2) + pow(point2.y - point1.y, 2));
+	}
+	static dot(point1, point2) {
+		return point1.x * point2.x + point1.y * point2.y;
+	}
+	static array(point) {
+		return [point.x, point.y];
+	}
+	static Zero() {
+		return new Vector2(0, 0);
+	}
+}
+
+class Point extends Vector2 {
+	constructor(x, y) {
+		super(x, y);
+	}
+}
+
+class Line {
+	constructor(point1, point2) {
+		this.point1 = point1;
+		this.point2 = point2;
+		this.x1 = point1.x;
+		this.y1 = point1.y;
+		this.x2 = point2.x;
+		this.y2 = point2.y;
+	}
+	pointOnLine(point) {
+		let m = (this.y2 - this.y1) / (this.x2 - this.x1);
+		let c = this.y1 - m * this.x1;
+		return point.y === m * point.x + c;
+	}
+	pointInLine(point) {
+		if (this.x1 < this.x2) {
+			if (this.y1 < this.y2) return this.pointOnLine(point) && (point.x >= this.x1 && point.x <= this.x2) && (point.y >= this.y1 && point.y <= this.y2);
+			return this.pointOnLine(point) && (point.x >= this.x1 && point.x <= this.x2) && (point.y >= this.y2 && point.y <= this.y1);
+		}
+		if (this.y1 < this.y2) return this.pointOnLine(point) && (point.x >= this.x2 && point.x <= this.x1) && (point.y >= this.y1 && point.y <= this.y2);
+		return this.pointOnLine(point) && (point.x >= this.x2 && point.x <= this.x1) && (point.y >= this.y2 && point.y <= this.y1);
+	}
+	intersects(other) {
+		if (this.pointInLine(other.point1) || this.pointInLine(other.point2)) return true;
+		let det = (this.x2 - this.x1) * (other.y2 - other.y1) - (other.x2 - other.x1) * (this.y2 - this.y1);
+		if (det === 0) return false;
+		let lambda = ((other.y2 - other.y1) * (other.x2 - this.x1) + (other.x1 - other.x2) * (other.y2 - this.y1)) / det;
+		let gamma = ((this.y1 - this.y2) * (other.x2 - this.x1) + (this.x2 - this.x1) * (other.y2 - this.y1)) / det;
+		return (lambda > 0 && lambda < 1) && (gamma > 0 && gamma < 1);
+	}
+}
+
+class PolygonMesh {
+	constructor(points) {
+		this.lines = [];
+		this.maxX = 0;
+		for (let i = 0; i < points.length - 1; i++) {
+			this.maxX += Math.abs(points[i].x);
+			this.maxX += Math.abs(points[i + 1].x);
+			this.lines.push(new Line(points[i], points[i + 1]));
+		}
+		this.lines.push(new Line(points[points.length - 1], points[0]));
+		this.maxX *= 10;
+	}
+	changeX(distance) {
+		this.lines.map(x => {
+			x.x1 += distance;
+			x.x2 += distance;
+		});
+		this.maxX += distance;
+	}
+	changeY(distance) {
+		this.lines.map(x => {
+			x.y1 += distance;
+			x.y2 += distance;
+		});
+	}
+	move(xDist, yDist) {
+		this.changeX(xDist);
+		this.changeY(yDist);
+	}
+	getMidpoint() {
+		let midpoint = new Vector2(0, 0);
+		for (let i = 0; i < this.lines.length; i++) {
+			midpoint.x += this.lines[i].x1;
+			midpoint.y += this.lines[i].y1;
+		}
+		midpoint.x /= this.lines.length;
+		midpoint.y /= this.lines.length;
+		return midpoint;
+	}
+	rotate(degree) {
+		let mid = this.getMidpoint();
+		this.changeX(-mid.x);
+		this.changeY(-mid.y);
+		for (let i = 0; i < this.lines.length; i++) {
+			let x = this.lines[i].x1, y = this.lines[i].y1;
+			this.lines[i].x1 = x * Math.cos(degree) - y * Math.sin(degree);
+			this.lines[i].y1 = x * Math.sin(degree) + y * Math.cos(degree);
+			this.maxX = Math.max(this.maxX, this.lines[i].x1);
+			x = this.lines[i].x2;
+			y = this.lines[i].y2;
+			this.lines[i].x2 = x * Math.cos(degree) - y * Math.sin(degree);
+			this.lines[i].y2 = x * Math.sin(degree) + y * Math.cos(degree);
+			this.maxX = Math.max(this.maxX, this.lines[i].x2);
+		}
+		this.changeX(mid.x);
+		this.changeY(mid.y);
+	}
+	pointInPolygon(point) {
+		let _testLine = new Line(point, new Vector2(this.maxX * 10, point.y));
+		let result = false;
+		for (let i = 0; i < this.lines.length; i++) if (this.lines[i].intersects(_testLine)) result = !result;
+		return result;
+	}
+	collision(other) {
+		for (let i = 0; i < this.lines.length; i++) {
+			if (other.pointInPolygon(new Vector2(this.lines[i].x1, this.lines[i].y1))) {
+				return true;
+			}
+		}
+		for (let i = 0; i < other.lines.length; i++) {
+			if (this.pointInPolygon(new Vector2(other.lines[i].x1, other.lines[i].y1))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	render(colour) {
+		$ctx.fillStyle = colour;
+		$ctx.beginPath();
+		$ctx.moveTo(this.lines[0].x1, this.lines[0].y1);
+		for (let i = 0; i < this.lines.length; i++) {
+			$ctx.lineTo(this.lines[i].x2, this.lines[i].y2);
+		}
+		$ctx.lineTo(this.lines[0].x1, this.lines[0].y1);
+		$ctx.fill();
+		$ctx.closePath();
+	}
+}
+
+class RectangleMesh extends PolygonMesh {
+	constructor(rectWidth, rectHeight, centered = true) {
+		if (centered) {
+			super([
+				new Vector2(-rectWidth / 2, -rectHeight / 2),
+				new Vector2(rectWidth / 2, -rectHeight / 2),
+				new Vector2(rectWidth / 2, rectHeight / 2),
+				new Vector2(-rectWidth / 2, rectHeight / 2)
+			]);
+		} else {
+			super([
+				new Vector2(0, 0),
+				new Vector2(rectWidth, 0),
+				new Vector2(rectWidth, rectHeight),
+				new Vector2(0, rectHeight)
+			]);
+		}
+	}
+}
+
+class PObject {
+	constructor(x, y, mesh, colour, type, update) {
+		this.x = x;
+		this.y = y;
+		this._mesh = mesh;
+		this.colour = colour;
+		this.type = type;
+		this._doesUpdate = false;
+		if (update) {
+			this._doesUpdate = true;
+			this.update = update;
+		}
+	}
+	get color() {
+		return this.color;
+	}
+	set color(color) {
+		this.color = color;
+	}
+	get width() {
+		return this._width;
+	}
+	get mesh() {
+		return this._mesh;
+	}
+	set mesh(newMesh) {
+		this._mesh = newMesh;
+	}
+	rotate(degrees) {
+		this._mesh.rotate(degrees);
+	}
+	render() {
+		$ctx.fillStyle = this.colour;
+		this._mesh.move(this.x - Camera.x, this.y - Camera.y);
+		this._mesh.render();
+		this._mesh.move(-(this.x - Camera.x), -(this.y - Camera.y));
+	}
+}
+
+class PText {
+	constructor(message, font, size, x, y, colour, update) {
+		this.message = message;
+		this.font = font;
+		this.size = size;
+		this.x = x;
+		this.y = y;
+		this.type = 0;
+		this.colour = colour;
+		this._doesUpdate = false;
+		if (update) {
+			this._doesUpdate = true;
+			this.update = update;
+		}
+	}
+	get color() {
+		return this.colour;
+	}
+	set color(value) {
+		return this.colour;
+	}
+	render() {
+		$ctx.fillStyle = this.colour;
+		$ctx.font = this.size + "px " + this.font;
+		$ctx.fillText(this.message, this.x - Camera.x, this.y - Camera.y);
+	}
+}
+
+class CustomPObject {
+	constructor(x, y, update = function () { }, render = function () { }) {
+		this.x = x;
+		this.y = y;
+		this._doesUpdate = true;
+		this.update = update;
+		this.render = render;
+	}
+}
+
+class Level {
+	constructor(objects) {
+		this._objects = objects;
+		$levels.push(this);
+	}
+	update() {
+		this._objects.map(x => {
+			if (x._doesUpdate) x.update();
+		});
+	}
+	render() {
+		this._objects.map(x => x.render());
+	}
+}
+
+class Player {
+	constructor(x, y, mesh, colour, canWalljump = false, update = function () { }) {
+		this._x = x;
+		this._y = y;
+		this._startX = x;
+		this._startY = y;
+		this._mesh = mesh;
+		this._colour = colour;
+		this._xVel = 0;
+		this.velocityMultiplier = 1;
+		this.resistance = 0.8;
+		this._yVel = 0;
+		this.gravityMultiplier = 1;
+		this.gravityIncrease = 1;
+		this.wallJump = canWalljump;
+		this.touchingGround = false;
+		this.update = update;
+		$player = this;
+	}
+	get x() {
+		return this._x;
+	}
+	set x(value) {
+		this._x = value;
+	}
+	get y() {
+		return this._y;
+	}
+	set y(value) {
+		this._y = value;
+	}
+	get mesh() {
+		return this._mesh;
+	}
+	get colour() {
+		return this._colour;
+	}
+	set colour(colour) {
+		this._colour = colour;
+	}
+	get color() {
+		return this._colour;
+	}
+	set color(color) {
+		this._colour = color;
+	}
+	readyMesh() {
+		this._mesh.move(this.x, this.y);
+	}
+	centerMesh() {
+		this._mesh.move(-this.x, -this.y);
+	}
+	jump() {
+		if (this.touchingGround) {
+			this._yVel = -14;
+		} else if (this.inWater) {
+			this._yVel = -4;
+		}
+	}
+	addForce(xForce, yForce) {
+		this._xVel += xForce;
+		this._yVel += yForce;
+	}
+	reset() {
+		this._x = this._startX;
+		this._y = this._startY;
+		this._xVel = 0;
+		this._yVel = 0;
+		this.touchingGround = false;
+	}
+	rotate(degrees) {
+		this._mesh.rotate(degrees);
+	}
+	changeX(distance) {
+		this._x += distance;
+	}
+	collisionX() {
+		let _tempLevel = $levels[currentLevel]._objects;
+		let dir = this._xVel > 0 ? 1 : this._xVel < 0 ? -1 : 0;
+		_tempLevel.map(x => {
+			if (x.type > 0) {
+				this.readyMesh();
+				x._mesh.move(x.x, x.y);
+				while (this._mesh.collision(x._mesh)) {
+					this.centerMesh();
+					switch (x.type) {
+						case 1:
+							this._x -= dir;
+							if (!this.inWater && this.wallJump && (Input[87] || Input[38] || Input[32])) {
+								if (dir === 1) this._xVel = -16;
+								else this._xVel = 16;
+								this._yVel = -12;
+							}
+							else this._xVel = 0;
+							break;
+						case 2:
+							this.reset();
+							break;
+						case 3:
+							this._x -= dir;
+							break;
+						case 4:
+							this.inWater = true;
+							this._xVel *= 0.4;
+							if (this._xVel > 2) this._xVel = 2;
+							else if (this._xVel < -2) this._xVel = -2;
+							x._mesh.move(-x.x, -x.y);
+							return;
+						case 9:
+							currentLevel++;
+							this.reset();
+							break;
+						default:
+							break;
+					}
+					this.readyMesh();
+				}
+				this.centerMesh();
+				x._mesh.move(-x.x, -x.y);
+				this.inWater = false;
+			}
+		});
+	}
+	changeY(distance) {
+		this._y += distance;
+	}
+	collisionY() {
+		let _tempLevel = $levels[currentLevel]._objects;
+		this.touchingGround = false;
+		let dir = this._yVel > 0 ? 1 : this._yVel < 0 ? -1 : 0;
+		_tempLevel.map(x => {
+			if (x.type > 0) {
+				this._mesh.move(this.x, this.y);
+				x._mesh.move(x.x, x.y);
+				while (this._mesh.collision(x._mesh)) {
+					this._mesh.move(-this.x, -this.y);
+					switch (x.type) {
+						case 1:
+							this._y -= dir;
+							if (dir === 1 || this.dir === 0) this.touchingGround = true;
+							else this.touchingGround = false;
+							this._yVel = 0;
+							break;
+						case 2:
+							this.reset();
+							break;
+						case 3:
+							this._y -= dir;
+							if (dir === 1) this._yVel = -24;
+							else this._yVel = 0;
+							this.touchingGround = false;
+							break;
+						case 4:
+							this.inWater = true;
+							this._yVel *= 0.4;
+							if (this._yVel > 2) this._yVel = 2;
+							else if (this._yVel < -2) this._yVel = -2;
+							x._mesh.move(-x.x, -x.y);
+							return;
+						case 9:
+							currentLevel++;
+							this.reset();
+							break;
+						default:
+							break;
+					}
+					this._mesh.move(this.x, this.y);
+				}
+				this._mesh.move(-this.x, -this.y);
+				x._mesh.move(-x.x, -x.y);
+			}
+		});
+	}
+	physicsTick() {
+		this._xVel *= this.resistance * this.velocityMultiplier;
+		if (this._xVel > 10) this._xVel = 10;
+		if (this._xVel < -10) this._xVel = -10;
+		this.changeX(this._xVel);
+		this.collisionX();
+		this._yVel += this.gravityIncrease * this.gravityMultiplier;
+		if (this._yVel > 50) this._xVel = 50;
+		if (this._yVel < -50) this._xVel = -50;
+		this.changeY(this._yVel);
+		this.collisionY();
+	}
+	render() {
+		this._mesh.move(this._x - Camera.x, this._y - Camera.y);
+		this._mesh.render(this._colour);
+		this._mesh.move(-(this._x - Camera.x), -(this._y - Camera.y));
+	}
+}
+
+// changes the number of frames per second
+function frameRate(frames = 60) {
+	$frameRate = frames;
+}
+
+// returns the distance between two 2D points (x1, y1 and x2, y2)
+function dist(x1, y1, x2, y2) {
+	return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+}
+
+// convert degrees to radians
+function degreesToRadians(degrees) {
+	return degrees * Math.PI / 180;
+}
+
+// convert radians to degrees
+function radiansToDegrees(radians) {
+	return radians * 180 / Math.PI;
+}
+
+// math shortcuts
+let pi = Math.PI,
+	pow = Math.pow,
+	log = Math.log,
+	sqrt = Math.sqrt,
+	round = Math.round,
+	min = Math.min,
+	max = Math.max,
+	abs = Math.abs,
+	sin = Math.sin,
+	cos = Math.cos,
+	tan = Math.tan,
+	asin = Math.asin,
+	acos = Math.acos,
+	atan = Math.atan;
+
+// generate random number between min and max inclusive
+function random(min, max) {
+	return Math.random() * (max - min + 1) + min;
+}
+
+// generate random whole number between min and max inclusive
+function randomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// restrains a number by two numbers
+let contrain, clamp;
+constrain = clamp = function (num, min, max) {
+	if (num < min) return min;
+	if (num > max) return max;
+	return num;
+}
+
+// returns a number between two number
+function lerp(value1, value2, amount) {
+	if (amount < 0) {
+		amount = 0;
+	} else if (amount > 1) {
+		amount = 1;
+	}
+	return value1 + (value2 - value1) * amount;
+}
+
+console.log("Loaded PlatformerJS by Matt-DESTROYER");
