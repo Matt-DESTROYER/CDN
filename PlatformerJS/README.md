@@ -16,6 +16,7 @@ Global variables (which you are allowed to use and may help).
 `FPS`: The number of frames per in a second the program is currently running at.
 `width`: The `width` of the `canvas` being used for your platformer.
 `height`: The `height` of the `canvas` being used for your platformer.
+
 `Input`: Provides you with access to user input, usage:
 ```js
 // Input.KEY e.g:
@@ -27,11 +28,13 @@ Input.mouseY // -> returns the y position of the user's cursor
 Input.pmouseX // -> returns the previous x position of the user's cursor
 Input.pmouseY // -> returns the previous y position of the user's cursor
 ```
+
 `Camera`: The position of the `Camera` in the current level;
 ```js
 Camera.x // you are able to get and set the camera's x position
 Camera.y // you are able to get and set the camera's y position
 ```
+
 `Time`: Time based object.
 ```js
 Time.startTime // returns the time in milliseconds when the platformer was started
