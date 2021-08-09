@@ -21,6 +21,14 @@ Converts a decimal number embedded in a string into a decimal number. Ignores le
 evaluate(string);
 ```
 Evaluates an equation. In some specific circumstances it can return better results than `eval` (eg `Maths.evaluate(2^4^8) = 4294967296` whereas `eval(2**4**8) = Infinity`).
+Supported operators:
+- `+` (add)
+- `-` (subtract)
+- `*` (multiply) [Note: a number next to parenthesis is multiplied by parenthesis eg 2 (1 + 1) is the same as 2 * (1 + 1)]
+- `/` (divide)
+- `%` (modulus)
+- `^` (power)
+- `()` (parenthesis)
 
 ```js
 ceil(number);
