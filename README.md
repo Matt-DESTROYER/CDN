@@ -6,3 +6,4 @@ CDN stands for Content Distribution Network, this repository acts as a free CDN 
 - Platformer.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/PlatformerJS/Platformer.js"></script>`
 - Extra.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/ExtraJS/Extra.js"></script>`
 - Maths.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/MathsJS/Maths.js"></script>`
+- Test.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/TestJS/Test.js"></script>`
