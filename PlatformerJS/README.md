@@ -1,7 +1,7 @@
 # Platformer.js
 A simple JavaScript platformer framework/engine.
 
-Warning, do not directly access and change the value of global variables beginning with `$` or properties/functions beginning with `_`.
+Warning, do not directly access and/or change the value of global variables beginning with `$` or properties/functions beginning with `_` unless you know what you are doing.
 
 ## Documentation/Features:
 ```js
