@@ -52,6 +52,7 @@ Mouse and keyboard events call functions named similarly to the event:
 - `mouseUp`
 - `mouseClick`
 - `mouseMove`
+
 You can change these functions to create your own actions when these events occur, e.g:
 ```js
 keyDown = function () {
