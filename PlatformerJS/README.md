@@ -73,7 +73,7 @@ Sets up a canvas (based on ID).
 ```js
 Platformer.Start();
 ```
-Starts your platformer game.
+Starts your platformer game. (Note: this should be the last line of code your personal scripts run, code after this line will likely not run)
 
 ```js
 new Vector2(x, y);
