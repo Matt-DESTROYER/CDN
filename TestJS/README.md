@@ -1,6 +1,10 @@
 # Test.js
 ## Documentation/Features
 ```
+Test
+```
+The class containing the test functions.
+```
 Test.equals(a, b);
 ```
 - `a`: One of the items being compared
