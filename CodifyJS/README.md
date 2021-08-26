@@ -7,7 +7,7 @@ codifyJS(code);
 ```
 Adds spans to the input code so that you can apply classes (see below) which will colour your code.
 
-Here are some example CSS classes with example colours.
+The CSS classes with example colours.
 ```css
 .code-keyword {
 	color: blue;
