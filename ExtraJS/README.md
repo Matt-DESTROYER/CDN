@@ -36,6 +36,19 @@ constrain(number, min, max);                                        // returns t
 
 ### Data Types:
 ```js
+Color(red, green, blue, alpha?); // a colour (alpha defaults to 1)
+Color.prototype.toString();      // returns a string version of the colour in the format rgba(r, g, b, a)
+Color.prototype.getRed();        // returns the red value of the colour
+Color.prototype.getGreen();      // returns the green value of the colour
+Color.prototype.getBlue();       // returns the blue value of the colour
+Color.prototype.getAlpha();      // returns the alpha or transparency of the colour
+Color.prototype.setRed(red);     // sets the red of the colour to the input value
+Color.prototype.setGreen(green); // sets the green of the colour to the input value
+Color.prototype.setBlue(blue);   // sets the blue of the colour to the input value
+Color.prototype.setAlpha(alpha); // sets the alpha or transparency of the colour to the input value
+```
+
+```js
 Vector2(x, y);                 // a 2D point
 Vector2.prototype.getX();      // returns the x value of the Vector2
 Vector2.prototype.getY();      // returns the y value of the Vector2
@@ -80,14 +93,8 @@ Vector3.Zero();                // returns a new point with an x, y, and z value 
 ```
 
 ```js
-Color(red, green, blue, alpha?); // a colour (alpha defaults to 1)
-toString();                      // returns a string version of the colour in the format rgba(r, g, b, a)
-getRed();                        // returns the red value of the colour
-getGreen();                      // returns the green value of the colour
-getBlue();                       // returns the blue value of the colour
-getAlpha();                      // returns the alpha or transparency of the colour
-setRed(red);                 // sets the red of the colour to the input value
-setGreen(green);             // sets the green of the colour to the input value
-setBlue(blue);               // sets the blue of the colour to the input value
-setAlpha(alpha);             // sets the alpha or transparency of the colour to the input value
+Line(point1, point2);              // a line
+Line.prototype.pointOnLine(point); // returns whether or not a point lies on a line (based on the equation of the line)
+Line.prototype.pointInLine(point); // returns whether or not a point lies in a line (restricted to being between the two points)
+Line.prototype.intersects(other);  // returns whether or not a line intersects with the current line
 ```
