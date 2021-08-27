@@ -78,3 +78,16 @@ Vector3.dot(point1, point2);   // returns the dot product of two input points
 Vector3.array(point);          // returns the input point in array format [x, y, z]
 Vector3.Zero();                // returns a new point with an x, y, and z value of 0
 ```
+
+```js
+Color(red, green, blue, alpha?); // a colour (alpha defaults to 1)
+toString();                      // returns a string version of the colour in the format rgba(r, g, b, a)
+getRed();                        // returns the red value of the colour
+getGreen();                      // returns the green value of the colour
+getBlue();                       // returns the blue value of the colour
+getAlpha();                      // returns the alpha or transparency of the colour
+setRed(red);                 // sets the red of the colour to the input value
+setGreen(green);             // sets the green of the colour to the input value
+setBlue(blue);               // sets the blue of the colour to the input value
+setAlpha(alpha);             // sets the alpha or transparency of the colour to the input value
+```
