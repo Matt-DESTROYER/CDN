@@ -53,5 +53,28 @@ Vector2.prototype.array();     // returns the current point in array format [x, 
 Vector2.dist(point1, point2);  // returns the distance between two input points
 Vector2.dot(point1, point2);   // returns the dot product of two input points
 Vector2.array(point);          // returns the input point in array format [x, y]
-Vector2.Zero();                // returns a new Vector2 with an x and y value of 0
+Vector2.Zero();                // returns a new point with an x and y value of 0
+```
+
+```js
+Vector3(x, y, z);              // a 3D point
+Vector3.prototype.getX();      // returns the x value of the current point
+Vector3.prototype.getY();      // returns the y value of the current point
+Vector3.prototype.getZ();      // returns the z value of the current point
+Vector3.prototype.setX(x);     // sets the x value of the current point to the input number
+Vector3.prototype.setY(y);     // sets the y value of the current point to the input number
+Vector3.prototype.setY(z);     // sets the z value of the current point to the input number
+Vector3.prototype.add(point);  // adds the x, y and z values of the input point to the current point
+Vector3.prototype.sub(point);  // subtracts the x, y and z values of the input point to the current point
+Vector3.prototype.mult(point); // multiplies the x, y and z values of the input point to the current point
+Vector3.prototype.div(point);  // divides the x, y and z values of the input point to the current point
+Vector3.prototype.dist(point); // returns the distance between the input point and the current point
+Vector3.prototype.dot(point);  // returns the dot product of the input point and the current point
+Vector3.prototype.mag();       // returns the magnitude of the current point
+Vector3.prototype.normalize(); // normalizes the current point
+Vector3.prototype.array();     // returns the current point in array format [x, y, z]
+Vector3.dist(point1, point2);  // returns the distance between two input points
+Vector3.dot(point1, point2);   // returns the dot product of two input points
+Vector3.array(point);          // returns the input point in array format [x, y, z]
+Vector3.Zero();                // returns a new point with an x, y, and z value of 0
 ```
