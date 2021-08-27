@@ -100,7 +100,7 @@ Line.prototype.intersects(other);  // returns whether or not a line intersects w
 ```
 
 ```js
-Rectangle(x, y, width, height, color, render); // a rectanlge
+Rectangle(x, y, width, height, color, render); // a rectangle
 Rectangle.prototype.getX();                    // returns the x value of the current rectangle
 Rectangle.prototype.getY();                    // returns the y value of the current rectangle
 Rectangle.prototype.getWidth();                // returns the width value of the current rectangle
@@ -109,8 +109,19 @@ Rectangle.prototype.setX(value);               // sets the x value of the curren
 Rectangle.prototype.setY(value);               // sets the y value of the current rectangle to the input value
 Rectangle.prototype.setWidth(value);           // sets the width value of the current rectangle to the input value
 Rectangle.prototype.setHeight(amount);         // sets the height value of the current rectangle to the input value
-Rectangle.prototype.changeX(amount);           // changes the x value of the current rectanlge by the input value
-Rectangle.prototype.changeY(amount);           // changes the y value of the current rectanlge by the input value
-Rectangle.prototype.changeWidth(amount);       // changes the width value of the current rectanlge by the input value
-Rectangle.prototype.changeHeight(amount);      // changes the height value of the current rectanlge by the input value
+Rectangle.prototype.changeX(amount);           // changes the x value of the current rectangle by the input value
+Rectangle.prototype.changeY(amount);           // changes the y value of the current rectangle by the input value
+Rectangle.prototype.changeWidth(amount);       // changes the width value of the current rectangle by the input value
+Rectangle.prototype.changeHeight(amount);      // changes the height value of the current rectangle by the input value
+```
+
+```js
+Polygon(points);                            // a polygon
+Polygon.prototype.pointInPolygon(point);    // returns whether or not a point is inside a polygon
+Polygon.prototype.collision(other);         // returns whether or not input polygon collides with the current polygon
+Polygon.prototype.changeX(distance);        // moves the polygon on the x axis by input value
+Polygon.prototype.changeY(distance);        // moves the polygon on the y axis by input value
+Polygon.prototype.getMidpoint();            // returns the midpoint of the polygon
+Polygon.prototype.rotate(degree);           // rotates all the points of the polygon
+Polygon.prototype.render(colour);           // draws the polygon on the current canvas with the input colour
 ```
