@@ -98,3 +98,19 @@ Line.prototype.pointOnLine(point); // returns whether or not a point lies on a l
 Line.prototype.pointInLine(point); // returns whether or not a point lies in a line (restricted to being between the two points)
 Line.prototype.intersects(other);  // returns whether or not a line intersects with the current line
 ```
+
+```js
+Rectangle(x, y, width, height, color, render); // a rectanlge
+Rectangle.prototype.getX();                    // returns the x value of the current rectangle
+Rectangle.prototype.getY();                    // returns the y value of the current rectangle
+Rectangle.prototype.getWidth();                // returns the width value of the current rectangle
+Rectangle.prototype.getHeight();               // returns the height value of the current rectangle
+Rectangle.prototype.setX(value);               // sets the x value of the current rectangle to the input value
+Rectangle.prototype.setY(value);               // sets the y value of the current rectangle to the input value
+Rectangle.prototype.setWidth(value);           // sets the width value of the current rectangle to the input value
+Rectangle.prototype.setHeight(amount);         // sets the height value of the current rectangle to the input value
+Rectangle.prototype.changeX(amount);           // changes the x value of the current rectanlge by the input value
+Rectangle.prototype.changeY(amount);           // changes the y value of the current rectanlge by the input value
+Rectangle.prototype.changeWidth(amount);       // changes the width value of the current rectanlge by the input value
+Rectangle.prototype.changeHeight(amount);      // changes the height value of the current rectanlge by the input value
+```
