@@ -125,3 +125,12 @@ Polygon.prototype.getMidpoint();         // returns the midpoint of the polygon
 Polygon.prototype.rotate(degree);        // rotates all the points of the polygon
 Polygon.prototype.render(colour);        // draws the polygon on the current canvas with the input colour
 ```
+
+### DOM Shortcut functions:
+```js
+getID(id);    // return the element with the input id
+getCTX(id);   // return a 2D context from the input canvas's id
+getText(id);  // return the textContent of the element with the input id
+getInner(id); // return the innerHTML of the element with the input id
+getOuter(id); // return the outerHTML of the element with the input id
+```
