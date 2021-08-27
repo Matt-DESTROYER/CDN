@@ -116,12 +116,12 @@ Rectangle.prototype.changeHeight(amount);      // changes the height value of th
 ```
 
 ```js
-Polygon(points);                            // a polygon
-Polygon.prototype.pointInPolygon(point);    // returns whether or not a point is inside a polygon
-Polygon.prototype.collision(other);         // returns whether or not input polygon collides with the current polygon
-Polygon.prototype.changeX(distance);        // moves the polygon on the x axis by input value
-Polygon.prototype.changeY(distance);        // moves the polygon on the y axis by input value
-Polygon.prototype.getMidpoint();            // returns the midpoint of the polygon
-Polygon.prototype.rotate(degree);           // rotates all the points of the polygon
-Polygon.prototype.render(colour);           // draws the polygon on the current canvas with the input colour
+Polygon(points);                         // a polygon
+Polygon.prototype.pointInPolygon(point); // returns whether or not a point is inside a polygon
+Polygon.prototype.collision(other);      // returns whether or not input polygon collides with the current polygon
+Polygon.prototype.changeX(distance);     // moves the polygon on the x axis by input value
+Polygon.prototype.changeY(distance);     // moves the polygon on the y axis by input value
+Polygon.prototype.getMidpoint();         // returns the midpoint of the polygon
+Polygon.prototype.rotate(degree);        // rotates all the points of the polygon
+Polygon.prototype.render(colour);        // draws the polygon on the current canvas with the input colour
 ```
