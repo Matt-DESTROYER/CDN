@@ -24,6 +24,7 @@ Input.keyCode // -> returns the keycode of the last key pressed (set on keyDown)
 Input.key // -> returns the last key pressed (set on keyDown)
 Input.mouseX // -> returns the x position of the user's cursor
 Input.mouseY // -> returns the y position of the user's cursor
+Input.mouseToWorldCoordinates // -> returns a Vector2 containing the mouse coordinates relative to the camera in the current scene
 Input.pmouseX // -> returns the previous x position of the user's cursor
 Input.pmouseY // -> returns the previous y position of the user's cursor
 ```
@@ -170,6 +171,7 @@ atan; // Math.atan
 
 #### Built-in functions:
 ```js
+cursor(cursorName); // changes the cursor in the canvas (use CSS cursor names)
 frameRate(frames); // changes the number of frames per second (defaults to 60)
 dist(x1, y1, x2, y2); // returns the distance between two 2D points (x1, y1 and x2, y2)
 degreesToRadians(degrees); // returns input degrees as radians
