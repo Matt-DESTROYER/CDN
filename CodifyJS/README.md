@@ -32,4 +32,4 @@ The CSS classes with example colours.
 ```js
 cleanInner(code);
 ```
-Removes all `span`s from the input code (code should be taken fromt he `innerHTML` of an element) and replaces the start of `div`s with line breaks (and removes the ends).
+Removes all `span`s from the input code (code should be taken from the `innerHTML` of an element) and replaces the start of `div`s with line breaks (and removes the ends).
