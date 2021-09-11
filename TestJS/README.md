@@ -1,10 +1,6 @@
 # Test.js
 ## Documentation/Features
 ```js
-Test
-```
-The class containing the test functions.
-```js
 Test.equals(a, b);
 ```
 - `a`: One of the items being compared
