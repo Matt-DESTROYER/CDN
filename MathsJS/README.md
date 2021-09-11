@@ -3,11 +3,6 @@ A `Maths` class which provides some maths related functionality.
 
 ## Documentation/Features:
 ```js
-Maths
-```
-A class containing many Math related functions.
-
-```js
 Maths.parseInt(string);
 ```
 Converts a whole number embedded in a string into an integer. Ignores letters and non-numeric characters (with the exception of `-`).
@@ -20,14 +15,14 @@ Converts a decimal number embedded in a string into a decimal number. Ignores le
 ```js
 Maths.evaluate(string);
 ```
-Evaluates an equation. In some specific circumstances `Maths.evaluate` can return better results than `eval` (eg `Maths.evaluate("2^4^8") = 4294967296` whereas `eval("2**4**8") = Infinity`).
+Evaluates an equation. In some specific circumstances `Maths.evaluate` can return better results than `eval` (eg `Maths.evaluate("2**4**8") = 4294967296` whereas `eval("2**4**8") = Infinity`). The accuracy with division can sometimes be more accurate than `eval` and sometimes be less accurate, the difference however will be miniscule.
 Supported operators:
 - `+` (add)
 - `-` (subtract)
 - `*` (multiply) [Note: a number next to parenthesis is multiplied by parenthesis eg 2 (1 + 1) is the same as 2 * (1 + 1)]
 - `/` (divide)
 - `%` (modulus)
-- `^` (power)
+- `**` (power)
 - `()` (parenthesis)
 
 ```js
@@ -48,22 +43,22 @@ Rounds an input number.
 ```js
 Maths.add(number, number);
 ```
-Adds two numbers.
+Returns the sum of two numbers.
 
 ```js
 Maths.subtract(number, number);
 ```
-Subtracts one number from another.
+Returns one number subtracted by the other.
 
 ```js
 Maths.multiply(number, number);
 ```
-Multiplies two numbers together.
+Returns the product of two numbers.
 
 ```js
 Maths.divide(number, number);
 ```
-Divides one number by another.
+Returns the quotient of two numbers.
 
 ```js
 Maths.remainder(number, number);
