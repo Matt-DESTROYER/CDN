@@ -41,6 +41,16 @@ Maths.round(number);
 Rounds an input number.
 
 ```js
+Maths.min(/*...args*/);
+```
+Returns the lowest input number or `Infinity`. (Searches through ALL levels of arrays. An array is the only time a single parameter will output a result.)
+
+```js
+Maths.max(/*...args*/);
+```
+Returns the largest input number or `-Infinity`. (Searches through ALL levels of arrays. An array is the only time a single parameter will output a result.)
+
+```js
 Maths.add(number, number);
 ```
 Returns the sum of two numbers.
