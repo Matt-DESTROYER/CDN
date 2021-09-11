@@ -1,14 +1,14 @@
 # Test.js
 ## Documentation/Features
 ```js
-Test.equals(a, b);
+Test.equals(a, b, ?caseSensitive);
 ```
 - `a`: One of the items being compared
 - `b`: The other item being compared
 - `caseSensitive`: If a string is input this allows the specification of whether the comparison should be case sensitive. (Defaults to true)
 Checks if `a === b`. If arrays are input as parameters it compares each item in the arrays to check if they are the same. Performs deep comparison on objects to check if they are equal.
 ```js
-Test.similar(a, b, threshold, caseSensitive);
+Test.similar(a, b, threshold, ?caseSensitive);
 ```
 - `a`: One of the items being compared
 - `b`: The other item being compared
