@@ -25,7 +25,7 @@ tan(number);                                                        // returns t
 asin(number);                                                       // returns the inverse sine of the input number
 acos(number);                                                       // returns the inverse cosine of the input number
 atan(number);                                                       // returns the inverse tangent of the input number
-min(number, number) /* or */ min(array) /* or */ min(/*...args*/);  // an improved version of Math.min that returns the lowest number in the input (if the input is an array searches all levels of the array (if multidimensional) to find the lowest number)
+min(number, number) /* or */ min(array) /* or */ min(/*...args*/);  // an improved version of Math.min that returns the lowest number in the input (if the input is an array searches ALL LEVELS of the array (if multidimensional) to find the lowest number)
 max(number, number) /* or */ max(array) /* or */ max(/*...args*/y); // an improved version of Math.max that returns the highest number in the input (if the input is an array searches ALL LEVELS of the array (if multidimensional) to find the highest number)
 random(min, max);                                                   // returns a pseudorandom number between min and max
 randomInt(min, max);                                                // returns a pseudorandom whole number between min and max
