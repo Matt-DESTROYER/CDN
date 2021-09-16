@@ -1,6 +1,6 @@
 # CDN
 A repository to access JavaScript frameworks/files externally.
-CDN stands for Content Distribution Network, this repository acts as a free CDN for my frameworks/JavaScript files. Alternatively you can download the files and manually include them in your project however this means you will either not receive updates or have to download the updated version each time an update is released.
+CDN stands for Content Distribution Network, this repository acts as a free CDN for my frameworks/JavaScript files. Alternatively you can download the files and manually include them in your project however this means you will either not receive updates or have to download the updated version each time an update is made.
 
 ## Frameworks/JavaScript Files
 - Platformer.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/PlatformerJS/Platformer.js"></script>`
