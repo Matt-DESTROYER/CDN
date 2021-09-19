@@ -15,3 +15,6 @@ Checks the similarity of `a` and `b` based on the threshold. First the percentag
 - `b`: The other item being compared
 - `threshold`: Percentage used to determine if `a` and `b` are satisfactorily similar
 - `caseSensitive`: If a string is input this allows the specification of whether the comparison should be case sensitive. (Defaults to true)
+
+Now available on NodeJS!
+(https://www.npmjs.com/package/deep-comparisons)
