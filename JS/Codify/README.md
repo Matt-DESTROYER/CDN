@@ -9,22 +9,22 @@ Adds spans to the input code so that you can apply classes (see below) which wil
 
 The CSS classes with example colours.
 ```css
-.code-keyword {
+keyword {
 	color: blue;
 }
-.code-variable {
+variable {
 	color: orangered;
 }
-.code-number {
+number {
 	color: yellow;
 }
-.code-string {
+string {
 	color: brown;
 }
-.code-operation {
+operation {
 	color: red;
 }
-.code-comment {
+comment {
 	color: green;
 }
 ```
