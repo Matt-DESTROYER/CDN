@@ -21,15 +21,10 @@ number {
 string {
 	color: brown;
 }
-operation {
+operator {
 	color: red;
 }
 comment {
 	color: green;
 }
 ```
-
-```js
-cleanInner(code);
-```
-Removes all `span`s from the input code (code should be taken from the `innerHTML` of an element) and replaces the start of `div`s with line breaks (and removes the ends).
