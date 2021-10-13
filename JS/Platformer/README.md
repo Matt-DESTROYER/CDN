@@ -202,4 +202,5 @@ isPrime(num);                 // returns whether or not a number is prime
 constrain(num, min, max);     // returns input number restrained by input min and max
 clamp(num, min, max);         // returns input number restrained by input min and max
 lerp(value1, value2, amount); // linear interpolation, returns a value between value1 and value2 depending on linear interpolation amount
+addStyles(css);               // adds the input css code to the document's head
 ```
