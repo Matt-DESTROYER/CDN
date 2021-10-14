@@ -9,6 +9,7 @@ height;
 Input;
 Camera;
 Time;
+Statistics;
 ```
 Global variables (which you are allowed to use and may help).
 `FPS`: The number of frames per in a second the program is currently running at.
@@ -37,6 +38,16 @@ Time.timeElapsed; // returns the time in milliseconds since the platformer was s
 Time.deltaTime;   // returns the number of milliseconds since the last frame
 Time.now;         // returns the current time in milliseconds
 ```
+`Statistics`: Statistics based object.
+```js
+Statistics.deaths;               // the number of times the player has died
+Statistics.millisecondsElapsed;  // the number of milliseconds since the platformer was started
+Statistics.secondsElapsed;       // the number of seconds since the platformer was started
+Statistics.minutesElapsed;       // the number of minutes since the platformer was started
+Statistics.millisecondsToFinish; // the number of milliseconds it took to complete the platformer
+Statistics.secondsToFinish;      // the number of seconds it took to complete the platformer
+Statistics.minutesToFinish;      // the number of minutes it took to complete the platformer
+```
 
 #### Dealing with events:
 Mouse and keyboard events call functions named similarly to the event:
@@ -63,9 +74,20 @@ Sets up a canvas (based on ID).
 `fullScreen`: Whether or not your canvas should be scaled to fit the screen. (Defaults to true.)
 
 ```js
-Platformer.Start();
+Platformer.Start(?lastLevel);
 ```
+`lastLevel`: Indicates which level is the last level (defaults to the last level you input). When the last level is finished, the time taken for the player to finish the game is recorded in `Statistics`. This is useful, if, for example you wish to display statistics about how long it took the player to complete the game, how many times they died etc on a last level that has no finish.
 Starts your platformer game.
+
+```js
+Platformer.End();
+```
+This is automatically called on the last level of your platformer. This **does not stop** the platformer, it is only used to record how long it took to complete the platformer.
+
+```js
+Platformer.Stop();
+```
+This **ends** the platformer. After this nothing will be rendered to the canvas by PlatformerJS (nor will the canvas be cleared). This could be useful to create a win screen at the end of the platformer rather than an impossible to complete level.
 
 ```js
 new Vector2(x, y);
