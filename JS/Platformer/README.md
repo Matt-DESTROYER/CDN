@@ -1,48 +1,41 @@
-# Platformer.js
-A simple JavaScript platformer framework/engine.
-
-Warning, do not directly access and/or change the value of global variables beginning with `$` or properties/functions beginning with `_` unless you know what you are doing.
+# PlatformerJS Template
+### A simple Unity-like JavaScript platformer template/engine.
 
 ## Documentation/Features:
 ```js
-FPS
-width
-height
-Input
-Camera
-Time
+FPS;
+width;
+height;
+Input;
+Camera;
+Time;
 ```
 Global variables (which you are allowed to use and may help).
 `FPS`: The number of frames per in a second the program is currently running at.
 `width`: The `width` of the `canvas` being used for your platformer.
 `height`: The `height` of the `canvas` being used for your platformer.
-
 `Input`: Provides you with access to user input, usage:
 ```js
 // Input.KEY e.g:
-Input.W       // -> returns true or false depending on whether the 'W' key is held down on the user's keyboard
+Input.W;       // returns true or false depending on whether the 'W' key is held down on the user's keyboard
 // Input[keyCode] e.g:
-Input[32]     // -> returns true or false depending on whether the 'Space' key (spacebar) is held down on the user's keyboard
-Input.keyCode // -> returns the keycode of the last key pressed (set on keyDown)
-Input.key     // -> returns the last key pressed (set on keyDown)
-Input.mouseX  // -> returns the x position of the user's cursor
-Input.mouseY  // -> returns the y position of the user's cursor
-Input.pmouseX // -> returns the previous x position of the user's cursor
-Input.pmouseY // -> returns the previous y position of the user's cursor
+Input[32];     // returns true or false depending on whether the 'Space' key (spacebar) is held down on the user's keyboard
+Input.mouseX;  // returns the x position of the user's cursor
+Input.mouseY;  // returns the y position of the user's cursor
+Input.pmouseX; // returns the previous x position of the user's cursor
+Input.pmouseY; // returns the previous y position of the user's cursor
 ```
-
 `Camera`: The position of the `Camera` in the current level;
 ```js
-Camera.x // you are able to get and set the camera's x position
-Camera.y // you are able to get and set the camera's y position
+Camera.x; // you are able to get and set the camera's x position
+Camera.y; // you are able to get and set the camera's y position
 ```
-
 `Time`: Time based object.
 ```js
-Time.startTime   // returns the time in milliseconds when the platformer was started
-Time.timeElapsed // returns the time in milliseconds since the platformer was started
-Time.deltaTime   // returns the number of milliseconds since the last frame
-Time.now         // returns the current time in milliseconds
+Time.startTime;   // returns the time in milliseconds when the platformer was started
+Time.timeElapsed; // returns the time in milliseconds since the platformer was started
+Time.deltaTime;   // returns the number of milliseconds since the last frame
+Time.now;         // returns the current time in milliseconds
 ```
 
 #### Dealing with events:
@@ -54,11 +47,10 @@ Mouse and keyboard events call functions named similarly to the event:
 - `mouseUp`
 - `mouseClick`
 - `mouseMove`
-
 You can change these functions to create your own actions when these events occur, e.g:
 ```js
 keyDown = function () {
-	// action/s that occur when a key is pressed down
+	// action/s that occur when a key is pressed
 }
 ```
 
@@ -73,11 +65,11 @@ Sets up a canvas (based on ID).
 ```js
 Platformer.Start();
 ```
-Starts your platformer game. (Note: this should be the last line of code your personal scripts run, code after this line will likely not run)
+Starts your platformer game.
 
 ```js
 new Vector2(x, y);
-new Point(x, y); // Point is the same as Vector2
+new Point(x, y);   // Point is the same as Vector2
 ```
 A 2D point.
 
@@ -127,7 +119,7 @@ Creates a rectangle mesh out of input width and height (`RectangleMesh` is an ex
 `height`: The `height` of the rectangle.
 
 ```js
-new PObject(x, y, width, height, colour, type, ?update);
+new PObject(x, y, mesh, colour, type, ?update);
 ```
 Create a platform object. (Should be stored in a level.)
 
@@ -154,20 +146,21 @@ Create a text object. (Should be stored in a level.)
 `update`: A special function called every frame.
 
 ```js
-new Level(objects);
+new Level(objects, ?start, ?end);
 ```
 Create a level based on an array of objects. (Note: no need to save to variable.)
 `objects`: An array of `PObject`s, `PText` objects and `CustomPObject`s.
+`start`: A function called when the level is first entered.
+`end`: A function called just before the level is exited.
 
 ```js
-new Player(x, y, width, height, colour, ?canWallJump, ?update);
+new Player(x, y, mesh, colour, ?canWallJump, ?update);
 ```
 Create a player object. (Note: no need to save to variable)
 
 `x`: The starting `x` position for the player. (Will respawn at this `x` coordinate.)
 `y`: The starting `y` position for the player. (Will respawn at this `y` coordinate.)
-`width`: The width of the player.
-`height`: The height of the player.
+`mesh`: The mesh used for collisions with platforms.
 `colour`: The colour of the player.
 `canWallJump`: Whether or not the player can 'wall jump' (bounce up walls).
 `update`: A special function called every frame.
@@ -202,5 +195,132 @@ isPrime(num);                 // returns whether or not a number is prime
 constrain(num, min, max);     // returns input number restrained by input min and max
 clamp(num, min, max);         // returns input number restrained by input min and max
 lerp(value1, value2, amount); // linear interpolation, returns a value between value1 and value2 depending on linear interpolation amount
-addStyles(css);               // adds the input css code to the document's head
 ```
+
+## How to use:
+First thing's first, you will need to get the `PlatformerJS` scripts, and you can do so using my GitHub CDN repository. Add this `script` tag to your HTML page: `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/Platformer/Platformer,js"></script>`.
+
+Next you will need to set up three things;
+
+- A `HTML` `canvas`
+- A player for you platformer
+- Levels for your platformer
+
+(The order doesn't matter)
+
+To set up a `canvas`:
+The easiest way is to just add a canvas into the body of your `HTML` file:
+`<canvas id="canvas-id"></canvas>` (Note: `canvas-id` can be replaced with any name, for example I sometimes use `game-screen`.)
+
+Then to setup the `canvas` to work with `PlatformerJS` simply call:
+```js
+Platformer.initCanvas(canvasID, fullScreen?);
+```
+For the first parameter pass in a string storing the id that you gave to your canvas, for the second parameter specify whether or not you want `PlatformerJS` to automatically scale the `canvas` to fill the screen (if you don't pass a value into the second paramter, it will default to true).
+
+Next you will need a player for your platformer. You can create a player by calling:
+```js
+new Player(x, y, mesh, colour, ?canWallJump, ?update);
+```
+To create the player you will need to specify its x and y position, width and height, colour, (optionally) whether or not it can walljump, and (optionally) an update function (this is good for things like having a smooth camera follow and also allows you to move your player based on input).
+
+Note: it can be useful to store the player in a variable to allow access to the player through the variable. This allows things like teleportation through setting the player's position.
+```js
+new PolygonMesh(points);
+new RectangleMesh(width, height);
+```
+A mesh or a collider is an object used for collisions with the player.
+
+To create a `PolygonMesh` you need to input an array of `Point`s or `Vector2`s (they are identical).
+
+To create a `RectangleMesh` you need to input the width and height for the rectangle. The `RectangleMesh` is really a `PolygonMesh` that when given a width and height, generates four points in a rectangle shape.
+```js
+// create a player at x: 0, y: 50, with a square shaped PolygonMesh, that is blue, and can move when the player presses certain keys and has a smooth camera follow and resets/dies when the player's y position gets lower than twice the height of the canvas.
+// note that the player is stored in a variable to allow platforms access to the player object later
+let player = new Player(0, 50, new PolygonMesh([
+	// vertices of a rectangle
+	new Vector2(-12, -12),
+	new Vector2(12, -12),
+	new Vector2(12, 12),
+	new Vector2(-12, 12)
+]), "blue", true, function () {
+	// update function, called every frame
+	Camera.x = lerp(Camera.x, this.x - width / 2 + 12.5, 0.1);
+	Camera.y = lerp(Camera.y, this.y - height / 2 + 12.5, 0.1);
+	// jump
+	if (Input.W || Input[38] || Input[32]) {
+		this.jump();
+	}
+	// move left
+	if (Input.A || Input[37]) {
+		this.addForce(-2, 0);
+	}
+	// move right
+	if (Input.D || Input[39]) {
+		this.addForce(2, 0);
+	}
+	// if the player's y position is
+	// greater than 2 times the screen
+	// height, reset the player
+	if (this.y > height * 2) {
+		this.reset();
+	}
+});
+```
+
+Lastly you will need some levels for your platformer! You can add levels to the platformer by calling:
+```js
+new Level(objects);
+```
+(Note: levels are automatically stored by `PlatformerJS` ) The only parameter in the level should be an array of `PText`s and/or `PObject`s.
+```js
+new PObject(x, y, mesh, colour, type, ?update);
+new PText(message, font, size, x, y, colour, type, ?update);
+```
+To create a `PObject`: you must specify the x and y position of the `PObject`, the mesh the `PObject` should use (either `PolygonMesh` or `RectangleMesh`), the colour the `PObject` should be rendered in, the type that the `PObject` is, and optionally an function to be called every frame (this is good for moving platforms).
+
+To create a `PText`: you must specify the message to be displayed, the font to be used, the size for the font, the x and y position for the text to be displayed at, the colour to be used to render the text, the text type, and optionally an function to be called every frame (this is good for signs that only show text when the player is close enough).
+### Types:
+- 0 - Air (player doesn not collide)
+- 1 - Solid (player collides)
+- 2 - Danger (resets/kills player)
+- 3 - Trampoline (bounces player)
+- 4 - Water (slows the player but allows them to 'swim' upwards)
+- 9 - Finish (sends player to next level)
+
+```js
+new Vector2(x, y);
+new Point(x, y);
+```
+A 2D point defined by an x and y coordinate. To create a `Vector2` or `Point`, you need to input a number for the x coordinate and y coordinate.
+
+Now to put it all together:
+```js
+new Level([
+	// a solid, black, rectangular, platform
+	new PObject(0, 100, new RectangleMesh(150, 25), "black", 1),
+	// a deadly, red, triangular, platform
+	new PObject(52, 73.5, new PolygonMesh([
+		new Vector2(-20, 0),
+		new Vector2(0, -40),
+		new Vector2(20, 0)
+	]), "red", 2),
+	new PText("Text", "Arial", 20, 0, -200, "black", 0, function () {
+		if (dist(this.x, this.y, player.x, player.y) <= 50) {
+			this.message = "Text";
+		} else {
+			this.message = "";
+		}
+	}),
+	// a level finish at the end (you might not want to add this on the last level)
+	new PObject(125, 0, new RectangleMesh(50, 50), "green", 9)
+]);
+```
+
+Now you can create as many levels as you want!
+
+All that's left to do is start your platformer which you can do by calling:
+```js
+Platformer.Start();
+```
+Note: that any lines of code after the platformer is started will likely not run (this should be the very last thing you do).
