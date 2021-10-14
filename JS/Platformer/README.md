@@ -293,7 +293,7 @@ Lastly you will need some levels for your platformer! You can add levels to the 
 ```js
 new Level(objects);
 ```
-(Note: levels are automatically stored by `PlatformerJS` ) The only parameter in the level should be an array of `PText`s and/or `PObject`s.
+(Note: levels are automatically stored by `PlatformerJS`) The only parameter in the level should be an array of `PText`s and/or `PObject`s.
 ```js
 new PObject(x, y, mesh, colour, type, ?update);
 new PText(message, font, size, x, y, colour, type, ?update);
