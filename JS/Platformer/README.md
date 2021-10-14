@@ -220,7 +220,7 @@ lerp(value1, value2, amount); // linear interpolation, returns a value between v
 ```
 
 ## How to use:
-First thing's first, you will need to get the `PlatformerJS` scripts, and you can do so using my GitHub CDN repository. Add this `script` tag to your HTML page: `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/Platformer/Platformer,js"></script>`.
+First thing's first, you will need to get the `PlatformerJS` scripts, and you can do so using my GitHub CDN repository. Add this `script` tag to your HTML page: `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/Platformer/Platformer.js"></script>`.
 
 Next you will need to set up three things;
 
