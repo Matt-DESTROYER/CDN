@@ -168,6 +168,23 @@ Create a text object. (Should be stored in a level.)
 `update`: A special function called every frame.
 
 ```js
+new CustomPObject(x, y, ?update, ?render);
+```
+`x`: The `x` position for the `CustomPObject`.
+`y`: The `y` position for the `CustomPObject`.
+`update`: An (optional) function to be run each frame.
+`render`: An (optional) function to render the `CustomPObject`.
+
+```js
+new PersistentPObject(x, y, ?update, ?render);
+```
+`x`: The `x` position for the `PersistentPObject`.
+`y`: The `y` position for the `PersistentPObject`.
+`update`: An (optional) function to be run each frame.
+`render`: An (optional) function to render the `PersistentPObject`.
+The difference between a `PersistentPObject` and a `CustomPObject` is that a `PersistentPObject` is active throughout **all** levels. You can simply create a `PersistentPObject` with the `new` keyword and `PlatformerJS` will automatically do the rest (no need to store it in a variable or add it into a level/s).
+
+```js
 new Level(objects, ?start, ?end);
 ```
 Create a level based on an array of objects. (Note: no need to save to variable.)
