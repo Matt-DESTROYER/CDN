@@ -17,24 +17,24 @@ Global variables (which you are allowed to use and may help).
 `Input`: Provides you with access to user input, usage:
 ```js
 // Input.KEY e.g:
-Input.W // -> returns true or false depending on whether the 'W' key is held down on the user's keyboard
+Input.W;                       // -> returns true or false depending on whether the 'W' key is held down on the user's keyboard
 // Input[keyCode] e.g:
-Input[32] // -> returns true or false depending on whether the 'Space' key (spacebar) is held down on the user's keyboard
-Input.keyCode // -> returns the keycode of the last key pressed (set on keyDown)
-Input.key // -> returns the last key pressed (set on keyDown)
-Input.mouseX // -> returns the x position of the user's cursor
-Input.mouseY // -> returns the y position of the user's cursor
-Input.mouseToWorldCoordinates // -> returns a Vector2 containing the mouse coordinates relative to the camera in the current scene
-Input.pmouseX // -> returns the previous x position of the user's cursor
-Input.pmouseY // -> returns the previous y position of the user's cursor
+Input[32];                     // -> returns true or false depending on whether the 'Space' key (spacebar) is held down on the user's keyboard
+Input.keyCode;                 // -> returns the keycode of the last key pressed (set on keyDown)
+Input.key;                     // -> returns the last key pressed (set on keyDown)
+Input.mouseX;                  // -> returns the x position of the user's cursor
+Input.mouseY;                  // -> returns the y position of the user's cursor
+Input.mouseToWorldCoordinates; // -> returns a Vector2 containing the mouse coordinates relative to the camera in the current scene
+Input.pmouseX;                 // -> returns the previous x position of the user's cursor
+Input.pmouseY;                 // -> returns the previous y position of the user's cursor
 ```
 
 `Time`: Time based object.
 ```js
-Time.startTime // returns the time in milliseconds when the game was started
-Time.timeElapsed // returns the time in milliseconds since the game was started
-Time.deltaTime // returns the number of milliseconds since the last frame
-Time.now // returns the current time in milliseconds
+Time.startTime;   // -> returns the time in milliseconds when the game was started
+Time.timeElapsed; // -> returns the time in milliseconds since the game was started
+Time.deltaTime;   // -> returns the number of milliseconds since the last frame
+Time.now;         // -> returns the current time in milliseconds
 ```
 
 #### Dealing with events:
@@ -76,23 +76,23 @@ A 2D point.
 `x`: The `x` position of the 2D coordinate.
 `y`: The `y` position of the 2D coordinate.
 ```js
-getX(); // returns the x position of the point
-getY(); // returns the y position of the point
-setX(x); // sets the x position of the point
-setY(y); // sets the y position of the point
-add(point); // adds the x and y positions of the point to the current point
-sub(point); // subtracts the x and y positions of the point from the current point
-mult(point); // multiplies the x and y positions of the current point by the point
-div(point); // divides the x and y positions of the current point by the point
-dist(point); // returns the distance between the point and the current point
-dot(point); // returns the dot product of the points
-mag(); // returns the magnitude of the point
-normalize(); // normalizes the current point
-array(); // returns the current point in array form [x, y]
-static dist(point1, point2); // returns the distance between two points
-static dot(point1, point2); // returns the dot product of the points
-static array(point); // returns the point in array form [x, y]
-static Zero(); // returns a point with x, y = 0, 0
+getX();                      // -> returns the x position of the point
+getY();                      // -> returns the y position of the point
+setX(x);                     // -> sets the x position of the point
+setY(y);                     // -> sets the y position of the point
+add(point);                  // -> adds the x and y positions of the point to the current point
+sub(point);                  // -> subtracts the x and y positions of the point from the current point
+mult(point);                 // -> multiplies the x and y positions of the current point by the point
+div(point);                  // -> divides the x and y positions of the current point by the point
+dist(point);                 // -> returns the distance between the point and the current point
+dot(point);                  // -> returns the dot product of the points
+mag();                       // -> returns the magnitude of the point
+normalize();                 // -> normalizes the current point
+array();                     // -> returns the current point in array form [x, y]
+static dist(point1, point2); // -> returns the distance between two points
+static dot(point1, point2);  // -> returns the dot product of the points
+static array(point);         // -> returns the point in array form [x, y]
+static Zero();               // -> returns a point with x, y = 0, 0
 ```
 
 ```js
@@ -101,14 +101,14 @@ new PolygonMesh(points);
 Creates a polygon out of an array of points. (Used in objects.)
 `points`: An array of `Vector2`s or `Point`s.
 ```js
-changeX(distance); // moves the polygon input distance on the x axis
-changeY(distance); // moves the polygon input distance on the y axis
-move(xDist, yDist); // moves the polygon input distance on the x and y axis
-getMidpoint(); // returns the center point of the polygon
-rotate(degree); // rotates the polygon input degrees
-pointInPolygon(point); // returns whether or not input point is inside the polygon
-collision(other); // returns whether or not the polygon collides with another polygon
-render(colour); // renders the polygon the input colour
+changeX(distance);     // -> moves the polygon input distance on the x axis
+changeY(distance);     // -> moves the polygon input distance on the y axis
+move(xDist, yDist);    // -> moves the polygon input distance on the x and y axis
+getMidpoint();         // -> returns the center point of the polygon
+rotate(degree);        // -> rotates the polygon input degrees
+pointInPolygon(point); // -> returns whether or not input point is inside the polygon
+collision(other);      // -> returns whether or not the polygon collides with another polygon
+render(colour);        // -> renders the polygon the input colour
 ```
 
 ```js
@@ -153,33 +153,33 @@ Create a `Scene` based on an array of `GameObjects` and a `Camera`. (Note: no ne
 
 #### Math shortcuts:
 ```js
-pi; // Math.PI
-pow; // Math.pow
-log; // Math.log
-sqrt; // Math.sqrt
-round; // Math.round
-min; // Math.min
-max; // Math.max
-abs; // Math.abs
-sin; // Math.sin
-cos; // Math.cos
-tan; // Math.tan
-asin; // Math.asin
-acos; // Math.acos
-atan; // Math.atan
+pi;    // -> Math.PI
+pow;   // -> Math.pow
+log;   // -> Math.log
+sqrt;  // -> Math.sqrt
+round; // -> Math.round
+min;   // -> Math.min
+max;   // -> Math.max
+abs;   // -> Math.abs
+sin;   // -> Math.sin
+cos;   // -> Math.cos
+tan;   // -> Math.tan
+asin;  // -> Math.asin
+acos;  // -> Math.acos
+atan;  // -> Math.atan
 ```
 
 #### Built-in functions:
 ```js
-cursor(cursorName); // changes the cursor in the canvas (use CSS cursor names)
-frameRate(frames); // changes the number of frames per second (defaults to 60)
-dist(x1, y1, x2, y2); // returns the distance between two 2D points (x1, y1 and x2, y2)
-degreesToRadians(degrees); // returns input degrees as radians
-radiansToDegrees(radians); // returns input radians as degrees
-random(min, max); // returns a random number between min and max
-randomInt(min, max); // returns a random whole number between min and  max
-isPrime(num); // returns whether or not a number is prime
-constrain(num, min, max); // returns input number restrained by input min and max
-clamp(num, min, max); // returns input number restrained by input min and max
-lerp(value1, value2, amount); // linear interpolation, returns a value between value1 and value2 depending on linear interpolation amount
+cursor(cursorName);           // -> changes the cursor in the canvas (use CSS cursor names)
+frameRate(frames);            // -> changes the number of frames per second (defaults to 60)
+dist(x1, y1, x2, y2);         // -> returns the distance between two 2D points (x1, y1 and x2, y2)
+degreesToRadians(degrees);    // -> returns input degrees as radians
+radiansToDegrees(radians);    // -> returns input radians as degrees
+random(min, max);             // -> returns a random number between min and max
+randomInt(min, max);          // -> returns a random whole number between min and  max
+isPrime(num);                 // -> returns whether or not a number is prime
+constrain(num, min, max);     // -> returns input number restrained by input min and max
+clamp(num, min, max);         // -> returns input number restrained by input min and max
+lerp(value1, value2, amount); // -> linear interpolation, returns a value between value1 and value2 depending on linear interpolation amount
 ```
