@@ -3,11 +3,11 @@ A simple 2D JS Game Engine which you can use to make creating 2D games easy!
 
 ## Documentation/Features:
 ```js
-FPS
-width
-height
-Input
-Time
+FPS;
+width;
+height;
+Input;
+Time;
 ```
 Global variables (which you are allowed to use and may help).
 `FPS`: The number of frames per second the program is currently running at.
