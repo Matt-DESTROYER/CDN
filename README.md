@@ -10,6 +10,7 @@ CDN stands for Content Distribution Network, this repository acts as a free CDN 
 - 2DGameEngine.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/2DGameEngine/2DGameEngine.js"></script>`
 - StringNumber.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/StringNumber/StringNumber.js"></script>`
 - Randomiser.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/Randomiser/Randomiser.js"></script>`
+- Tokeniser.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/Tokeniser/Tokeniser.js"></script>`
 
 ## Stylesheets
 - BlackGold.css `<link rel="stylesheet" type="text/css" href="https://Matt-DESTROYER.github.io/CDN/CSS/BlackGold/BlackGold.css" />`
