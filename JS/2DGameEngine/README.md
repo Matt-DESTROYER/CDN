@@ -86,12 +86,13 @@ gameObject.addEventListener(new EventListener("click", function () {
 ```
 
 ```js
-GameEngine.initCanvas(id, ?fullScreen);
+GameEngine.Initialise(?canvas, ?fullScreen, ?width, ?height);
 ```
-Sets up a canvas (based on ID).
-
-`ID`: The `ID` of the `HTML` `canvas` you want to use for your game.
-`fullScreen`: Whether or not your canvas should be scaled to fit the screen. (Defaults to true.)
+Sets up a canvas and 2D context. (Note: passing in no arguments will result in the `GameEngine` creating a `canvas` and making its dimensions fill the screen).
+`canvas`: The `ID` of the `HTML` `canvas` you want to use for your game.
+`fullScreen`: Whether or not your canvas should be scaled to fit the screen. (Defaults to `true`.)
+`width`: The width of your canvas (if `fullScreen` is `false`). (If no value is passed in the `canvas`s width will not be changed.)
+`height`: The height of your canvas (if `fullScreen` is `false`). (If no value is passed in the `canvas`s width will not be changed.)
 
 ```js
 GameEngine.Start();
