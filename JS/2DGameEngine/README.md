@@ -1,6 +1,9 @@
 # COMPLETE REMAKE/REVAMP IN PROGRESS
 #### This will stay available until the new version is released (which could quite possibly be never)
 
+### v2.1: Event Listeners!
+With event listeners, you can make your games more interactive then ever!
+
 # 2D Game Engine
 A simple 2D JS Game Engine which you can use to make creating 2D games easy!
 
