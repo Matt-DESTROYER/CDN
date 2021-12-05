@@ -161,7 +161,7 @@ Create a camera object.
 `update`: A special function called every frame.
 
 ```js
-new GameObject(x, y, polymesh, colour, collides);
+new GameObject(x, y, polymesh, colour, collides, ?eventListeners);
 ```
 Create a `GameObject`.
 
@@ -170,11 +170,23 @@ Create a `GameObject`.
 `polymesh`: The mesh used to render the `GameObject`, and if `collides` is set to true, for collisions.
 `colour`: The colour the `GameObject` is rendered in.
 `collides`: Whether or not the `GameObject` collides with other objects.
+`eventListeners`: An array of event listeners to be used.
+```js
+addEventListener(name, func);    // -> adds an event listener to a GameObject
+addEventListener(eventListener); // -> adds an event listener to a GameObject
+setX(position);                  // -> sets a GameObject's x coordinate to 'position' (WARNING: if a GameObject that collides has its position set to 'inside' another collidable GameObject, the game may crash)
+setY(position);                  // -> sets a GameObject's y coordinate to 'position' (WARNING: if a GameObject that collides has its position set to 'inside' another collidable GameObject, the game may crash)
+changeX(distance);               // -> moves a GameObject 'distance' pixels along the x-axis
+changeY(distance);               // -> moves a GameObject 'distance' pixels along the y-axis (note y axis is inverted, -1 is 'higher' on the screen than 1)
+setRotation(degrees);            // -> sets the rotation of a GameObject to 'degrees'
+rotate(degrees);                 // -> rotates a GameObject by 'degrees'
+render();                        // -> renders a GameObject
+```
 
 ```js
 new Scene(gameObjects, camera);
 ```
-Create a `Scene` based on an array of `GameObjects` and a `Camera`. (Note: no need to save to variable.)
+Create a `Scene` based on an array of `GameObjects` and a `Camera`. (Note: no need to save to a variable.)
 `gameObjects`: An array of `GameObjects`s.
 `camera`: A camera used to determine which portion of the `Scene` is rendered.
 
