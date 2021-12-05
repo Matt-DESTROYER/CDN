@@ -61,7 +61,7 @@ keyDown = function () {
 ```
 
 You can also add event listeners to `GameObject`s using the `EventListener` class:
-```
+```js
 new GameObject(x, y, polymesh, colour, collides, [
 	new EventListener("click", function () {
 		console.log("This GameObject was clicked!");
