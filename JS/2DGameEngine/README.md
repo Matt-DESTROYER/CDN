@@ -1,10 +1,10 @@
 # COMPLETE REMAKE/REVAMP IN PROGRESS
 #### This will stay available until the new version is released (which could quite possibly be never)
 
-### v2.1: Event Listeners!
+### Latest Update - v2.1: Event Listeners!
 With event listeners, you can make your games more interactive then ever!
 
-# 2D Game Engine
+# 2D Game Engine v2.1
 A simple 2D JS Game Engine which you can use to make creating 2D games easy!
 
 ## Documentation/Features:
@@ -58,6 +58,31 @@ You can change these functions to create your own actions when these events occu
 keyDown = function () {
 	// action/s that occur when a key is pressed
 }
+```
+
+You can also add event listeners to `GameObject`s using the `EventListener` class:
+```
+new GameObject(x, y, polymesh, colour, collides, [
+	new EventListener("click", function () {
+		console.log("This GameObject was clicked!");
+	}),
+	new EventListener("start", function () {
+		console.log("This GameObject was started!");
+	}),
+	new EventListener("update", function () {
+		console.log("This GameObject was updated!");
+	})
+]);
+// OR
+const gameObject = new GameObject(x, y, polymesh, colour, collides);
+// addEventListener(name, function);
+gameObject.addEventListener("click", function () {
+	console.log("This GameObject was clicked!");
+});
+// addEventListener(EventListener);
+gameObject.addEventListener(new EventListener("click", function () {
+	console.log("This GameObject was clicked!");
+}));
 ```
 
 ```js
@@ -136,7 +161,7 @@ Create a camera object.
 `update`: A special function called every frame.
 
 ```js
-new GameObject(x, y, polymesh, colour, ?start, ?update, ?collides, ?oncollision, ?onclick);
+new GameObject(x, y, polymesh, colour, collides);
 ```
 Create a `GameObject`.
 
@@ -144,11 +169,7 @@ Create a `GameObject`.
 `y`: The `y` position for the `GameObject`.
 `polymesh`: The mesh used to render the `GameObject`, and if `collides` is set to true, for collisions.
 `colour`: The colour the `GameObject` is rendered in.
-`start`: A special function called when the scene first loads.
-`update`: A special function called every frame.
 `collides`: Whether or not the `GameObject` collides with other objects.
-`oncollision`: A function called everytime the `GameObject` collides (if the `GameObject` collides).
-`onclick`: A function called everytime the `GameObject` is clicked.
 
 ```js
 new Scene(gameObjects, camera);
