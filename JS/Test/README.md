@@ -19,8 +19,8 @@ Checks the similarity of `a` and `b` based on the threshold. First the percentag
 Test.functionSpeed(func, tests);
 ```
 Returns an array of speeds (in milliseconds) take to run the input function with the input test cases. (Test cases should be input in a two dimensional array format, each sub-array should contain the arguments to be used).
-`func`: The function to be tested.
-`tests`: A two dimensional array of arguments to be used when testing. For example:
+- `func`: The function to be tested.
+- `tests`: A two dimensional array of arguments to be used when testing. For example:
 ```js
 Test.functionSpeed(function (a, b) {
 	return a + b;
