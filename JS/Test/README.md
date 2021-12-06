@@ -1,4 +1,6 @@
 # Test.js
+A small library for comparisons and tests.
+
 ## Documentation/Features
 ```js
 Test.equals(a, b, ?caseSensitive);
