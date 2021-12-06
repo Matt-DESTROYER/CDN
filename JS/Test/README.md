@@ -36,5 +36,5 @@ Test.functionSpeed(function (a, b) {
 ```
 In the above example a function is tested that simple adds/concatenates two numbers/strings. We test the function 7 times with the following parameters: `(1, 1)`, `(-1, -1)`, `(10, 10)`, `(-10, -10)`, `(100, 100)`, `(-100, -100)`, `(Infinity, -Infinity)`
 
-Now available on NodeJS!
+Available through NPM!
 (https://www.npmjs.com/package/deep-comparisons)
