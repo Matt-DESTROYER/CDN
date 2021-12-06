@@ -34,7 +34,7 @@ Test.functionSpeed(function (a, b) {
 	[ Infinity, -Infinity ]
 ]);
 ```
-In the above example a function is tested that simple adds/concatenates two numbers/strings. We test the function 7 times with the following parameters: `(1, 1)`, `(-1, -1)`, `(10, 10)`, `(-10, -10)`, `(100, 100)`, `(-100, -100)`, `(Infinity, -Infinity)`
+In the above example a function is tested that simple adds/concatenates two numbers/strings. We test the function 7 times with the following parameters: `(1, 1)`, `(-1, -1)`, `(10, 10)`, `(-10, -10)`, `(100, 100)`, `(-100, -100)`, `(Infinity, -Infinity)`. The function we input does very little and so will likely take less than a millisecond to run on most tests, our output should look something like this: `[0, 0, 0, 0, 0, 0, 0]`.
 
 Available through NPM!
 (https://www.npmjs.com/package/deep-comparisons)
