@@ -15,7 +15,7 @@ Checks the similarity of `a` and `b` based on the threshold. First the percentag
 - `b`: The other item being compared
 - `threshold`: Percentage used to determine if `a` and `b` are satisfactorily similar
 - `caseSensitive`: If a string is input this allows the specification of whether the comparison should be case sensitive. (Defaults to true)
-```ks
+```js
 Test.functionSpeed(func, tests);
 ```
 Returns an array of speeds (in milliseconds) take to run the input function with the input test cases. (Test cases should be input in a two dimensional array format, each sub-array should contain the arguments to be used).
@@ -23,15 +23,15 @@ Returns an array of speeds (in milliseconds) take to run the input function with
 `tests`: A two dimensional array of arguments to be used when testing. For example:
 ```js
 Test.functionSpeed(function (a, b) {
-  return a + b;
+	return a + b;
 }, [
-  [ 1, 1 ],
-  [ -1, -1 ],
-  [ 10, 10 ],
-  [ -10, -10 ],
-  [ 100, 100 ],
-  [ -100, -100 ],
-  [ Infinity, -Infinity ]
+	[ 1, 1 ],
+	[ -1, -1 ],
+	[ 10, 10 ],
+	[ -10, -10 ],
+	[ 100, 100 ],
+	[ -100, -100 ],
+	[ Infinity, -Infinity ]
 ]);
 ```
 In the above example a function is tested that simple adds/concatenates two numbers/strings. We test the function 7 times with the following parameters: `(1, 1)`, `(-1, -1)`, `(10, 10)`, `(-10, -10)`, `(100, 100)`, `(-100, -100)`, `(Infinity, -Infinity)`
