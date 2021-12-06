@@ -16,7 +16,7 @@ Checks the similarity of `a` and `b` based on the threshold. First the percentag
 - `threshold`: Percentage used to determine if `a` and `b` are satisfactorily similar
 - `caseSensitive`: If a string is input this allows the specification of whether the comparison should be case sensitive. (Defaults to true)
 ```js
-Test.functionSpeed(func, tests);
+Test.functionSpeed(func, tests, ?printStats);
 ```
 Returns an array of speeds (in milliseconds) take to run the input function with the input test cases. (Test cases should be input in a two dimensional array format, each sub-array should contain the arguments to be used).
 - `func`: The function to be tested.
@@ -35,6 +35,7 @@ Test.functionSpeed(function (a, b) {
 ]);
 ```
 In the above example a function is tested that simple adds/concatenates two numbers/strings. We test the function 7 times with the following parameters: `(1, 1)`, `(-1, -1)`, `(10, 10)`, `(-10, -10)`, `(100, 100)`, `(-100, -100)`, `(Infinity, -Infinity)`. The function we input does very little and so will likely take less than a millisecond to run on most tests, our output should look something like this: `[0, 0, 0, 0, 0, 0, 0]`.
+- `printStats`: Whether or not the statistics of the functions tests should be printed to the console.
 
 Available through NPM!
 (https://www.npmjs.com/package/deep-comparisons)
