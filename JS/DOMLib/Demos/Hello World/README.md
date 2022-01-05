@@ -124,6 +124,45 @@ titleText.addEventListener("click", () => {
 
 Next we need to make our "Hi" `Page`.
 
-[UNFINISHED]
- 
- > A live demo of the website built with this code is available [here](https://domlib-demo-hello-world.mattdestroyer.repl.co/).
+The HTML partial will be very simple, just a title named `title text`, and a variable nameed `user`.
+Your final `hi.html` file should look something like this:
+`hi.html`
+```html
+<h1 name="title text">Hi!</h1>
+<variable name="user"></variable>
+```
+
+Lastly we need to make our `hiController`. First of all we want to make a controller.
+```js
+const hiController = APP.Controller("hiController");
+```
+
+Next we want to create a variable right away and link it up to our user variable.
+```js
+hiController.CreateVariable("user", "Welcome.", ["out"]);
+```
+
+Lastly we want to let the user tell us who they are, so we are going to use the `Input` method of the `DOMLibInstance`. Then we are going to use that input to display a personalised welcome message to the user.
+```js
+APP.Input("Enter your name:", ["Submit"]).then((result) => {
+	hiController.SetVariable("user", "Welcome " + result + ".");
+}).catch((error) => {
+	console.warn("Could not get input: " + error);
+});
+```
+
+Your final `hiController.js` file should look something like this:
+`hiController.js`
+```js
+const hiController = APP.Controller("hiController");
+hiController.CreateVariable("user", "Welcome.", ["out"]);
+APP.Input("Enter your name:", ["Submit"]).then((result) => {
+	hiController.SetVariable("user", "Welcome " + result + ".");
+}).catch((error) => {
+	console.warn("Could not get input: " + error);
+});
+```
+
+And we're done! Hopefully this tutorial has introduced you to `DOMLib`. If you feel like you haven't completely understood something or want to know more about the library you can check the [documentation](https://github.com/Matt-DESTROYER/CDN/blob/main/JS/DOMLib/README.md) or contact me by leaving a comment [here](https://replit.com/@MattDESTROYER/DOMLib-Demo-Hello-World?v=1). Feel free to contact me with feedback about either the tutorial or library, I'd love to know if there is a feature or tool you'd like to see added to/integrated in the library.
+
+> A live demo of the website built with this code is available [here](https://domlib-demo-hello-world.mattdestroyer.repl.co/).
