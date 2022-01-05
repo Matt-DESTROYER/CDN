@@ -28,6 +28,6 @@ APP.onload = function() {
 };
 ```
 
-It's pretty simple!
+It's pretty simple! Check out the demos (currently only one demo is available) [here](https://github.com/Matt-DESTROYER/CDN/tree/main/JS/DOMLib/Demos).
 
 ## Documentation
