@@ -94,7 +94,7 @@ First, let's get the title text, we can do this using the `DOM` method in the `D
 ```js
 const titleText = homeController.DOM("name", "title text");
 ```
-Let's look at the `DOM` method quickly. The `DOM` method takes in two or three arguments (forth and fifth parameters are used in recursion, so do not input any more than three arguments to prevent errors). The `DOM` method searches the body of the document for any node that matches the input parameter conditions. The first parameter specifies the property that will be checked, and the second specifies what value this property should have, the _optional_ third parameter specifies what the name of the tag of the `HTMLElement` should be.
+Let's look at the `DOM` method quickly. The `DOM` method takes in two or three arguments (forth and fifth parameters are used in recursion, so do not input any more than three arguments to prevent errors). The `DOM` method searches the body of the document for any node that matches the input parameter conditions. The first parameter specifies the property that will be checked, and the second specifies what value this property should have, the _optional_ third parameter specifies what the name of the tag of the `HTMLElement` should be. The `DOM` method returns either `null`, if no elements matching the criteria are found, a single element, if only one element matching the criteria was found, or an array of elements if more than one element match the criteria.
 
 Now we've got our `titleText` we can add an event listener to ensure when it is clicked, the `Page` is switched to "Hi" and rendered.
 ```js
