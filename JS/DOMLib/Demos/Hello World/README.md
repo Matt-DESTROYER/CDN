@@ -44,6 +44,7 @@ APP.onload = function() {
 ```
 
 Your final `index.html` file should look something like this:
+
 `index.html`
 ```html
 <!DOCTYPE html>
@@ -69,6 +70,7 @@ Your final `index.html` file should look something like this:
 ```
 
 Now we need to create the files we are using for our `Page`s. Let's start with the "Home" `Page`. Our home page will have three elements, a title, a short message, and a `DOMLibVariable`.
+
 `home.html`
 ```html
 <h1 name="title text">Hello World!</h1>
@@ -110,6 +112,7 @@ titleText.style.cursor = "pointer";
 ```
 
 Your final `homeController.js` file should look something like this:
+
 `homeController.js`
 ```js
 const homeController = APP.Controller("homeController");
@@ -126,6 +129,7 @@ Next we need to make our "Hi" `Page`.
 
 The HTML partial will be very simple, just a title named `title text`, and a variable nameed `user`.
 Your final `hi.html` file should look something like this:
+
 `hi.html`
 ```html
 <h1 name="title text">Hi!</h1>
@@ -152,6 +156,7 @@ APP.Input("Enter your name:", ["Submit"]).then((result) => {
 ```
 
 Your final `hiController.js` file should look something like this:
+
 `hiController.js`
 ```js
 const hiController = APP.Controller("hiController");
