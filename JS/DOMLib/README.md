@@ -42,6 +42,11 @@ DOMLib.Init(name);
 This method is used to setup your initial `DOMLibInstance` which gets all the components you need for you website. It takes in the name to be used as the title of your website.
 
 ```js
+DOMLib.GET(url);
+```
+This method sends a get XMLHTTPReqest
+
+```js
 DOMLibInstance
 ```
 This class allows you to piece together the components of your website.
@@ -80,9 +85,36 @@ This method renders either the `Page` with the input title or if no input is rec
 ```js
 DOMLibInstance.prototype.Controller(name);
 ```
-This method returns `DOMLibController` created using the input name.
+This method returns `DOMLibController` created using the input name. This can be used to add interactivity and functionality to a `Page`.
 
 ```js
 DOMLibController
 ```
+This class is used to create interactivity and functionality in a `Page`.
+
+```js
+DOMLibController.prototype.DOM(property, value, ?tag);
+```
+This useful method allows you to search the document's body for an element or elements with the input property that has a certain value. For example instead of `document.getElementById("an id");` you could do `controller.DOM("id", "an id");`. Additionally you can specify a tag name (meaning you could only check paragraph elements for example). This method returns `null` if no element could be found with the input criteria, a single element if only one element could be found with the input criteria, or an array of the elements found that match the input criteria.
+
+```js
+DOMLibController.prototype.CreateVariable(name, value, settings);
+```
+
+```js
+DOMLibController.prototype.SetVariable(name, value);
+```
+
+```js
+DOMLibController.prototype.GetVariable(name);
+```
+
+```js
+DOMLibVariable
+```
+
+```js
+Page
+```
+
 [UNFINISHED]
