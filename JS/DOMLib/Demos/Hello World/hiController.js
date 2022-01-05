@@ -1,4 +1,7 @@
-const hiController = APP.Controller();
-let usr = APP.Input("Enter your name:", ["submit"]);
-hiController.Variables.user = "Welcome " + usr;
-hiController.DOM["title text"].ChangeText("Hi " + usr);
+const hiController = APP.Controller("hiController");
+hiController.CreateVariable("user", "Welcome.", ["out"]);
+APP.Input("Enter your name:", ["Submit"]).then((result) => {
+	hiController.SetVariable("user", "Welcome " + result + ".");
+}).catch((error) => {
+	console.warn("Could not get input: " + error);
+});
