@@ -34,3 +34,45 @@ It's pretty simple! Check out the demos (currently only one demo is available) [
 ```js
 DOMLib
 ```
+`DOMLib` is an object used to setup your initial `DOMLibInstance`.
+
+```js
+DOMLib.Init(name);
+```
+This method is used to setup your initial `DOMLibInstance` which gets all the components you need for you website. It takes in the name to be used as the title of your website.
+
+```js
+DOMLibInstance
+```
+This class allows you to piece together the components of your website.
+
+```js
+DOMLibInstance.prototype.Input(message, buttons);
+```
+> Note: This method is currently a **prototype**. This method could be subject to dramatic change until a stable acceptable version is released.
+This method can be used to get input from a user. It takes in the message which will be displayed to the user while taking in input and an array of buttons to be displayed. Supported buttons include `"Submit"`, `"Ok"`, `"Cancel"`, and `"Close"`. This method will return a promise. You can use `.then` to receive input in string format and `.catch` if the user declines to give input.
+
+```js
+DOMLibInstance.prototype.CreatePage(title, htmlPartialDirectory, jsControllerDirectory);
+```
+This method can be used to add a `Page` to your website. This method takes in the title of the `Page`, the directory of the HTML partial that contains the `Page`'s content, and the directory of the JavaScript controller that will add interactivity and functionality to the `Page`.
+
+```js
+DOMLibInstance.prototype.GetPage(title);
+```
+This method can be used to get a `Page` based on its title from the `Page`s already created.
+
+```js
+DOMLibInstance.prototype.RefreshAllContent();
+```
+This method can be used to refresh all HTML partials and JavaScript controllers. This could be useful if the HTML partials, for exmaple, were updated constantly so the user could refresh the content.
+
+```js
+DOMLibInstance.prototype.Render(?page);
+```
+This method renders either the current page or the page with the title input. If the page being rendered is not fully loaded or no have been created, an error will be triggered.
+
+```js
+DOMLibInstance.prototype.Controller(name);
+```
+This method returns `DOMLibController` created using the input name.
