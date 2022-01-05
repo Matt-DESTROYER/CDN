@@ -90,14 +90,33 @@ Our variable is created with a name (which must match up with the name property 
 
 Next we want a way to access our other `Page`, so when a user clicks on the title, lets send them to the "Hi" `Page`.
 
-[UNFINISHED]
+First, let's get the title text, we can do this using the `DOM` method in the `DOMLibController` we created (`homeController`).
+```js
+const titleText = homeController.DOM("name", "title text");
+```
+Let's look at the `DOM` method quickly. The `DOM` method takes in two or three arguments (forth and fifth parameters are used in recursion, so do not input any more than three arguments to prevent errors). The `DOM` method searches the body of the document for any node that matches the input parameter conditions. The first parameter specifies the property that will be checked, and the second specifies what value this property should have, the _optional_ third parameter specifies what the name of the tag of the `HTMLElement` should be.
+
+Now we've got our `titleText` we can add an event listener to ensure when it is clicked, the `Page` is switched to "Hi" and rendered.
+```js
+titleText.addEventListener("click", () => {
+	APP.Page = "Hi";
+	APP.Render();
+});
+```
+
+Additionally, to it a little more obvious the `titleText` is a form of button, we can _optionally_, make it so our cursor becomes a pointer when hovering over it.
+```js
+titleText.style.cursor = "pointer";
+```
 
 Your final `homeController.js` file should look something like this:
 `homeController.js`
 ```js
 const homeController = APP.Controller("homeController");
 homeController.CreateVariable("data", "some data", ["out"]);
-homeController.DOM("name", "title text").addEventListener("click", function() {
+const titleText = homeController.DOM("name", "title text");
+titleText.style.cursor = "pointer";
+titleText.addEventListener("click", () => {
 	APP.Page = "Hi";
 	APP.Render();
 });
