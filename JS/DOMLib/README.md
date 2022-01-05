@@ -47,6 +47,11 @@ DOMLibInstance
 This class allows you to piece together the components of your website.
 
 ```js
+DOMLibInstance.prototype.Page;
+```
+This string allows you to set the current `Page`, this is used when rendering if no `Page` title is input. This is also used internally by the `DOMLibInstance`.
+
+```js
 DOMLibInstance.prototype.Input(message, buttons);
 ```
 > Note: This method is currently a **prototype**. This method could be subject to dramatic change until a stable acceptable version is released.
@@ -70,9 +75,14 @@ This method can be used to refresh all HTML partials and JavaScript controllers.
 ```js
 DOMLibInstance.prototype.Render(?page);
 ```
-This method renders either the current page or the page with the title input. If the page being rendered is not fully loaded or no have been created, an error will be triggered.
+This method renders either the `Page` with the input title or if no input is receive the current `Page` stored in `DOMLibInstance.prototype.Page`. If the page being rendered is not fully loaded or no have been created, an error will be triggered.
 
 ```js
 DOMLibInstance.prototype.Controller(name);
 ```
 This method returns `DOMLibController` created using the input name.
+
+```js
+DOMLibController
+```
+[UNFINISHED]
