@@ -1,5 +1,5 @@
 # A simple Hello World DOMLib webpage
-> A live demo is available [here](https://domlib-demo-hello-world.mattdestroyer.repl.co/)
+> A live demo of the website built with this code is available [here](https://domlib-demo-hello-world.mattdestroyer.repl.co/).
 
 The website starts with your average empty `index.html` file.
 ```html
@@ -123,4 +123,7 @@ titleText.addEventListener("click", () => {
 ```
 
 Next we need to make our "Hi" `Page`.
- [UNFINISHED]
+
+[UNFINISHED]
+ 
+ > A live demo of the website built with this code is available [here](https://domlib-demo-hello-world.mattdestroyer.repl.co/).
