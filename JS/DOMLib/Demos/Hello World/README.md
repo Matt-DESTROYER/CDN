@@ -104,7 +104,7 @@ titleText.addEventListener("click", () => {
 });
 ```
 
-Additionally, to it a little more obvious the `titleText` is a form of button, we can _optionally_, make it so our cursor becomes a pointer when hovering over it.
+Additionally, to it a little more obvious the `titleText` is like a button, we can _optionally_, make it so our cursor becomes a pointer when hovering over it.
 ```js
 titleText.style.cursor = "pointer";
 ```
@@ -121,3 +121,6 @@ titleText.addEventListener("click", () => {
 	APP.Render();
 });
 ```
+
+Next we need to make our "Hi" `Page`.
+ [UNFINISHED]
