@@ -100,21 +100,16 @@ This useful method allows you to search the document's body for an element or el
 ```js
 DOMLibController.prototype.CreateVariable(name, value, settings);
 ```
+This method creates a special variable that allows indirect access to the DOM. A variable must be named and initialised with a value. Then to link the variable to an element in the DOM, an element must be created with the tag `<variable></variable>` and a matching name `<variable name="variable name"></variable>` (in which case the variable might look like `controller.CreateVariable("variable name", "a value", ["out"])`). A variable can also be assigned settings (which is an array of strings). These settings dictate how the variable interacts with the element it is linked to. So far a variable's settings can include `"out"` and `"in"`. If a variable's settings includes `"out"`, then upon changing the variable, the linked element's `textContent` will be changed to match. If a variable's settings includes `"in"`, then upon changing the linked element, the variable's value will be changed to match.
 
 ```js
 DOMLibController.prototype.SetVariable(name, value);
 ```
+This method can be used to set the value of a variable previously created, and thus indirectly write to the DOM (if the variable's settings includes `"out"`).
 
 ```js
 DOMLibController.prototype.GetVariable(name);
 ```
+This method can be used to get the value of a variable previously created, and thus indirectly read from the DOM (if the variable's settings includes `"in"`).
 
-```js
-DOMLibVariable
-```
-
-```js
-Page
-```
-
-[UNFINISHED]
+> Note: Documentation is still in early stages and will evolve with this library.
