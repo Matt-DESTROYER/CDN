@@ -9,3 +9,20 @@ All `DOMLib` websites start with a `DOMLibInstance`.
 ```js
 const APP = DOMLib.Init("App Name");
 ```
+
+From there simply create `Page`s giving each one a name, the directory of a HTML partial, and the directory of a JavaScript controller.
+```js
+APP.CreatePage("Page Name", "HTML partial directory.html", "JS controller directory.js");
+```
+
+After that set the start `Page`.
+```js
+APP.Page = "Home";
+```
+
+And after all the pages have loaded, you can direct `DOMLib` to render the current `Page`.
+```js
+APP.onload = function() {
+	APP.Render();
+};
+```
