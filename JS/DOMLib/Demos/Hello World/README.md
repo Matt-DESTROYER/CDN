@@ -43,7 +43,8 @@ APP.onload = function() {
 };
 ```
 
-Our final `index.html` file should look something like this:
+Your final `index.html` file should look something like this:
+`index.html`
 ```html
 <!DOCTYPE html>
 <html>
@@ -65,4 +66,39 @@ Our final `index.html` file should look something like this:
 </body>
 
 </html>
+```
+
+Now we need to create the files we are using for our `Page`s. Let's start with the "Home" `Page`. Our home page will have three elements, a title, a short message, and a `DOMLibVariable`.
+`home.html`
+```html
+<h1 name="title text">Hello World!</h1>
+<p>This is a home page.</p>
+<variable name="data"></variable>
+```
+The `name` property allows an easy method of access to the title, however for `DOMLibVariable`, the name tag is required as a means identification.
+
+Next we need the JavaScript controller to run this page. First of all we need to initialise the controller.
+```js
+const homeController = APP.Controller("homeController");
+```
+
+Next let's hook up a `DOMLibVariable` to the variable tag in our `home.html` file.
+```js
+homeController.CreateVariable("data", "somedata", ["out"]);
+```
+Our variable is created with a name (which must match up with the name property of the variable it will be connected to), a value (which can be changed), and an array containing strings which determine how the variable is connected to the DOM. In this case the array only contains `"out"`, which means that whenever the variable is changed, it will also change the value of the element it is linked to. If the array contained `"in"`, if the element in the DOM was changed so would the `DOMLibVariable`.
+
+Next we want a way to access our other `Page`, so when a user clicks on the title, lets send them to the "Hi" `Page`.
+
+[UNFINISHED]
+
+Your final `homeController.js` file should look something like this:
+`homeController.js`
+```js
+const homeController = APP.Controller("homeController");
+homeController.CreateVariable("data", "some data", ["out"]);
+homeController.DOM("name", "title text").addEventListener("click", function() {
+	APP.Page = "Hi";
+	APP.Render();
+});
 ```
