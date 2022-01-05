@@ -44,7 +44,7 @@ This method is used to setup your initial `DOMLibInstance` which gets all the co
 ```js
 DOMLib.GET(url);
 ```
-This method sends a get XMLHTTPReqest
+This method sends a get request to the input URL and returns a promise. Using `.then` you can read the resulting string and using `.catch` you can read any error that occurs preventing the get request from being completed.
 
 ```js
 DOMLibInstance
