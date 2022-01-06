@@ -7,10 +7,13 @@
 
 <body>
 	<script>
-		const APP = DOMLib.Init();
+		const APP = DOMLib.Init("Hello World");
 		APP.CreatePage("Home", "home.html", "homeController.js");
 		APP.CreatePage("Hi", "hi.html", "hiController.js");
-		APP.Render();
+		APP.Page = "Home";
+		APP.onload = () => {
+			APP.Render();
+		};
 	</script>
 </body>
 
