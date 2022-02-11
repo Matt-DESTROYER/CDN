@@ -10,7 +10,7 @@ All `DOMLib` websites start with a `DOMLibInstance`.
 const APP = DOMLib.Init("App Name");
 ```
 
-From there simply create `Page`s giving each one a name, the directory of a HTML partial, and the directory of a JavaScript controller.
+From there, simply create `Page`s giving each one a name, the directory of a HTML partial, and the directory of a JavaScript controller.
 > Note: A HTML partial is essentially any HTML that would go into the _body_ of a HTML document.
 ```js
 APP.CreatePage("Home", "HTML partial directory.html", "JS controller directory.js");
