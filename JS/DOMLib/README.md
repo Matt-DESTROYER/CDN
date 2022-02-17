@@ -105,11 +105,11 @@ This method creates a special variable that allows indirect access to the DOM. A
 ```js
 DOMLibController.prototype.SetVariable(name, value);
 ```
-This method can be used to set the value of a variable previously created, and thus indirectly write to the DOM (if the variable's settings includes `"out"`).
+This method can be used to set the value of a variable previously created, and thus indirectly write to the DOM (if the variable's settings includes `"out"`). Returns the variable object.
 
 ```js
 DOMLibController.prototype.GetVariable(name);
 ```
-This method can be used to get the value of a variable previously created, and thus indirectly read from the DOM (if the variable's settings includes `"in"`).
+This method can be used to get the value of a variable previously created, and thus indirectly read from the DOM (if the variable's settings includes `"in"`). Returns the variable object.
 
 > Note: Documentation is still in early stages and will evolve with this library.
