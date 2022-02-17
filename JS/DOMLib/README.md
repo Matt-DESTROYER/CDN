@@ -49,7 +49,7 @@ This method sends a get request to the input URL and returns a promise. Using `.
 ```js
 DOMLibInstance
 ```
-This class allows you to piece together the components of your website.
+This class allows you to piece together the components of your website. (Not available to global scope.)
 
 ```js
 DOMLibInstance.prototype.Page;
