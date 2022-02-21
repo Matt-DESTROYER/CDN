@@ -11,52 +11,67 @@
 		* {
 			background-color: rgb(175, 175, 175);
 		}
-		
-		.code {
+		.container {
+			padding: 20px;
+			border: none;
+			border-radius: 8px;
 			background-color: lightgray;
+		}
+		.code {
+			background-color: whitesmoke;
 			font-family: "Lucida Console", "Courier New", monospace;
 			padding: 5px;
 			border-radius: 7px;
 			font-size: 12px;
 		}
 		.code keyword {
-			background-color: lightgray;
+			background-color: whitesmoke;
 		}
 		.code variable {
-			background-color: lightgray;
+			background-color: whitesmoke;
 		}
 		.code string {
-			background-color: lightgray;
+			background-color: whitesmoke;
 		}
 	</style>
 </head>
 
 <body>
-	<h1 class="title">Matt-DESTROYER's CDN</h1>
-	<h4 class="description">This website provides the ability to source files in my (Matt-DESTROYER) CDN repository externally.</h4>
-	<p>Externally available JS frameworks/files:</p>
-	<ul>
-		<li>Platformer.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/Platformer/Platformer.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
-		<br>
-		<li>Test.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/Test/Test.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
-		<br>
-		<li>Codify.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/Codify/Codify.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
-		<br>
-		<li>2DGameEngine.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/2DGameEngine/2DGameEngine.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
-		<br>
-		<li>StringNumber.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/StringNumber/StringNumber.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
-		<br>
-		<li>Randomiser.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/Randomiser/Randomiser.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
-		<br>
-		<li>Tokeniser.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/Tokeniser/Tokeniser.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
-	</ul>
-	<p>Externally available CSS stylesheets/files:</p>
-	<ul>
-		<li>BlackGold.css <span class="code">&lt;<keyword>link</keyword> <variable>rel</variable>=<string>"stylesheet"</string> <variable>type</variable>=<string>"text/css"</string> <variable>href</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/CSS/BlackGold/BlackGold.css"</string> /&gt;</span></li>
-		<br>
-		<li>BlackGold.css <span class="code">&lt;<keyword>link</keyword> <variable>rel</variable>=<string>"stylesheet"</string> <variable>type</variable>=<string>"text/css"</string> <variable>href</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/CSS/CodeBlocks/CodeBlocks.css"</string> /&gt;</span></li>
-	</ul>
-	<p>Check out the <a href="https://github.com/Matt-DESTROYER/CDN" target="_blank">repository</a> (on <a href="https://github.com/" target="_blank">GitHub</a>) for documentation and other information about these libraries.</p>
+	<div class="container">
+		<h1 class="title">Matt-DESTROYER's CDN</h1>
+		<h4 class="description">This website provides the ability to source files in my (Matt-DESTROYER) CDN repository externally.</h4>
+	</div>
+	<br>
+	<br>
+	<div class="container">
+		<p>Externally available JS frameworks/files:</p>
+		<ul>
+			<li>Platformer.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/Platformer/Platformer.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
+			<br>
+			<li>Test.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/Test/Test.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
+			<br>
+			<li>Codify.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/Codify/Codify.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
+			<br>
+			<li>2DGameEngine.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/2DGameEngine/2DGameEngine.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
+			<br>
+			<li>StringNumber.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/StringNumber/StringNumber.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
+			<br>
+			<li>Randomiser.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/Randomiser/Randomiser.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
+			<br>
+			<li>Tokeniser.js <span class="code">&lt;<keyword>script</keyword> <variable>type</variable>=<string>"text/javascript"</string> <variable>src</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/JS/Tokeniser/Tokeniser.js"</string>&gt;&lt;/<keyword>script</keyword>&gt;</span></li>
+		</ul>
+		<p>Externally available CSS stylesheets/files:</p>
+		<ul>
+			<li>BlackGold.css <span class="code">&lt;<keyword>link</keyword> <variable>rel</variable>=<string>"stylesheet"</string> <variable>type</variable>=<string>"text/css"</string> <variable>href</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/CSS/BlackGold/BlackGold.css"</string> /&gt;</span></li>
+			<br>
+			<li>BlackGold.css <span class="code">&lt;<keyword>link</keyword> <variable>rel</variable>=<string>"stylesheet"</string> <variable>type</variable>=<string>"text/css"</string> <variable>href</variable>=<string>"https://Matt-DESTROYER.github.io/CDN/CSS/CodeBlocks/CodeBlocks.css"</string> /&gt;</span></li>
+		</ul>
+	</div>
+	<br>
+	<br>
+	<div class="container">
+		<p>Check out the <a href="https://github.com/Matt-DESTROYER/CDN" target="_blank">repository</a> (on <a href="https://github.com/" target="_blank">GitHub</a>) for documentation and other information about these libraries.</p>
+	</div>
 </body>
 
 </html>
