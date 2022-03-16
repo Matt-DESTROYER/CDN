@@ -364,6 +364,3 @@ All that's left to do is start your platformer which you can do by calling:
 Platformer.Start();
 ```
 Note: that any lines of code after the platformer is started will likely not run (this should be the very last thing you do).
-
-## Coming soon:
-- `PersistentObject`: an object that is active during **all** levels.
