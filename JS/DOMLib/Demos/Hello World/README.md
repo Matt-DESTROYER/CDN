@@ -1,18 +1,9 @@
 # A simple Hello World DOMLib webpage
 > A live demo of the website built with this code is available [here](https://domlib-demo-hello-world.mattdestroyer.repl.co/).
 
-The website starts with your average empty `index.html` file.
+The website starts with a slightly more empty than usual `index.html` file.
 ```html
 <!DOCTYPE html>
-<html>
-
-<head>
-</head>
-
-<body>
-</body>
-
-</html>
 ```
 
 First of all we need to load the `DOMLib` scripts using this tag in the document's head `<script src="https://Matt-DESTROYER.github.io/CDN/JS/DOMLib/lib.js"></script>`.
@@ -48,25 +39,18 @@ Your final `index.html` file should look something like this:
 `index.html`
 ```html
 <!DOCTYPE html>
-<html>
 
-<head>
-	<script src="https://Matt-DESTROYER.github.io/CDN/JS/DOMLib/lib.js"></script>
-</head>
+<script src="https://Matt-DESTROYER.github.io/CDN/JS/DOMLib/lib.js"></script>
 
-<body>
-	<script>
-		const APP = DOMLib.Init("Hello World");
-		APP.CreatePage("Home", "home.html", "homeController.js");
-		APP.CreatePage("Hi", "hi.html", "hiController.js");
-		APP.Page = "Home";
-		APP.onload = function() {
-			APP.Render();
-		};
-	</script>
-</body>
-
-</html>
+<script>
+	const APP = DOMLib.Init("Hello World");
+	APP.CreatePage("Home", "home.html", "homeController.js");
+	APP.CreatePage("Hi", "hi.html", "hiController.js");
+	APP.Page = "Home";
+	APP.onload = function() {
+		APP.Render();
+	};
+</script>
 ```
 
 Now we need to create the files we are using for our `Page`s. Let's start with the "Home" `Page`. Our home page will have three elements, a title, a short message, and a `DOMLibVariable`.
