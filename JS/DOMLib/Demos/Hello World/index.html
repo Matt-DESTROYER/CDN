@@ -1,20 +1,13 @@
 <!DOCTYPE html>
-<html>
 
-<head>
-	<script src="https://Matt-DESTROYER.github.io/CDN/JS/DOMLib/lib.js"></script>
-</head>
+<script src="https://Matt-DESTROYER.github.io/CDN/JS/DOMLib/lib.js"></script>
 
-<body>
-	<script>
-		const APP = DOMLib.Init("Hello World");
-		APP.CreatePage("Home", "home.html", "homeController.js");
-		APP.CreatePage("Hi", "hi.html", "hiController.js");
-		APP.Page = "Home";
-		APP.onload = () => {
-			APP.Render();
-		};
-	</script>
-</body>
-
-</html>
+<script>
+	const APP = DOMLib.Init("Hello World");
+	APP.CreatePage("Home", "home.html", "homeController.js");
+	APP.CreatePage("Hi", "hi.html", "hiController.js");
+	APP.Page = "Home";
+	APP.onload = function() {
+		APP.Render();
+	};
+</script>
