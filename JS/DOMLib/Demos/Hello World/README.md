@@ -111,7 +111,7 @@ titleText.addEventListener("click", () => {
 
 Next we need to make our "Hi" `Page`.
 
-The HTML partial will be very simple, just a title named `title text`, and a variable nameed `user`.
+The HTML partial will be very simple, just a title named `title text`, and a variable named `user`.
 Your final `hi.html` file should look something like this:
 
 `hi.html`
