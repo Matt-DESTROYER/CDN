@@ -1,30 +1,36 @@
 # Fraction.js
 > A small and simple library which allows you to operate on/with fractions (which allows more precision than decimals).
 
+
 ```js
 new Fraction(/* int */ numerator, /* int */ denominator) /* OR */ Fraction(int numerator, int denominator);
 ```
 Creates a new `Fraction` object.
+
 
 ```js
 Fraction.prototype.simplify();
 ```
 Simplifies a `Fraction`.
 
+
 ```js
 Fraction.prototype.add(/* Fraction */ fraction) /* OR */ Fraction.prototype.add(/* int */ numerator, /* int */ denominator);
 ```
 Adds the input `Fraction` to a `Fraction`.
+
 
 ```js
 Fraction.prototype.subtract(/* Fraction */ fraction) /* OR */ Fraction.prototype.subtract(/* int */ numerator, /* int */ denominator);
 ```
 Subtracts the input `Fraction` from a `Fraction`.
 
+
 ```js
 Fraction.prototype.multiply(/* Fraction */ fraction) /* OR */ Fraction.prototype.multiply(/* int */ numerator, /* int */ denominator);
 ```
 Multiplies a `Fraction` by an input `Fraction`.
+
 
 ```js
 Fraction.prototype.divide(/* Fraction */ fraction) /* OR */ Fraction.prototype.divide(/* int */ numerator, /* int */ denominator);
