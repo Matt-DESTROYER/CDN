@@ -1,8 +1,5 @@
-# 2D Game Engine v2.1
+# 2D Game Engine v2.2.0
 A simple 2D JS Game Engine which you can use to make creating 2D games easy!
-
-### Latest Update - v2.1: Event Listeners!
-With event listeners, you can make your games more interactive then ever!
 
 ## Documentation/Features:
 ```js
@@ -118,6 +115,7 @@ dot(point);                  // -> returns the dot product of the points
 mag();                       // -> returns the magnitude of the point
 normalize();                 // -> normalizes the current point
 array();                     // -> returns the current point in array form [x, y]
+clone();                     // -> clones the point
 static dist(point1, point2); // -> returns the distance between two points
 static dot(point1, point2);  // -> returns the dot product of the points
 static array(point);         // -> returns the point in array form [x, y]
@@ -130,14 +128,15 @@ new PolygonMesh(points);
 Creates a polygon out of an array of points. (Used in objects.)
 `points`: An array of `Vector2`s or `Point`s.
 ```js
-changeX(distance);     // -> moves the polygon input distance on the x axis
-changeY(distance);     // -> moves the polygon input distance on the y axis
-move(xDist, yDist);    // -> moves the polygon input distance on the x and y axis
-getMidpoint();         // -> returns the center point of the polygon
-rotate(degree);        // -> rotates the polygon input degrees
-pointInPolygon(point); // -> returns whether or not input point is inside the polygon
-collision(other);      // -> returns whether or not the polygon collides with another polygon
-render(colour);        // -> renders the polygon the input colour
+changeX(distance);     // -> moves the PolygonMesh input distance on the x axis
+changeY(distance);     // -> moves the PolygonMesh input distance on the y axis
+move(xDist, yDist);    // -> moves the PolygonMesh input distance on the x and y axis
+getMidpoint();         // -> returns the center point of the PolygonMesh
+rotate(degree);        // -> rotates the PolygonMesh input degrees
+pointInPolygon(point); // -> returns whether or not input point is inside the PolygonMesh
+collision(other);      // -> returns whether or not the PolygonMesh collides with another PolygonMesh
+render(colour);        // -> renders the PolygonMesh the input colour
+clone();               // -> clones the PolygonMesh
 ```
 
 ```js
@@ -157,6 +156,9 @@ Create a camera object.
 `colour`: The colour of the `Camera`.
 `start`: A special function called when the scene first loads.
 `update`: A special function called every frame.
+```js
+clone(); // -> clones the Camera
+```
 
 ```js
 new GameObject(x, y, polymesh, colour, collides, ?eventListeners);
@@ -179,6 +181,7 @@ changeY(distance);               // -> moves a GameObject 'distance' pixels alon
 setRotation(degrees);            // -> sets the rotation of a GameObject to 'degrees'
 rotate(degrees);                 // -> rotates a GameObject by 'degrees'
 render();                        // -> renders a GameObject
+clone();                         // -> clones the GameObject
 ```
 
 ```js
@@ -187,6 +190,9 @@ new Scene(gameObjects, camera);
 Create a `Scene` based on an array of `GameObjects` and a `Camera`. (Note: no need to save to a variable.)
 `gameObjects`: An array of `GameObjects`s.
 `camera`: A camera used to determine which portion of the `Scene` is rendered.
+```js
+clone(); // -> clones the Scene
+```
 
 #### Math shortcuts:
 ```js
