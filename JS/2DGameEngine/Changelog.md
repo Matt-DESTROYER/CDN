@@ -1,4 +1,4 @@
-# Changelog:
+# Changelog
 ### - v2.0.0: Complete rewrite
 The entire library was rewritten from scratch
 
@@ -10,3 +10,6 @@ Added simply cloning functionality to 'classes'.
 
 ### - v2.2.1: Changelog
 Created changelog to briefly explain updates (changes *should* be reflected in the documentation).
+
+### - v2.2.2: Documentation
+Updates to the documentation (not the content; documentation changes will not be logged).
