@@ -275,7 +275,7 @@ To create a `PolygonMesh` you need to input an array of `Point`s or `Vector2`s (
 
 To create a `RectangleMesh` you need to input the width and height for the rectangle. The `RectangleMesh` is really a `PolygonMesh` that when given a width and height, generates four points in a rectangle shape.
 ```js
-// create a player at x: 0, y: 50, with a square shaped PolygonMesh, that is blue, and can move when the player presses certain keys and has a smooth camera follow and resets/dies when the player's y position gets lower than twice the height of the canvas.
+// create a player at x: 0, y: 50, with a square shaped PolygonMesh, that is blue, can move when the player presses certain keys, has a smooth camera follow and dies when the player's y position gets lower than twice the height of the canvas.
 // note that the player is stored in a variable to allow platforms access to the player object later
 let player = new Player(0, 50, new PolygonMesh([
 	// vertices of a rectangle
@@ -303,7 +303,7 @@ let player = new Player(0, 50, new PolygonMesh([
 	// greater than 2 times the screen
 	// height, reset the player
 	if (this.y > height * 2) {
-		this.reset();
+		this.die();
 	}
 });
 ```
@@ -363,4 +363,3 @@ All that's left to do is start your platformer which you can do by calling:
 ```js
 Platformer.Start();
 ```
-Note: that any lines of code after the platformer is started will likely not run (this should be the very last thing you do).
