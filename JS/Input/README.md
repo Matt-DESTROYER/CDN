@@ -23,11 +23,20 @@ if (input.W) {
 	// ...
 }
 
+// note: use not recommended
+// input.keyIsPressed
+// returns a boolean value to represent whether or not a (any) key is currently pressed
+if (input.keyIsPresed) {
+	// ...
+}
+
+// note: use not recommended
 // input.key
 // note: all characters are made uppercase
 // returns the string value of the last key pressed
 console.log(input.key);
 
+// note: use not recommended
 // input.keyCode
 // returns the numeric keyCode of the last key pressed
 console.log(input.keyCode);
