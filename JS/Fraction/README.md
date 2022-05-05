@@ -39,4 +39,14 @@ Fraction.prototype.divide(/* int */ numerator, /* int */ denominator);
 ```
 Divides a `Fraction` by an the input `Fraction`.
 
+```js
+Fraction.prototype.toArray();
+```
+Returns a `Fraction` in array fromat: `[ numerator, denominator ]`.
+
+```js
+Fraction.prototype.toString();
+```
+Returns a `Fraction` in string format: `"numerator/denominator"`.
+
 > All methods of `Fraction`s are **chainable**!
