@@ -38,8 +38,7 @@ Returns a random `String` of input length based on the input characters (in the 
 ### `shuffle`:
 ```js
 Randomiser.shuffle(str);
-Randomiser.shuffle(arr);
-Randomiser.shuffle(arr, randomiseAllDimensions);
+Randomiser.shuffle(arr, ?randomiseAllDimensions);
 ```
 Returns the input `String`/`Array` in a randomised order. `randomiseAllDimensions` (which defaults to `false`) allows you to specify whether all dimensions of the `Array` should be randomised or not.
 
@@ -49,15 +48,14 @@ String.prototype.shuffle();
 Returns the `String` in a randomised order.
 
 ```js
-Array.prototype.shuffle(randomiseAllDimensions);
+Array.prototype.shuffle(?randomiseAllDimensions);
 ```
 Returns the `Array` in a randomised order. `randomiseAllDimensions` (which defaults to `false`) allows you to specify whether all dimensions of the `Array` should be randomised or not.
 
 ### `pick`:
 ```js
 Randomiser.pick(str);
-Randomiser.pick(arr);
-Randomiser.pick(arr, searchAllDimensions);
+Randomiser.pick(arr, ?searchAllDimensions);
 ```
 Returns a random item/character from the input `String`/`Array`. `searchAllDimensions` (which defaults to `true`) allows you to specify whether all dimensions of `Array`s should be searched (if `searchAllDimensions` is `false` and a multi-dimensional `Array` is input, this method may output an `Array` rather than a single item).
 
@@ -67,6 +65,6 @@ String.prototype.pick();
 Returns a random character from the input `String`.
 
 ```js
-Array.prototype.pick(randomiseAllDimensions);
+Array.prototype.pick(?randomiseAllDimensions);
 ```
 Returns a random item from the `Array`. `searchAllDimensions` (which defaults to `true`) allows you to specify whether all dimensions of the `Array` should be searched (if `searchAllDimensions` is `false` and a multi-dimensional `Array` is input, this method may output an `Array` rather than a single item).
