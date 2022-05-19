@@ -20,9 +20,9 @@ Global variables (which you are allowed to use and may help).
 `Input`: Provides you with access to user input, usage:
 ```js
 // Input.KEY e.g:
-Input.W;       // returns true or false depending on whether the 'W' key is held down on the user's keyboard
+Input.W;       // returns true or false depending on whether the 'W' key is held down on the user's keyboard (or undefined if the W key has not yet been while PlatformerJS was running)
 // Input[keyCode] e.g:
-Input[32];     // returns true or false depending on whether the 'Space' key (spacebar) is held down on the user's keyboard
+Input[32];     // returns true or false depending on whether the 'Space' key (spacebar) is held down on the user's keyboard (or undefined if the W key has not yet been while PlatformerJS was running)
 Input.mouseX;  // returns the x position of the user's cursor
 Input.mouseY;  // returns the y position of the user's cursor
 Input.pmouseX; // returns the previous x position of the user's cursor
