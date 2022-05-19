@@ -1,5 +1,5 @@
 # PlatformerJS Template
-### A simple Unity-like JavaScript platformer template/engine.
+### A simple Unity-like JavaScript platformer engine.
 
 A live demo is available here: https://replit.com/@MattDESTROYER/Platformer-Template?v=1
 
