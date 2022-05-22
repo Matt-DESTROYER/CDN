@@ -13,3 +13,6 @@ Created changelog to briefly explain updates (changes *should* be reflected in t
 
 ### - v2.2.2: Documentation
 Updates to the documentation (not the content; documentation changes will not be logged).
+
+### - v2.2.3: Force
+Honestly not sure how I overlooked this...
