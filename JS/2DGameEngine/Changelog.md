@@ -19,3 +19,6 @@ Honestly not sure how I overlooked this... Added force to `GameObject`s.
 
 ### - `v2.3.1`: Cloning improvements
 Improved scene and gameobject cloning.
+
+### - `v2.3.2`: Bug fixes and collision improvements
+Fixed `width` and `height` bug and improved collision detection and collision events.
