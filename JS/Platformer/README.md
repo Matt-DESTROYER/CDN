@@ -64,7 +64,7 @@ You can change these functions to create your own actions when these events occu
 ```js
 keyDown = function () {
 	// action/s that occur when a key is pressed
-}
+};
 ```
 
 ```js
