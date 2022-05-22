@@ -174,6 +174,7 @@ addEventListener(name, func);    // -> adds an event listener to a GameObject
 addEventListener(eventListener); // -> adds an event listener to a GameObject
 setX(position);                  // -> sets a GameObject's x coordinate to 'position' (WARNING: if a GameObject that collides has its position set to 'inside' another collidable GameObject, the game may crash)
 setY(position);                  // -> sets a GameObject's y coordinate to 'position' (WARNING: if a GameObject that collides has its position set to 'inside' another collidable GameObject, the game may crash)
+addForce(x, y);                  // -> applies input force to a GameObject
 changeX(distance);               // -> moves a GameObject 'distance' pixels along the x-axis
 changeY(distance);               // -> moves a GameObject 'distance' pixels along the y-axis (note y axis is inverted, -1 is 'higher' on the screen than 1)
 setRotation(degrees);            // -> sets the rotation of a GameObject to 'degrees'
