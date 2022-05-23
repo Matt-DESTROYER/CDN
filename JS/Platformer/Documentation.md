@@ -94,7 +94,8 @@ The `Player`also has some extra events:
  - `"groundenter"` (called when the player lands on the ground)
  - `"groundexit"` (called when the player leaves the ground)
  - `"levelup"` (called when the player collides with the level finish)
- - `"die"` (called when the player 'dies')
+ - `"death"` (called when the player 'dies')
+ - `"jump"` (called when the player 'jumps')
 
 ```js
 Platformer.initCanvas(id, ?fullScreen);
