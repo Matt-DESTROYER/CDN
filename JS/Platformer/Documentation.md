@@ -96,6 +96,7 @@ The `Player`also has some extra events:
  - `"levelup"` (called when the player collides with the level finish)
  - `"death"` (called when the player 'dies')
  - `"jump"` (called when the player 'jumps')
+ - `"reset"` (called when the player is 'reset')
 
 ```js
 Platformer.initCanvas(id, ?fullScreen);
