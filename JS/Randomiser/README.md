@@ -1,6 +1,11 @@
 # Randomiser
 A simple tool for randomisation.
 
+Available here as one line to copy and paste into a JavaScript script.
+
+Available through this script tag:
+`<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/Randomiser/Randomiser.js"></script>`
+
 Available on NPM as `rand-pkg`:
 ```js
 const Randomiser = require("rand-pkg");
