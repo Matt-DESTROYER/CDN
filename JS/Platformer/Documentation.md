@@ -65,6 +65,36 @@ keyDown = function () {
 	// action/s that occur when a key is pressed
 };
 ```
+You can also add event listeners to the `Player`, `PObject`s, `PText`s and `PersistentPObject`s using the `EventListener` class:
+
+```js
+const player = new Player(/* ... */);
+// addEventListener(name, function);
+player.addEventListener("update", function () {
+	console.log("The player was updated!");
+});
+
+// OR
+
+const player = new Player(/* ... */);
+// addEventListener(EventListener);
+player.addEventListener(new EventListener("update", function () {
+	console.log("The player was updated!");
+}));
+```
+`PObject`s, `PText`s and `PersistentPObject`s have the same basic events (which pass in a reference to themself as the first parameter to every `EventListener` callback function):
+ - `"start"` (called when the containing level is first loaded)
+ - `"update"` (called each frame while in an active level, called after physics have occurred and before rendering has occurred)
+ - `"render"` (called each frame while in active level, called after updates and [automated] rendering have occurred)
+
+The `Player`also has some extra events:
+ - `"collision"` (called when the player collides with another object, which also receives a reference to the object collided with as the second parameter)
+ - `"waterenter"` (called when the player enters water)
+ - `"waterexit"` (called when the player exits water)
+ - `"groundenter"` (called when the player lands on the ground)
+ - `"groundexit"` (called when the player leaves the ground)
+ - `"levelup"` (called when the player collides with the level finish)
+ - `"die"` (called when the player 'dies')
 
 ```js
 Platformer.initCanvas(id, ?fullScreen);
@@ -274,13 +304,13 @@ To create a `RectangleMesh` you need to input the width and height for the recta
 ```js
 // create a player at x: 0, y: 50, with a square shaped PolygonMesh, that is blue, can move when the player presses certain keys, has a smooth camera follow and dies when the player's y position gets lower than twice the height of the canvas.
 // note that the player is stored in a variable to allow platforms access to the player object later
-let player = new Player(0, 50, new PolygonMesh([
+const player = new Player(0, 50, new PolygonMesh([
 	// vertices of a rectangle
 	new Vector2(-12, -12),
 	new Vector2(12, -12),
 	new Vector2(12, 12),
 	new Vector2(-12, 12)
-]), "blue", true, function () {
+]), "blue", true).addEventListener("update",function () {
 	// update function, called every frame
 	Camera.x = lerp(Camera.x, this.x - width / 2 + 12.5, 0.1);
 	Camera.y = lerp(Camera.y, this.y - height / 2 + 12.5, 0.1);
@@ -342,7 +372,7 @@ new Level([
 		new Vector2(0, -40),
 		new Vector2(20, 0)
 	]), "red", 2),
-	new PText("Text", "Arial", 20, 0, -200, "black", 0, function () {
+	new PText("Text", "Arial", 20, 0, -200, "black", 0).addEventListener("update", function () {
 		if (dist(this.x, this.y, player.x, player.y) <= 50) {
 			this.message = "Text";
 		} else {
