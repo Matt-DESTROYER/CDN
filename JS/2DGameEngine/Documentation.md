@@ -35,6 +35,10 @@ Time.deltaTime;   // -> returns the number of milliseconds since the last frame
 Time.now;         // -> returns the current time in milliseconds
 ```
 
+`Randomiser` API:
+The `Randomiser` API makes randomising things simpler!
+You can view the documentation [here](https://github.com/Matt-DESTROYER/CDN/blob/main/JS/Randomiser/README.md).
+
 #### Dealing with events:
 Mouse and keyboard events call functions named similarly to the event:
 - `keyDown`
@@ -218,8 +222,6 @@ frameRate(frames);            // -> changes the number of frames per second (def
 dist(x1, y1, x2, y2);         // -> returns the distance between two 2D points (x1, y1 and x2, y2)
 degreesToRadians(degrees);    // -> returns input degrees as radians
 radiansToDegrees(radians);    // -> returns input radians as degrees
-random(min, max);             // -> returns a random number between min and max
-randomInt(min, max);          // -> returns a random whole number between min and  max
 isPrime(num);                 // -> returns whether or not a number is prime
 constrain(num, min, max);     // -> returns input number restrained by input min and max
 clamp(num, min, max);         // -> returns input number restrained by input min and max
