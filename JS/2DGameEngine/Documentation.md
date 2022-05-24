@@ -58,17 +58,7 @@ keyDown = function () {
 
 You can also add event listeners to `GameObject`s using the `EventListener` class:
 ```js
-new GameObject(x, y, polymesh, colour, collides, [
-	new EventListener("click", function () {
-		console.log("This GameObject was clicked!");
-	}),
-	new EventListener("start", function () {
-		console.log("This GameObject was started!");
-	}),
-	new EventListener("update", function () {
-		console.log("This GameObject was updated!");
-	})
-]);
+new GameObject(x, y, polymesh, colour, collides);
 // OR
 const gameObject = new GameObject(x, y, polymesh, colour, collides);
 // addEventListener(name, function);
@@ -80,6 +70,15 @@ gameObject.addEventListener(new EventListener("click", function () {
 	console.log("This GameObject was clicked!");
 }));
 ```
+`GameObject`s have the following events:
+ - `start` (called when the `Scene` a `GameObject` is in first becomes active)
+ - `update` (called each frame when the `Scene` a `GameObject` is in is active after that `GameObject` has been updated)
+ - `render` (called each frame the the `Scene` a `GameObject` is in is active after that `GameObject` has been rendered)
+ - `click` (called when the user clicks on a `GameObject`)
+
+`Scene`s and `Camera`s both have the following events:
+ - `start` (called when a `Scene` first becomes active)
+ - `update` (called each frame after a `Scene` has been updated if a `Scene` is active)
 
 ```js
 GameEngine.Initialise(?canvas, ?fullScreen, ?width, ?height);
