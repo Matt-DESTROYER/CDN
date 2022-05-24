@@ -8,10 +8,11 @@ Camera;
 Time;
 Statistics;
 ```
-Global variables (which you are allowed to use and may help).
+Global variables (which you are allowed* to use).
 `FPS`: The number of frames per in a second the program is currently running at.
 `width`: The `width` of the `canvas` being used for your platformer.
 `height`: The `height` of the `canvas` being used for your platformer.
+* as opposed to variables which are not *recommended* to be used (although obviously can still use)
 `Input`: Provides you with access to user input, usage:
 ```js
 // Input.KEY e.g:
@@ -83,28 +84,29 @@ player.addEventListener(new EventListener("update", function () {
 }));
 ```
 `PObject`s, `PText`s and `PersistentPObject`s have the same basic events (which pass in a reference to themself as the first parameter to every `EventListener` callback function):
- - `"start"` (called when the containing level is first loaded)
- - `"update"` (called each frame while in an active level, called after physics have occurred and before rendering has occurred)
- - `"render"` (called each frame while in active level, called after updates and [automated] rendering have occurred)
+ - `start` (called when the containing level is first loaded)
+ - `update` (called each frame while in an active level, called after physics have occurred and before rendering has occurred)
+ - `render` (called each frame while in active level, called after updates and [automated] rendering have occurred)
 
 The `Player`also has some extra events:
  - `"collision"` (called when the player collides with another object, which also receives a reference to the object collided with as the second parameter)
- - `"waterenter"` (called when the player enters water)
- - `"waterexit"` (called when the player exits water)
- - `"groundenter"` (called when the player lands on the ground)
- - `"groundexit"` (called when the player leaves the ground)
- - `"levelup"` (called when the player collides with the level finish)
- - `"death"` (called when the player 'dies')
- - `"jump"` (called when the player 'jumps')
- - `"reset"` (called when the player is 'reset')
+ - `waterenter` (called when the player enters water)
+ - `waterexit` (called when the player exits water)
+ - `groundenter` (called when the player lands on the ground)
+ - `groundexit` (called when the player leaves the ground)
+ - `levelup` (called when the player collides with the level finish)
+ - `death` (called when the player 'dies')
+ - `jump` (called when the player 'jumps')
+ - `reset` (called when the player is 'reset')
 
 ```js
-Platformer.initCanvas(id, ?fullScreen);
+Platformer.initCanvas(?canvas, ?fullScreen, ?width, ?height);
 ```
-Sets up a canvas (based on ID).
-
-`ID`: The `ID` of the `HTML` `canvas` you want to use for your platformer.
-`fullScreen`: Whether or not your canvas should be scaled to fit the screen. (Defaults to true.)
+Sets up a canvas and 2D context. (Note: passing in no arguments will result in `PlatformerJS` creating a `canvas` and making its dimensions fill the screen).
+`canvas`: The `id` of the `HTML` `canvas` you want to use for your game or a `HTMLCanvasElement` or null (in which case a canvas will be dynamically generated).
+`fullScreen`: Whether or not your canvas should be scaled to fit the screen. (Defaults to `true`.)
+`width`: The width of your canvas (if `fullScreen` is `false`). (If no value is passed in the `canvas`s width will not be changed.)
+`height`: The height of your canvas (if `fullScreen` is `false`). (If no value is passed in the `canvas`s width will not be changed.)
 
 ```js
 Platformer.Start(?lastLevel);
@@ -174,7 +176,7 @@ Creates a rectangle mesh out of input width and height (`RectangleMesh` is an ex
 `height`: The `height` of the rectangle.
 
 ```js
-new PObject(x, y, mesh, colour, type, ?update);
+new PObject(x, y, mesh, colour, type);
 ```
 Create a platform object. (Should be stored in a level.)
 
@@ -184,10 +186,9 @@ Create a platform object. (Should be stored in a level.)
 `height`: The height of the `PObject`.
 `colour`: The colour of the `PObject`.
 `type`: The type of `PObject` (defines how the object interacts with the player).
-`update`: A special function called every frame.
 
 ```js
-new PText(message, font, size, x, y, colour, type, update);
+new PText(message, font, size, x, y, colour, type);
 ```
 Create a text object. (Should be stored in a level.)
 
@@ -198,35 +199,28 @@ Create a text object. (Should be stored in a level.)
 `y`: The `y` position for the `PText`.
 `colour`: The colour of the `PText`.
 `type`: How the `PText` interacts with the player.
-`update`: A special function called every frame.
 
 ```js
-new CustomPObject(x, y, ?update, ?render);
+new CustomPObject(x, y);
 ```
 `x`: The `x` position for the `CustomPObject`.
 `y`: The `y` position for the `CustomPObject`.
-`update`: An (optional) function to be run each frame.
-`render`: An (optional) function to render the `CustomPObject`.
 
 ```js
-new PersistentPObject(x, y, ?update, ?render);
+new PersistentPObject(x, y);
 ```
 `x`: The `x` position for the `PersistentPObject`.
 `y`: The `y` position for the `PersistentPObject`.
-`update`: An (optional) function to be run each frame.
-`render`: An (optional) function to render the `PersistentPObject`.
 The difference between a `PersistentPObject` and a `CustomPObject` is that a `PersistentPObject` is active throughout **all** levels. You can simply create a `PersistentPObject` with the `new` keyword and `PlatformerJS` will automatically do the rest (no need to store it in a variable or add it into a level/s).
 
 ```js
-new Level(objects, ?start, ?end);
+new Level(objects);
 ```
 Create a level based on an array of objects. (Note: no need to save to variable.)
 `objects`: An array of `PObject`s, `PText` objects and `CustomPObject`s.
-`start`: A function called when the level is first entered.
-`end`: A function called just before the level is exited.
 
 ```js
-new Player(x, y, mesh, colour, ?canWallJump, ?update);
+new Player(x, y, mesh, colour, ?canWallJump);
 ```
 Create a player object. (Note: no need to save to variable)
 
@@ -234,8 +228,7 @@ Create a player object. (Note: no need to save to variable)
 `y`: The starting `y` position for the player. (Will respawn at this `y` coordinate.)
 `mesh`: The mesh used for collisions with platforms.
 `colour`: The colour of the player.
-`canWallJump`: Whether or not the player can 'wall jump' (bounce up walls).
-`update`: A special function called every frame.
+`canWallJump`: Whether or not the player can 'wall jump' (bounce up walls, defaults to false).
 
 #### Math shortcuts:
 ```js
@@ -244,6 +237,8 @@ pow;   // Math.pow
 log;   // Math.log
 sqrt;  // Math.sqrt
 round; // Math.round
+floor; // Math.floor
+ceil;  // Math.ceil
 min;   // Math.min
 max;   // Math.max
 abs;   // Math.abs
@@ -261,7 +256,6 @@ frameRate(frames);            // changes the number of frames per second (defaul
 dist(x1, y1, x2, y2);         // returns the distance between two 2D points (x1, y1 and x2, y2)
 degreesToRadians(degrees);    // returns input degrees as radians
 radiansToDegrees(radians);    // returns input radians as degrees
-isPrime(num);                 // returns whether or not a number is prime
 constrain(num, min, max);     // returns input number restrained by input min and max
 clamp(num, min, max);         // returns input number restrained by input min and max
 lerp(value1, value2, amount); // linear interpolation, returns a value between value1 and value2 depending on linear interpolation amount
@@ -278,20 +272,13 @@ Next you will need to set up three things;
 (The order doesn't matter)
 
 To set up a `canvas`:
-The easiest way is to just add a canvas into the body of your `HTML` file:
-`<canvas id="canvas-id"></canvas>` (Note: `canvas-id` can be replaced with any name, for example I sometimes use `game-screen`.)
-
-Then to setup the `canvas` to work with `PlatformerJS` simply call:
-```js
-Platformer.initCanvas(canvasID, fullScreen?);
-```
-For the first parameter pass in a string storing the id that you gave to your canvas, for the second parameter specify whether or not you want `PlatformerJS` to automatically scale the `canvas` to fill the screen (if you don't pass a value into the second paramter, it will default to true).
+The easiest way is to just call `Platformer.initCanvas();` with no arguments which will automatically create a canvas and make it fill the screen. Otherwise you can input a `HTMLCanvasElement` or string `id` that identifies a canvas.
 
 Next you will need a player for your platformer. You can create a player by calling:
 ```js
-new Player(x, y, mesh, colour, ?canWallJump, ?update);
+new Player(x, y, mesh, colour, ?canWallJump);
 ```
-To create the player you will need to specify its x and y position, width and height, colour, (optionally) whether or not it can walljump, and (optionally) an update function (this is good for things like having a smooth camera follow and also allows you to move your player based on input).
+To create the player you will need to specify its x and y position, width and height, colour, (optionally) whether or not it can walljump.
 
 Note: it can be useful to store the player in a variable to allow access to the player through the variable. This allows things like teleportation through setting the player's position.
 ```js
@@ -303,6 +290,15 @@ A mesh or a collider is an object used for collisions with the player.
 To create a `PolygonMesh` you need to input an array of `Point`s or `Vector2`s (they are identical).
 
 To create a `RectangleMesh` you need to input the width and height for the rectangle. The `RectangleMesh` is really a `PolygonMesh` that when given a width and height, generates four points in a rectangle shape.
+
+You can then add event listeners to enable your user to interact with the player:
+```js
+player.addEventListener("eventname", function() {
+	// callback function
+});
+```
+Probably the most useful event is the `update` event which is where you should handle user input
+
 ```js
 // create a player at x: 0, y: 50, with a square shaped PolygonMesh, that is blue, can move when the player presses certain keys, has a smooth camera follow and dies when the player's y position gets lower than twice the height of the canvas.
 // note that the player is stored in a variable to allow platforms access to the player object later
@@ -312,7 +308,7 @@ const player = new Player(0, 50, new PolygonMesh([
 	new Vector2(12, -12),
 	new Vector2(12, 12),
 	new Vector2(-12, 12)
-]), "blue", true).addEventListener("update",function () {
+]), "blue", true).addEventListener("update", function () {
 	// update function, called every frame
 	Camera.x = lerp(Camera.x, this.x - width / 2 + 12.5, 0.1);
 	Camera.y = lerp(Camera.y, this.y - height / 2 + 12.5, 0.1);
@@ -337,24 +333,26 @@ const player = new Player(0, 50, new PolygonMesh([
 });
 ```
 
-Lastly you will need some levels for your platformer! You can add levels to the platformer by calling:
+Next you will need some levels for your platformer! You can add levels to the platformer by calling:
 ```js
 new Level(objects);
 ```
-(Note: levels are automatically stored by `PlatformerJS`) The only parameter in the level should be an array of `PText`s and/or `PObject`s.
+(Note: levels are automatically stored by `PlatformerJS`) The only parameter in the level should be an array of `PText`s, `PObject`s and/or `CustomPObject`s (`PersistentPObjects` are automatically handled separately by PlatformerJS).
 ```js
-new PObject(x, y, mesh, colour, type, ?update);
-new PText(message, font, size, x, y, colour, type, ?update);
+new PObject(x, y, mesh, colour, type);
+new PText(message, font, size, x, y, colour, type);
+new CustomPObject(x, y);
 ```
-To create a `PObject`: you must specify the x and y position of the `PObject`, the mesh the `PObject` should use (either `PolygonMesh` or `RectangleMesh`), the colour the `PObject` should be rendered in, the type that the `PObject` is, and optionally an function to be called every frame (this is good for moving platforms).
+To create a `PObject`: you must specify the x and y position of the `PObject`, the mesh the `PObject` should use (either `PolygonMesh` or `RectangleMesh`), the colour the `PObject` should be rendered in, the type that the `PObject` is. Note: using event listeners you can create interactive objects like moving platforms.
 
-To create a `PText`: you must specify the message to be displayed, the font to be used, the size for the font, the x and y position for the text to be displayed at, the colour to be used to render the text, the text type, and optionally an function to be called every frame (this is good for signs that only show text when the player is close enough).
+To create a `PText`: you must specify the message to be displayed, the font to be used, the size for the font, the x and y position for the text to be displayed at, the colour to be used to render the text, the text type. Note: using event listeners you can create interactive text elements like signs that only show text when the player is nearby.
+
 ### Types:
 - 0 - Air (player doesn not collide)
 - 1 - Solid (player collides)
-- 2 - Danger (resets/kills player)
+- 2 - Danger ('kills' player)
 - 3 - Trampoline (bounces player)
-- 4 - Water (slows the player but allows them to 'swim' upwards)
+- 4 - Water (slows the player but allows them to 'swim' continuously in any direction)
 - 9 - Finish (sends player to next level)
 
 ```js
@@ -392,3 +390,5 @@ All that's left to do is start your platformer which you can do by calling:
 ```js
 Platformer.Start();
 ```
+
+And you're done! Yep, it's really that simple, so what are you waiting for? Give it a try!
