@@ -13,6 +13,10 @@ CDN stands for Content Distribution Network, this repository acts as a CDN for m
 - Test.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/Test/Test.js"></script>`
 - Tokeniser.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/Tokeniser/Tokeniser.js"></script>`
 - Input.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/Input/Input.js"></script>`
+- Point.mjs `import Point from "https://Matt-DESTROYER.github.io/CDN/JS/Classes/Point.mjs";`
+- Line.mjs `import Point from "https://Matt-DESTROYER.github.io/CDN/JS/Classes/Line.mjs";`
+- Polygon.mjs `import Point from "https://Matt-DESTROYER.github.io/CDN/JS/Classes/Polygon.mjs";`
+- Rectangle.mjs `import Point from "https://Matt-DESTROYER.github.io/CDN/JS/Classes/Rectangle.mjs";`
 
 ## CascadingStyleSheets
 - BlackGold.css `<link rel="stylesheet" type="text/css" href="https://Matt-DESTROYER.github.io/CDN/CSS/BlackGold/BlackGold.css" />`
