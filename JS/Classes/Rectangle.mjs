@@ -1,0 +1,1 @@
+import Point as a from"https://Matt-DESTROYER.github.io/CDN/JS/Classes/Point.mjs";import Polygon as b from"https://Matt-DESTROYER.github.io/CDN/JS/Classes/Polygon.mjs";export default class c extends b{constructor(b,c,d,e){super([new a(b,c),new a(b+d,c),new a(b,c+e),new a(b+d,c+e)])}}
