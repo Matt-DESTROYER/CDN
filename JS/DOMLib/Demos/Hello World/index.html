@@ -6,8 +6,7 @@
 	const APP = DOMLib.Init("Hello World");
 	APP.CreatePage("Home", "home.html", "homeController.js");
 	APP.CreatePage("Hi", "hi.html", "hiController.js");
-	APP.Page = "Home";
 	APP.onload = function() {
-		APP.Render();
+		APP.Render("Home");
 	};
 </script>
