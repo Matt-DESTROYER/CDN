@@ -1,4 +1,4 @@
-# A simple Hello World DOMLib webpage
+# Hello DOMLib!
 > A live demo of the website built with this code is available [here](https://domlib-demo-hello-world.mattdestroyer.repl.co/).
 
 The website starts with a slightly more empty than usual `index.html` file.
@@ -11,7 +11,7 @@ Then we will add a script tag in the document's body which will contain the code
 
 All `DOMLib` websites start with a `DOMLibInstance`, we need to initialise the website in the script tag we created.
 ```js
-const APP = DOMLib.Init("Hello World");
+const APP = DOMLib.Init("Hello DOMLib");
 ```
 
 From there we have to create `Page`s. Each one must have a name, a HTML partial, and a JavaScript controller (you could in theory use the same HTML partial or JavaScript controller in multiple different pages, although circumstances requiring that are unlikely).
@@ -22,15 +22,10 @@ APP.CreatePage("Home", "home.html", "homeController.js");
 APP.CreatePage("Hi", "hi.html", "hiController.js");
 ```
 
-After that we need to set the start `Page`. You probably already guessed the start page is our "Home" page.
-```js
-APP.Page = "Home";
-```
-
-And after `DOMLib` loads the pages we want `DOMLib` to render the "Home" page.
+And after `DOMLib` loads the pages we want `DOMLib` to render the 'Home' page.
 ```js
 APP.onload = function() {
-	APP.Render();
+	APP.Render("Home");
 };
 ```
 
@@ -46,9 +41,8 @@ Your final `index.html` file should look something like this:
 	const APP = DOMLib.Init("Hello World");
 	APP.CreatePage("Home", "home.html", "homeController.js");
 	APP.CreatePage("Hi", "hi.html", "hiController.js");
-	APP.Page = "Home";
 	APP.onload = function() {
-		APP.Render();
+		APP.Render("Home");
 	};
 </script>
 ```
@@ -59,9 +53,9 @@ Now we need to create the files we are using for our `Page`s. Let's start with t
 ```html
 <h1 name="title text">Hello World!</h1>
 <p>This is a home page.</p>
-<variable name="data"></variable>
+<variable name="pi"></variable>
 ```
-The `name` property allows an easy method of access to the title, however for `DOMLibVariable`, the name tag is required as a means identification.
+The `name` property is an easy method of access to the title. For `DOMLibVariable`, the name tag is actually _required_ as a means identification.
 
 Next we need the JavaScript controller to run this page. First of all we need to initialise the controller.
 ```js
@@ -70,9 +64,9 @@ const homeController = APP.Controller("homeController");
 
 Next let's hook up a `DOMLibVariable` to the variable tag in our `home.html` file.
 ```js
-homeController.CreateVariable("data", "somedata", ["out"]);
+homeController.CreateVariable("pi", Math.PI, ["out"]);
 ```
-Our variable is created with a name (which must match up with the name property of the variable it will be connected to), a value (which can be changed), and an array containing strings which determine how the variable is connected to the DOM. In this case the array only contains `"out"`, which means that whenever the variable is changed, it will also change the value of the element it is linked to. If the array contained `"in"`, if the element in the DOM was changed so would the `DOMLibVariable`.
+Our variable is created with a name (which must match up with the name property of the variable it will be connected to), a value (which can be changed), and an array containing strings which determine how the variable is connected to the DOM. In this case the array only contains `"out"`, indicating whenever the variable is changed, it will also change the text content of the element it is linked to. If the array contained `"in"`, if the element in the DOM was changed so would the `DOMLibVariable`.
 
 Next we want a way to access our other `Page`, so when a user clicks on the title, lets send them to the "Hi" `Page`.
 
@@ -84,13 +78,12 @@ Let's look at the `DOM` method quickly. The `DOM` method takes in two or three a
 
 Now we've got our `titleText` we can add an event listener to ensure when it is clicked, the `Page` is switched to "Hi" and rendered.
 ```js
-titleText.addEventListener("click", () => {
-	APP.Page = "Hi";
-	APP.Render();
+titleText.addEventListener("click", function() {
+	APP.Render("Hi");
 });
 ```
 
-Additionally, to it a little more obvious the `titleText` is like a button, we can _optionally_, make it so our cursor becomes a pointer when hovering over it.
+Additionally, to it a little more obvious the `titleText` is like a button, we can make it so our cursor becomes a pointer when hovering over it.
 ```js
 titleText.style.cursor = "pointer";
 ```
@@ -103,9 +96,8 @@ const homeController = APP.Controller("homeController");
 homeController.CreateVariable("data", "some data", ["out"]);
 const titleText = homeController.DOM("name", "title text");
 titleText.style.cursor = "pointer";
-titleText.addEventListener("click", () => {
-	APP.Page = "Hi";
-	APP.Render();
+titleText.addEventListener("click", function() {
+	APP.Render("Hi");
 });
 ```
 
@@ -132,9 +124,12 @@ hiController.CreateVariable("user", "Welcome.", ["out"]);
 
 Lastly we want to let the user tell us who they are, so we are going to use the `Input` method of the `DOMLibInstance`. Then we are going to use that input to display a personalised welcome message to the user.
 ```js
-APP.Input("Enter your name:", ["Submit"]).then((result) => {
-	hiController.SetVariable("user", "Welcome " + result + ".");
-}).catch((error) => {
+APP.Input("Enter your name:", ["Submit", "Cancel"]).then(function(result) {
+	if (result.trim()) {
+		hiController.SetVariable("user", "Welcome " + result + ".");
+		hiController.DOM("title").textContent = "Hello " + result + "!";
+	}
+}).catch(function(error) {
 	console.warn("Could not get input: " + error);
 });
 ```
@@ -152,6 +147,6 @@ APP.Input("Enter your name:", ["Submit"]).then((result) => {
 });
 ```
 
-And we're done! Hopefully this tutorial has introduced you to `DOMLib`. If you feel like you haven't completely understood something or want to know more about the library you can check the [documentation](https://github.com/Matt-DESTROYER/CDN/blob/main/JS/DOMLib/README.md) or contact me by leaving a comment [here](https://replit.com/@MattDESTROYER/DOMLib-Demo-Hello-World?v=1). Feel free to contact me with feedback about either the tutorial or library, I'd love to know if there is a feature or tool you'd like to see added to/integrated in the library.
+And we're done! Hopefully this simple tutorial has shown you some of the benefits of using `DOMLib`. If you feel like you haven't completely understood something or want to know more about the library you can check the [documentation](https://github.com/Matt-DESTROYER/CDN/blob/main/JS/DOMLib/README.md) or contact me by leaving a comment [here](https://replit.com/@MattDESTROYER/DOMLib-Demo-Hello-World?v=1). Feel free to contact me with feedback about either the tutorial or library, I'd love to know if there is a feature or tool you'd like to see added to/integrated in the library.
 
 > A live demo of the website built with this code is available [here](https://domlib-demo-hello-world.mattdestroyer.repl.co/).
