@@ -22,3 +22,6 @@ Improved scene and gameobject cloning.
 
 ### - `v2.3.2`: Bug fixes and collision improvements
 Fixed `width` and `height` bug and improved collision detection and collision events.
+
+### - `v2.3.3`: Bug fixes and performance improvements
+Fixed a bug resulting in multiplied force and made many small improvements to performance.
