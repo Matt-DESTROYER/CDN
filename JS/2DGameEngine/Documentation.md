@@ -167,26 +167,23 @@ Creates a rectangle mesh out of input width and height (`RectangleMesh` is an ex
 `height`: The `height` of the rectangle.
 
 ```js
-new Camera(x, y, ?start, ?update);
+new Camera(x, y);
 ```
 Creates a camera object.
 `x`: The `x` position for the `Camera`.
 `y`: The `y` position for the `Camera`.
-`colour`: The colour of the `Camera`.
-`start`: A special function called when the scene first loads.
-`update`: A special function called every frame.
 ```js
 clone(); // -> clones the Camera
 ```
 
 ```js
-new GameObject(x, y, polymesh, colour, collides);
+new GameObject(x, y, polymesh, colImgFun, collides);
 ```
 Creates a `GameObject`.
 `x`: The `x` position for the `GameObject`.
 `y`: The `y` position for the `GameObject`.
 `polymesh`: The mesh used to render the `GameObject`, and if `collides` is set to true, for collisions.
-`colour`: The colour the `GameObject` is rendered in.
+`colImgFun`: This argument can be either a CSS colour to render the `GameObject` in, an image, which will be rendered at the `GameObject`'s position or a function which you can use to render the `GameObject` yourself.
 `collides`: Whether or not the `GameObject` collides with other objects.
 ```js
 addEventListener(name, func);    // -> adds an event listener to a GameObject
