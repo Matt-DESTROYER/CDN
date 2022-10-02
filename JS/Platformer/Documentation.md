@@ -47,8 +47,8 @@ Statistics.secondsToFinish;      // the number of seconds it took to complete th
 Statistics.minutesToFinish;      // the number of minutes it took to complete the platformer
 ```
 
-`Randomiser` API:
-The `Randomiser` API makes randomising things simpler!
+`Randomiser` Library:
+The `Randomiser` library makes randomising things simpler!
 You can view the documentation [here](https://github.com/Matt-DESTROYER/CDN/blob/main/JS/Randomiser/README.md).
 
 #### Dealing with events:
