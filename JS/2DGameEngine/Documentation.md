@@ -38,8 +38,8 @@ Time.timeElapsed; // -> returns the time in milliseconds since the game was star
 Time.now;         // -> returns the current time in milliseconds (Date.now())
 ```
 
-`Randomiser` API:
-The `Randomiser` API makes randomising things simpler!
+`Randomiser` Library:
+The `Randomiser` library makes randomising things simpler!
 You can view the documentation [here](https://github.com/Matt-DESTROYER/CDN/blob/main/JS/Randomiser/README.md).
 
 #### Dealing with events:
