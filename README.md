@@ -4,6 +4,7 @@ CDN stands for Content Distribution Network, this repository acts as a CDN for m
 
 ## JavaScript
 - 2DGameEngine.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/2DGameEngine/2DGameEngine.js"></script>`
+- BouncingParticles.js `<script type="module">import initParticles from "https://Matt-DESTROYER.github.io/CDN/JS/BouncingParticles/BouncingParticles.js";</script>`
 - DOMLib.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/DOMLib/lib.js"></script>`
 - Fraction.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/Fraction/Fraction.js"></script>`
 - Markdown.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/Markdown/Markdown.js"></script>`
