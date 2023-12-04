@@ -1,1 +1,50 @@
-import a from"https://Matt-DESTROYER.github.io/CDN/JS/Classes/Point.mjs";export default class b{constructor(a,b){this.p1=a,this.p2=b}get x1(){return this.p1.x}set x1(a){return this.p1.x=a}get x2(){return this.p2.x}set x2(a){return this.p2.x=a}get y1(){return this.p1.y}set y1(a){return this.p1.y=a}get y2(){return this.p2.y}set y2(a){return this.p2.y=a}intersects(a){let b=(this.p1.x-this.p2.x)*(a.p1.y-a.p2.y)-(this.p1.y-this.p2.y)*(a.p1.x-a.p2.x);if(0===b)return!1;let c=((this.p1.x-a.p1.x)*(a.p1.y-a.p2.y)-(this.p1.y-a.p1.y)*(a.p1.x-a.p2.x))/b,d=((this.p1.x-a.p1.x)*(this.p1.y-this.p2.y)-(this.p1.y-a.p1.y)*(this.p1.x-this.p2.x))/b;return c>=0&&c<=1&&d>=0&&d<=1}pointOfIntersection(b){let d=(this.p1.x-this.p2.x)*(b.p1.y-b.p2.y)-(this.p1.y-this.p2.y)*(b.p1.x-b.p2.x);if(0===d)return null;let c=((this.p1.x-b.p1.x)*(b.p1.y-b.p2.y)-(this.p1.y-b.p1.y)*(b.p1.x-b.p2.x))/d,e=((this.p1.x-b.p1.x)*(this.p1.y-this.p2.y)-(this.p1.y-b.p1.y)*(this.p1.x-this.p2.x))/d;return c>=0&&c<=1&&e>=0&&e<=1?new a(this.p1.x+c*(this.p2.x-this.p1.x),this.p1.y+c*(this.p2.y-this.p1.y)):null}}
+import Point from "https://Matt-DESTROYER.github.io/CDN/JS/Classes/Point.mjs";
+
+export default class Line {
+	constructor(p1, p2) {
+		this.p1 = p1;
+		this.p2 = p2;
+	}
+	get x1() {
+		return this.p1.x;
+	}
+	set x1(value) {
+		return this.p1.x = value;
+	}
+	get x2() {
+		return this.p2.x;
+	}
+	set x2(value) {
+		return this.p2.x = value;
+	}
+	get y1() {
+		return this.p1.y;
+	}
+	set y1(value) {
+		return this.p1.y = value;
+	}
+	get y2() {
+		return this.p2.y;
+	}
+	set y2(value) {
+		return this.p2.y = value;
+	}
+	intersects(line) {
+		const den = (this.p1.x - this.p2.x) * (line.p1.y - line.p2.y) - (this.p1.y - this.p2.y) * (line.p1.x - line.p2.x);
+		if (den === 0) {
+			return false;
+		}
+		const t = ((this.p1.x - line.p1.x) * (line.p1.y - line.p2.y) - (this.p1.y - line.p1.y) * (line.p1.x - line.p2.x)) / den;
+		const u = ((this.p1.x - line.p1.x) * (this.p1.y - this.p2.y) - (this.p1.y - line.p1.y) * (this.p1.x - this.p2.x)) / den;
+		return t >= 0 && t <= 1 && u >= 0 && u <= 1;
+	}
+	pointOfIntersection(line) {
+		const den = (this.p1.x - this.p2.x) * (line.p1.y - line.p2.y) - (this.p1.y - this.p2.y) * (line.p1.x - line.p2.x);
+		if (den === 0) {
+			return null;
+		}
+		const t = ((this.p1.x - line.p1.x) * (line.p1.y - line.p2.y) - (this.p1.y - line.p1.y) * (line.p1.x - line.p2.x)) / den;
+		const u = ((this.p1.x - line.p1.x) * (this.p1.y - this.p2.y) - (this.p1.y - line.p1.y) * (this.p1.x - this.p2.x)) / den;
+		return (t >= 0 && t <= 1 && u >= 0 && u <= 1) ? new Point(this.p1.x + t * (this.p2.x - this.p1.x), this.p1.y + t * (this.p2.y - this.p1.y)) : null;
+	}
+}

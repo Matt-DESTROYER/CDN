@@ -1,1 +1,259 @@
-const DOMLib=(function(){function a(a){return new Promise(function(c,d){let b=new XMLHttpRequest;b.open("GET",a,!0),b.onreadystatechange=function(){if(b.readyState===XMLHttpRequest.DONE){if(200===b.status){let a=b.getResponseHeader("Content-Type");1!==a.indexOf("text")?c(b.responseText):c(b.response)}else d(b)}},b.send(null)})}function b(b,c,d,e){this.title=b,this.htmlDirectory=c,this.htmlPartial=null,this.htmlPartialLoaded=!1,a(this.htmlDirectory).then(a=>{this.htmlPartial=a,this.htmlPartialLoaded=!0,e.$progress()}),this.jsControllerDirectory=d,this.jsController=null,this.jsControllerLoaded=!1,a(this.jsControllerDirectory).then(a=>{this.jsController=a,this.jsControllerLoaded=!0,e.$progress()})}function c(a,b,c){this.name=a,this.value=b,this.settings=c}class d{constructor(a){this.name=a,this.Variables=[]}DOM(d,e,f=null,g=null,a=[]){let c=g?g.childNodes:document.childNodes;for(let b=0;b<c.length;b++)c[b]&&((!f||c[b].tagName===f.toUpperCase())&&"getAttribute"in c[b]&&c[b].getAttribute(d)&&c[b].getAttribute(d)===e&&a.push(c[b]),c[b].childNodes.length>0&&this.DOM(d,e,f,c[b],a));if(0===a.length){let h=document.getElementById(d),i=document.getElementById(e);h&&a.push(h),i&&a.push(i);let j=Array.from(document.getElementsByTagName(d)),k=Array.from(document.getElementsByTagName(e));j.length>0&&a.push(...j),k.length>0&&a.push(...k)}return a.length>1?a:1===a.length?a[0]:null}CreateVariable(d,e,f=["out"]){for(let b=0;b<this.Variables.length;b++)if(this.Variables[b].name===d)return this.Variables[b].value=e,this.Variables[b].settings=f,console.warn("[DOMLibController] Called APP.CreateVariable with the same name as another variable ("+d+"), previous variable overwritten (to set a variable use APP.SetVariable(name, value))."),this.Variables[b];let a=new c(d,e,f);return void 0!==a.value&&a.settings.includes("out")&&this.DOM("name",a.name,"variable")&&(this.DOM("name",a.name,"variable").textContent=a.value),a.settings.includes("in")&&this.DOM("name",a.name,"variable")&&(a.value=this.DOM("name",a.name,"variable").textContent),this.Variables.push(a),a.value}GetVariable(b){for(let a=0;a<this.Variables.length;a++)if(this.Variables[a].name===b)return this.Variables[a].settings.includes("in")&&this.DOM("name",this.Variables[a].name,"variable")&&(this.Variables[a].value=this.DOM("name",this.Variables[a].name,"variable").textContent),this.Variables[a];return null}SetVariable(b,c){for(let a=0;a<this.Variables.length;a++)if(this.Variables[a].name===b){this.Variables[a].value=c,this.Variables[a].settings.includes("out")&&this.DOM("name",this.Variables[a].name,"variable")&&(this.DOM("name",this.Variables[a].name,"variable").textContent=this.Variables[a].value);break}return null}}class e{constructor(c){this.$appName=c,this.$pages=[],this.$pageContentLoaded=0,this.Page=null,this.onload=function(){},this.Controllers=[];let a=document.getElementsByTagName("title");if(a.length>0)a[0].innerHTML=this.$appName;else{let b=document.createElement("title");b.textContent=this.$appName,document.getElementsByTagName("head")[0].append(b)}}Input(a,b){return new Promise(function(i,j){let g=document.getElementsByTagName("body")[0],d=document.createElement("dialog");d.style["background-color"]="#c8c8c8",d.style["border-radius"]="10px";let f=document.createElement("h2");f.textContent=a,d.appendChild(f);let h=document.createElement("input");d.appendChild(h),d.appendChild(document.createElement("br")),d.appendChild(document.createElement("br"));for(let e=0;e<b.length;e++){let c=document.createElement("button");c.style["padding-left"]=c.style["padding-right"]="6px",c.style["padding-top"]=c.style["padding-bottom"]="4px",c.style["border-radius"]="6px",c.style.cursor="pointer","Ok"===b[e]||"Submit"===b[e]?(c.style["background-color"]="#1e90ff",c.style.border="2px solid #4682b4",c.style["border-radius"]="4px",c.style.color="#ffffff"):("Cancel"===b[e]||"Close"===b[e])&&(c.style["background-color"]="#fa7575",c.style.border="2px solid #b55757",c.style["border-radius"]="4px",c.style.color="#ffffff"),c.textContent=b[e],c.addEventListener("click",function(){"Ok"===c.textContent||"Submit"===c.textContent?i(h.value):("Cancel"===c.textContent||"Close"===c.textContent)&&j("cancelled"),g.removeChild(d)}),d.appendChild(c)}g.appendChild(d),d.showModal()})}$progress(){if(this.$pageContentLoaded++,this.$pageContentLoaded===2*this.$pages.length){let a=this.onload;this.onload=function(){},a()}}GetPage(b){for(let a=0;a<this.$pages.length;a++)if(this.$pages[a].title===b)return this.$pages[a];return null}CreatePage(a,c,d){return this.$pages.push(new b(a,c,d,this))}RefreshAllContent(){this.$pageContentLoaded=0,this.$pages.forEach(function(a){return a=new b(a.title,a.htmlDirectory,a.jsControllerDirectory,this)})}Render(b){if(b||""===this.Page||"string"!=typeof this.Page){if(this.$pages.length>0)b?this.Page=this.GetPage(b).title:this.Page=this.$pages[0].title;else throw new Error("[APP] No pages created, create at least one page before rendering the page.")}let a=this.GetPage(this.Page);if(!a.htmlPartialLoaded||!a.jsControllerLoaded)throw new Error("[APP] Page cannot be rendered, content not yet loaded. (Use APP.onload to ensure page contents are not used before loaded.)");document.getElementsByTagName("body")[0].innerHTML=a.htmlPartial,document.getElementsByTagName("condition");let c=document.createElement("script");c.textContent=a.jsController,document.getElementsByTagName("body")[0].appendChild(c)}Controller(b){let a=new d(b);return this.Controllers.push(a),a}}return{Init:function(a){return delete this.Init,new e(a)},GET:a}})();console.log("Loaded DOMLib by Matthew James")
+const DOMLib = (function () {
+	function GET(url) {
+		return new Promise(function (res, rej) {
+			const request = new XMLHttpRequest();
+			request.open("GET", url, true);
+			request.onreadystatechange = function () {
+				if (request.readyState === XMLHttpRequest.DONE) {
+					if (request.status === 200) {
+						const type = request.getResponseHeader("Content-Type");
+						if (type.indexOf("text") !== 1) {
+							res(request.responseText);
+						} else {
+							res(request.response);
+						}
+					} else {
+						rej(request);
+					}
+				}
+			}
+			request.send(null);
+		});
+	}
+	function Page(title, htmlDirectory, jsControllerDirectory, parent) {
+		this.title = title;
+		this.htmlDirectory = htmlDirectory;
+		this.htmlPartial = null;
+		this.htmlPartialLoaded = false;
+		GET(this.htmlDirectory).then((res) => {
+			this.htmlPartial = res;
+			this.htmlPartialLoaded = true;
+			parent.$progress();
+		});
+		this.jsControllerDirectory = jsControllerDirectory;
+		this.jsController = null;
+		this.jsControllerLoaded = false;
+		GET(this.jsControllerDirectory).then((res) => {
+			this.jsController = res;
+			this.jsControllerLoaded = true;
+			parent.$progress();
+		});
+	}
+	function DOMLibVariable(name, value, settings) {
+		this.name = name;
+		this.value = value;
+		this.settings = settings;
+	}
+	class DOMLibController {
+		constructor(name) {
+			this.name = name;
+			this.Variables = [];
+		}
+		DOM(property, value, tag = null, node = null, arr = []) {
+			const nodes = node ? node.childNodes : document.childNodes;
+			for (let i = 0; i < nodes.length; i++) {
+				if (!nodes[i]) {
+					continue;
+				}
+				if ((tag ? nodes[i].tagName === tag.toUpperCase() : true) && "getAttribute" in nodes[i] && nodes[i].getAttribute(property) && nodes[i].getAttribute(property) === value) {
+					arr.push(nodes[i]);
+				}
+				if (nodes[i].childNodes.length > 0) {
+					this.DOM(property, value, tag, nodes[i], arr);
+				}
+			}
+			if (arr.length === 0) {
+				const pid = document.getElementById(property);
+				const vid = document.getElementById(value);
+				if (pid) {
+					arr.push(pid);
+				}
+				if (vid) {
+					arr.push(vid);
+				}
+				const ptag = Array.from(document.getElementsByTagName(property));
+				const vtag = Array.from(document.getElementsByTagName(value));
+				if (ptag.length > 0) {
+					arr.push(...ptag);
+				}
+				if (vtag.length > 0) {
+					arr.push(...vtag);
+				}
+			}
+			return arr.length > 1 ? arr : arr.length === 1 ? arr[0] : null;
+		}
+		CreateVariable(name, value, settings = ["out"]) {
+			for (let i = 0; i < this.Variables.length; i++) {
+				if (this.Variables[i].name === name) {
+					this.Variables[i].value = value;
+					this.Variables[i].settings = settings;
+					console.warn("[DOMLibController] Called APP.CreateVariable with the same name as another variable (" + name + "), previous variable overwritten (to set a variable use APP.SetVariable(name, value)).");
+					return this.Variables[i];
+				}
+			}
+			const variable = new DOMLibVariable(name, value, settings);
+			if (variable.value !== undefined && variable.settings.includes("out")) {
+				if (this.DOM("name", variable.name, "variable")) {
+					this.DOM("name", variable.name, "variable").textContent = variable.value;
+				}
+			}
+			if (variable.settings.includes("in")) {
+				if (this.DOM("name", variable.name, "variable")) {
+					variable.value = this.DOM("name", variable.name, "variable").textContent;
+				}
+			}
+			this.Variables.push(variable);
+			return variable.value;
+		}
+		GetVariable(name) {
+			for (let i = 0; i < this.Variables.length; i++) {
+				if (this.Variables[i].name === name) {
+					if (this.Variables[i].settings.includes("in")) {
+						if (this.DOM("name", this.Variables[i].name, "variable")) {
+							this.Variables[i].value = this.DOM("name", this.Variables[i].name, "variable").textContent;
+						}
+					}
+					return this.Variables[i];
+				}
+			}
+			return null;
+		}
+		SetVariable(name, value) {
+			for (let i = 0; i < this.Variables.length; i++) {
+				if (this.Variables[i].name === name) {
+					this.Variables[i].value = value;
+					if (this.Variables[i].settings.includes("out")) {
+						if (this.DOM("name", this.Variables[i].name, "variable")) {
+							this.DOM("name", this.Variables[i].name, "variable").textContent = this.Variables[i].value;
+						}
+					}
+					break;
+				}
+			}
+			return null;
+		}
+	}
+	class DOMLibInstance {
+		constructor(name) {
+			this.$appName = name;
+			this.$pages = [];
+			this.$pageContentLoaded = 0;
+			this.Page = null;
+			this.onload = function () { };
+			this.Controllers = [];
+			let _titles = document.getElementsByTagName("title");
+			if (_titles.length > 0) {
+				_titles[0].innerHTML = this.$appName;
+			} else {
+				const _title = document.createElement("title");
+				_title.textContent = this.$appName;
+				document.getElementsByTagName("head")[0].append(_title);
+			}
+		}
+		Input(message, buttons) {
+			return new Promise(function (res, rej) {
+				const body = document.getElementsByTagName("body")[0];
+				const dlg = document.createElement("dialog");
+				dlg.style["background-color"] = "#c8c8c8";
+				dlg.style["border-radius"] = "10px";
+				const msg = document.createElement("h2");
+				msg.textContent = message;
+				dlg.appendChild(msg);
+				const input = document.createElement("input");
+				dlg.appendChild(input);
+				dlg.appendChild(document.createElement("br"));
+				dlg.appendChild(document.createElement("br"));
+				for (let i = 0; i < buttons.length; i++) {
+					const btn = document.createElement("button");
+					btn.style["padding-left"] = btn.style["padding-right"] = "6px";
+					btn.style["padding-top"] = btn.style["padding-bottom"] = "4px";
+					btn.style["border-radius"] = "6px";
+					btn.style.cursor = "pointer";
+					if (buttons[i] === "Ok" || buttons[i] === "Submit") {
+						btn.style["background-color"] = "#1e90ff";
+						btn.style.border = "2px solid #4682b4";
+						btn.style["border-radius"] = "4px";
+						btn.style.color = "#ffffff";
+					} else if (buttons[i] === "Cancel" || buttons[i] === "Close") {
+						btn.style["background-color"] = "#fa7575";
+						btn.style.border = "2px solid #b55757";
+						btn.style["border-radius"] = "4px";
+						btn.style.color = "#ffffff";
+					}
+					btn.textContent = buttons[i];
+					btn.addEventListener("click", function () {
+						if (btn.textContent === "Ok" || btn.textContent === "Submit") {
+							res(input.value);
+						} else if (btn.textContent === "Cancel" || btn.textContent === "Close") {
+							rej("cancelled");
+						}
+						body.removeChild(dlg);
+					});
+					dlg.appendChild(btn);
+				}
+				body.appendChild(dlg);
+				dlg.showModal();
+			});
+		}
+		$progress() {
+			this.$pageContentLoaded++;
+			if (this.$pageContentLoaded === this.$pages.length * 2) {
+				const onload = this.onload;
+				this.onload = function () { };
+				onload();
+			}
+		}
+		GetPage(title) {
+			for (let i = 0; i < this.$pages.length; i++) {
+				if (this.$pages[i].title === title) {
+					return this.$pages[i];
+				}
+			}
+			return null;
+		}
+		CreatePage(title, htmlDirectory, jsControllerDirectory) {
+			return this.$pages.push(new Page(title, htmlDirectory, jsControllerDirectory, this))
+		}
+		RefreshAllContent() {
+			this.$pageContentLoaded = 0;
+			this.$pages.forEach(function (page) {
+				return page = new Page(page.title, page.htmlDirectory, page.jsControllerDirectory, this);
+			});
+		}
+		Render(page) {
+			if (page || this.Page === "" || typeof this.Page !== "string") {
+				if (this.$pages.length > 0) {
+					if (page) {
+						this.Page = this.GetPage(page).title;
+					} else {
+						this.Page = this.$pages[0].title;
+					}
+				} else {
+					throw new Error("[APP] No pages created, create at least one page before rendering the page.");
+				}
+			}
+			const _page = this.GetPage(this.Page);
+			if (!_page.htmlPartialLoaded || !_page.jsControllerLoaded) {
+				throw new Error("[APP] Page cannot be rendered, content not yet loaded. (Use APP.onload to ensure page contents are not used before loaded.)");
+			}
+			document.getElementsByTagName("body")[0].innerHTML = _page.htmlPartial;
+			const conditions = document.getElementsByTagName("condition");
+			const _script = document.createElement("script");
+			_script.textContent = _page.jsController;
+			document.getElementsByTagName("body")[0].appendChild(_script);
+		}
+		Controller(name) {
+			const _controller = new DOMLibController(name);
+			this.Controllers.push(_controller);
+			return _controller;
+		}
+	}
+	return {
+		"Init": function (name) {
+			delete this.Init;
+			return new DOMLibInstance(name);
+		},
+		"GET": GET
+	};
+})();
+console.log("Loaded DOMLib by Matthew James");

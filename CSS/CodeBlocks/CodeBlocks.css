@@ -1,1 +1,61 @@
-.code,.in-line-code,code,in-line-code{background-color:#d3d3d3;color:gray;font-family:monospace;text-align:left;tab-size:4}.code,code{padding:10px 20px;border-radius:5px}.in-line-code,in-line-code{padding:1px;border-radius:3px}.code p+p,code p+p{margin-top:-13px}.keyword,keyword{color:#00f}.variable,variable{color:#f27a3a}.object,object{color:#ff6400}.object-property,object-property{color:#ff9600}.string,string{color:brown}.number,number{color:#ffe563}.operator,operator{color:#79c0ff}.boolean,boolean{color:#6495ed}.comment,comment{color:green}
+.code, code {
+	background-color: lightgray;
+	color: gray;
+	font-family: monospace;
+	text-align: left;
+	padding: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 5px;
+	tab-size: 4;
+}
+
+.in-line-code, in-line-code {
+	background-color: lightgray;
+	color: gray;
+	font-family: monospace;
+	text-align: left;
+	padding: 1px;
+	border-radius: 3px;
+	tab-size: 4;
+}
+
+.code p+p, code p+p {
+	margin-top: -13px;
+}
+
+.keyword, keyword {
+	color: blue;
+}
+
+.variable, variable {
+	color: #f27a3a;
+}
+
+.object, object {
+	color: rgb(255, 100, 0);
+}
+
+.object-property, object-property {
+	color: rgb(255, 150, 0);
+}
+
+.string, string {
+	color: brown;
+}
+
+.number, number {
+	color: #ffe563;
+}
+
+.operator, operator {
+	color: #79C0FF;
+}
+
+.boolean, boolean {
+	color: cornflowerblue;
+}
+
+.comment, comment {
+	color: green;
+}

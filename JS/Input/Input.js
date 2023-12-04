@@ -1,1 +1,115 @@
-const Input=(function(){let a=[];function b(b,c){for(let a=0;a<b.length;a++)if(c(b[a]))return a;return -1}function c(c){c=c||window.event;for(let e=0;e<c.path.length;e++){let d=b(a,function(a){return a.element===c.path[e]});-1!==d&&(a[d].input[c.keyCode]=!0,a[d].input[c.key.toString().toUpperCase()]=!0,a[d].input.keyIsPressed=!0,a[d].input.keyCode=c.keyCode,a[d].input.key=c.key.toString().toUpperCase())}}function d(c){c=c||window.event;for(let e=0;e<c.path.length;e++){let d=b(a,function(a){return a.element===c.path[e]});-1!==d&&(a[d].input[c.keyCode]=!1,a[d].input[c.key.toString().toUpperCase()]=!1,a[d].input.keyCode===c.keyCode&&(a[d].input.keyIsPressed=!1))}}function e(c){c=c||window.event;for(let e=0;e<c.path.length;e++){let d=b(a,function(a){return a.element===c.path[e]});-1!==d&&(a[d].input.buttons=c.buttons,a[d].input.mouseDown=!0)}}function f(c){c=c||window.event;for(let e=0;e<c.path.length;e++){let d=b(a,function(a){return a.element===c.path[e]});-1!==d&&(a[d].input.buttons=c.buttons,a[d].input.mouseDown=!1)}}function g(c){c=c||window.event;for(let e=0;e<c.path.length;e++){let d=b(a,function(a){return a.element===c.path[e]});if(-1!==d){if(a[d].input.pmouseX=a[d].input.mouseX,a[d].input.pmouseY=a[d].input.mouseY,"getBoundingClientRect"in c.currentTarget){let f=c.currentTarget.getBoundingClientRect();a[d].input.mouseX=c.clientX-f.left,a[d].input.mouseY=c.clientY-f.top}else a[d].input.mouseX=c.clientX,a[d].input.mouseY=c.clientY}}}return{listenTo:function(b){let h={element:b,input:{}};return a.push(h),b.addEventListener("keydown",c),b.addEventListener("keyup",d),b.addEventListener("mousedown",e),b.addEventListener("mouseup",f),b.addEventListener("mousemove",g),h.input},stopListening:function(a){return a.removeEventListener("keydown",c),a.removeEventListener("keyup",d),a.removeEventListener("mousedown",e),a.removeEventListener("mouseup",f),a.removeEventListener("mousemove",g),a}}})();console.log("Loaded Input.js by Matthew James")
+const Input = (function () {
+	const listeners = [];
+
+	function indexOf(arr, func) {
+		for (let i = 0; i < arr.length; i++) {
+			if (func(arr[i])) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	function keyDown(e) {
+		e = e || window.event;
+		for (let i = 0; i < e.path.length; i++) {
+			const idx = indexOf(listeners, function (x) {
+				return x.element === e.path[i];
+			});
+			if (idx !== -1) {
+				listeners[idx].input[e.keyCode] = true;
+				listeners[idx].input[e.key.toString().toUpperCase()] = true;
+				listeners[idx].input.keyIsPressed = true;
+				listeners[idx].input.keyCode = e.keyCode;
+				listeners[idx].input.key = e.key.toString().toUpperCase();
+			}
+		}
+	}
+
+	function keyUp(e) {
+		e = e || window.event;
+		for (let i = 0; i < e.path.length; i++) {
+			const idx = indexOf(listeners, function (x) {
+				return x.element === e.path[i];
+			});
+			if (idx !== -1) {
+				listeners[idx].input[e.keyCode] = false;
+				listeners[idx].input[e.key.toString().toUpperCase()] = false;
+				if (listeners[idx].input.keyCode === e.keyCode) {
+					listeners[idx].input.keyIsPressed = false;
+				}
+			}
+		}
+	}
+
+	function mouseDown(e) {
+		e = e || window.event;
+		for (let i = 0; i < e.path.length; i++) {
+			const idx = indexOf(listeners, function (x) {
+				return x.element === e.path[i];
+			});
+			if (idx !== -1) {
+				listeners[idx].input.buttons = e.buttons;
+				listeners[idx].input.mouseDown = true;
+			}
+		}
+	}
+
+	function mouseUp(e) {
+		e = e || window.event;
+		for (let i = 0; i < e.path.length; i++) {
+			const idx = indexOf(listeners, function (x) {
+				return x.element === e.path[i];
+			});
+			if (idx !== -1) {
+				listeners[idx].input.buttons = e.buttons;
+				listeners[idx].input.mouseDown = false;
+			}
+		}
+	}
+
+	function mouseMove(e) {
+		e = e || window.event;
+		for (let i = 0; i < e.path.length; i++) {
+			const idx = indexOf(listeners, function (x) {
+				return x.element === e.path[i];
+			});
+			if (idx !== -1) {
+				listeners[idx].input.pmouseX = listeners[idx].input.mouseX;
+				listeners[idx].input.pmouseY = listeners[idx].input.mouseY;
+				if ("getBoundingClientRect" in e.currentTarget) {
+					const rect = e.currentTarget.getBoundingClientRect();
+					listeners[idx].input.mouseX = e.clientX - rect.left;
+					listeners[idx].input.mouseY = e.clientY - rect.top;
+				} else {
+					listeners[idx].input.mouseX = e.clientX;
+					listeners[idx].input.mouseY = e.clientY;
+				}
+			}
+		}
+	}
+	return {
+		"listenTo": function (htmlElement) {
+			const _listener = {
+				"element": htmlElement,
+				"input": {}
+			};
+			listeners.push(_listener);
+			htmlElement.addEventListener("keydown", keyDown);
+			htmlElement.addEventListener("keyup", keyUp);
+			htmlElement.addEventListener("mousedown", mouseDown);
+			htmlElement.addEventListener("mouseup", mouseUp);
+			htmlElement.addEventListener("mousemove", mouseMove);
+			return _listener.input;
+		},
+		"stopListening": function (htmlElement) {
+			htmlElement.removeEventListener("keydown", keyDown);
+			htmlElement.removeEventListener("keyup", keyUp);
+			htmlElement.removeEventListener("mousedown", mouseDown);
+			htmlElement.removeEventListener("mouseup", mouseUp);
+			htmlElement.removeEventListener("mousemove", mouseMove);
+			return htmlElement;
+		}
+	};
+})();
+console.log("Loaded Input.js by Matthew James");

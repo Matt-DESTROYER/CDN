@@ -1,1 +1,92 @@
-import a from"https://Matt-DESTROYER.github.io/CDN/JS/Classes/Point.mjs";import b from"https://Matt-DESTROYER.github.io/CDN/JS/Classes/Line.mjs";export default class c{constructor(a){this.points=a}minX(){return Math.min(...this.points.map(a=>a.x))}minY(){return Math.min(...this.points.map(a=>a.y))}maxX(){return Math.max(...this.points.map(a=>a.x))}maxY(){return Math.max(...this.points.map(a=>a.y))}translate(b,c){for(let a=0;a<this.points.length;a++)this.points[a].add(b,c);return this}getMidpoint(){let b=new a(0,0);for(let c=0;c<this.points.length;c++)b.add(this.points[c]);return b.divide(this.points.length),b}rotate(b){b*=Math.PI/180;let c=this.getMidpoint();for(let a=0;a<this.points.length;a++){let d=this.points[a].x-c.x,e=this.points[a].y-c.y;this.points[a].x=d*Math.cos(b)-e*Math.sin(b)+c.x,this.points[a].y=d*Math.sin(b)+e*Math.cos(b)+c.y}return this}pointInPolygon(g,c=null){if(null===c){c=this.points[0].x;for(let d=1;d<this.points.length;d++)this.points[d].x>c&&(c=this.points[d].x)}let h=new b(g,new a(c,g.y)),f=!1;for(let e=1;e<this.points.length;e++)h.intersects(new b(this.points[e-1],this.points[e]))&&(f=!f);return f}collides(b){let a=this.points[0].x;for(let c=1;c<this.points.length;c++)this.points[c].x>a&&(a=this.points[c].x);for(let d=0;d<b.points.length;d++)b.points[d].x>a&&(a=b.points[d].x);a<0?a=-a:0===a&&(a=1),a*=10;for(let e=0;e<this.points.length;e++)if(b.pointInPolygon(this.points[e],a))return!0;for(let f=0;f<b.points.length;f++)if(this.pointInPolygon(b.points[f],a))return!0;return!1}}
+import Point from "https://Matt-DESTROYER.github.io/CDN/JS/Classes/Point.mjs";
+import Line from "https://Matt-DESTROYER.github.io/CDN/JS/Classes/Line.mjs";
+
+export default class Polygon {
+	constructor(points) {
+		this.points = points;
+	}
+	minX() {
+		return Math.min(...this.points.map((point) => point.x));
+	}
+	minY() {
+		return Math.min(...this.points.map((point) => point.y));
+	}
+	maxX() {
+		return Math.max(...this.points.map((point) => point.x));
+	}
+	maxY() {
+		return Math.max(...this.points.map((point) => point.y));
+	}
+	translate(x, y) {
+		for (let i = 0; i < this.points.length; i++) {
+			this.points[i].add(x, y);
+		}
+		return this;
+	}
+	getMidpoint() {
+		const midpoint = new Point(0, 0);
+		for (let i = 0; i < this.points.length; i++) {
+			midpoint.add(this.points[i])
+		}
+		midpoint.divide(this.points.length);
+		return midpoint;
+	}
+	rotate(degree) {
+		degree *= Math.PI / 180;
+		const midpoint = this.getMidpoint();
+		for (let i = 0; i < this.points.length; i++) {
+			const x = this.points[i].x - midpoint.x, y = this.points[i].y - midpoint.y;
+			this.points[i].x = x * Math.cos(degree) - y * Math.sin(degree) + midpoint.x;
+			this.points[i].y = x * Math.sin(degree) + y * Math.cos(degree) + midpoint.y;
+		}
+		return this;
+	}
+	pointInPolygon(point, maxX = null) {
+		if (maxX === null) {
+			maxX = this.points[0].x;
+			for (let i = 1; i < this.points.length; i++) {
+				if (this.points[i].x > maxX) {
+					maxX = this.points[i].x;
+				}
+			}
+		}
+		const ray = new Line(point, new Point(maxX, point.y));
+		let result = false;
+		for (let i = 1; i < this.points.length; i++) {
+			if (ray.intersects(new Line(this.points[i - 1], this.points[i]))) {
+				result = !result;
+			}
+		}
+		return result;
+	}
+	collides(polygon) {
+		let maxX = this.points[0].x;
+		for (let i = 1; i < this.points.length; i++) {
+			if (this.points[i].x > maxX) {
+				maxX = this.points[i].x;
+			}
+		}
+		for (let i = 0; i < polygon.points.length; i++) {
+			if (polygon.points[i].x > maxX) {
+				maxX = polygon.points[i].x;
+			}
+		}
+		if (maxX < 0) {
+			maxX = -maxX;
+		} else if (maxX === 0) {
+			maxX = 1;
+		}
+		maxX *= 10;
+		for (let i = 0; i < this.points.length; i++) {
+			if (polygon.pointInPolygon(this.points[i], maxX)) {
+				return true;
+			}
+		}
+		for (let i = 0; i < polygon.points.length; i++) {
+			if (this.pointInPolygon(polygon.points[i], maxX)) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
