@@ -99,7 +99,7 @@ const Markdown = (function () {
 						result += tokens[i] + "</comment>";
 					} else if (tokens[i].substr(0, 2) === "//") {
 						result += "<comment>" + tokens[i];
-						while (!newLineRegex.test(tokens[i])) {
+						while (!newLineRegexp.test(tokens[i])) {
 							i++;
 							result += tokens[i].includes("\n") ? tokens[i].substr(0, tokens[i].indexOf("\n")) + "</comment>" : tokens[i];
 						}
