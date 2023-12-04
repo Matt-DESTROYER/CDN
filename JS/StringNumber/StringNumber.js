@@ -148,11 +148,6 @@ class StringNumber {
 				return false;
 			} else if (_.includes("-") && !this.includes("-")) {
 				return true;
-			} else if (this.n.includes("-") && !_.includes("-")) {
-				this.n = this.n.replace("-", "");
-				let _ = this.lessThan(_.replace("-"), "");
-				this.n = "-" + this.n;
-				return _;
 			}
 			const length = Math.min(this.n.length, _.length);
 			for (let i = 0; i < length; i++) {
