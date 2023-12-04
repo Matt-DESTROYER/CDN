@@ -376,7 +376,7 @@ class StringNumber {
 			}
 			this.n = this.n.map(x => x === "." ? "." : StringNumber.DigitToInt(x));
 			_ = _.map(x => x === "." ? "." : StringNumber.DigitToInt(x));
-			let result, a, b;
+			let a, b;
 			for (let i = 0; i < _.length; i++) {
 				b = _[_.length - i - 1];
 				if (b === ".") {
