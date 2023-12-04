@@ -2,6 +2,8 @@
 A repository to access JavaScript frameworks/files externally.
 CDN stands for Content Distribution Network, this repository acts as a CDN for my frameworks/JavaScript files. Alternatively you can download the files and manually include them in your project. (This means you will either not receive updates or have to download the updated version each time an update is made to a file.)
 
+Now fully open-source; code is no longer minified/obfuscated!
+
 ## JavaScript
 - 2DGameEngine.js `<script type="text/javascript" src="https://Matt-DESTROYER.github.io/CDN/JS/2DGameEngine/2DGameEngine.js"></script>`
 - BouncingParticles.js `<script type="module">import initParticles from "https://Matt-DESTROYER.github.io/CDN/JS/BouncingParticles/BouncingParticles.js";</script>`
