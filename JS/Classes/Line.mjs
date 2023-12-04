@@ -9,25 +9,25 @@ export default class Line {
 		return this.p1.x;
 	}
 	set x1(value) {
-		return this.p1.x = value;
+		this.p1.x = value;
 	}
 	get x2() {
 		return this.p2.x;
 	}
 	set x2(value) {
-		return this.p2.x = value;
+		this.p2.x = value;
 	}
 	get y1() {
 		return this.p1.y;
 	}
 	set y1(value) {
-		return this.p1.y = value;
+		this.p1.y = value;
 	}
 	get y2() {
 		return this.p2.y;
 	}
 	set y2(value) {
-		return this.p2.y = value;
+		this.p2.y = value;
 	}
 	intersects(line) {
 		const den = (this.p1.x - this.p2.x) * (line.p1.y - line.p2.y) - (this.p1.y - this.p2.y) * (line.p1.x - line.p2.x);
