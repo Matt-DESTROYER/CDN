@@ -14,73 +14,73 @@ export default class Rectangle extends Polygon {
 		return this.points[0];
 	}
 	set p1(value) {
-		return this.points[0] = value;
+		this.points[0] = value;
 	}
 	get p2() {
 		return this.points[1];
 	}
 	set p2(value) {
-		return this.points[1] = value;
+		this.points[1] = value;
 	}
 	get p3() {
 		return this.points[2];
 	}
 	set p3(value) {
-		return this.points[2] = value;
+		this.points[2] = value;
 	}
 	get p4() {
 		return this.points[3];
 	}
 	set p4(value) {
-		return this.points[3] = value;
+		this.points[3] = value;
 	}
 	get x1() {
 		return this.points[0].x;
 	}
 	set x1(value) {
-		return this.points[0].x = value;
+		this.points[0].x = value;
 	}
 	get y1() {
 		return this.points[0].y;
 	}
 	set y1(value) {
-		return this.points[0].y = value;
+		this.points[0].y = value;
 	}
 	get x2() {
 		return this.points[1].x;
 	}
 	set x2(value) {
-		return this.points[0].x = value;
+		this.points[0].x = value;
 	}
 	get y2() {
 		return this.points[1].y;
 	}
 	set y2(value) {
-		return this.points[1].y = value;
+		this.points[1].y = value;
 	}
 	get x3() {
 		return this.points[2].x;
 	}
 	set x3(value) {
-		return this.points[0].x = value;
+		this.points[0].x = value;
 	}
 	get y3() {
 		return this.points[2].y;
 	}
 	set y3(value) {
-		return this.points[2].y = value;
+		this.points[2].y = value;
 	}
 	get x4() {
 		return this.points[3].x;
 	}
 	set x4(value) {
-		return this.points[0].x = value;
+		this.points[0].x = value;
 	}
 	get y4() {
 		return this.points[3].y;
 	}
 	set y4(value) {
-		return this.points[3].y = value;
+		this.points[3].y = value;
 	}
 	get x() {
 		return this.points[0].x;
