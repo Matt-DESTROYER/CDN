@@ -34,9 +34,9 @@ const Tokeniser = (function () {
 		},
 		parseString: function (str) {
 			if (typeof str !== "string") {
-				if (str === null) {
+				if (str == null) {
 					return "null";
-				} if (typeof str === "object") {
+				} else if (typeof str === "object") {
 					str = JSON.stringify(str);
 				} else {
 					str = str.toString();
