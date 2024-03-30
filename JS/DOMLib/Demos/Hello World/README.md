@@ -1,5 +1,5 @@
 # Hello DOMLib!
-> A live demo of the website built with this code is available [here](https://domlib-demo-hello-world.mattdestroyer.repl.co/).
+> Check out the live demo of the website built with the code bellow [here](https://matt-destroyer.github.io/CDN/JS/DOMLib/Demos/Hello%20World/)!
 
 The website starts with an empty `index.html` file.
 ```html
