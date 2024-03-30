@@ -1,9 +1,14 @@
 # Hello DOMLib!
 > A live demo of the website built with this code is available [here](https://domlib-demo-hello-world.mattdestroyer.repl.co/).
 
-The website starts with a slightly more empty than usual `index.html` file.
+The website starts with an empty `index.html` file.
 ```html
 <!DOCTYPE html>
+<html>
+	<head></head>
+
+	<body></body>
+</html>
 ```
 
 First of all we need to load the `DOMLib` scripts using this tag in the document's head `<script src="https://Matt-DESTROYER.github.io/CDN/JS/DOMLib/lib.js"></script>`.
@@ -34,17 +39,22 @@ Your final `index.html` file should look something like this:
 `index.html`
 ```html
 <!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://Matt-DESTROYER.github.io/CDN/JS/DOMLib/lib.js"></script>
+	</head>
 
-<script src="https://Matt-DESTROYER.github.io/CDN/JS/DOMLib/lib.js"></script>
-
-<script>
-	const APP = DOMLib.Init("Hello World");
-	APP.CreatePage("Home", "home.html", "homeController.js");
-	APP.CreatePage("Hi", "hi.html", "hiController.js");
-	APP.onload = function() {
-		APP.Render("Home");
-	};
-</script>
+	<body>
+		<script>
+			const APP = DOMLib.Init("Hello World");
+			APP.CreatePage("Home", "home.html", "homeController.js");
+			APP.CreatePage("Hi", "hi.html", "hiController.js");
+			APP.onload = function() {
+				APP.Render("Home");
+			};
+		</script>
+	</body>
+</html>
 ```
 
 Now we need to create the files we are using for our `Page`s. Let's start with the "Home" `Page`. Our home page will have three elements, a title, a short message, and a `DOMLibVariable`.
@@ -78,7 +88,7 @@ Let's look at the `DOM` method quickly. The `DOM` method takes in two or three a
 
 Now we've got our `titleText` we can add an event listener to ensure when it is clicked, the `Page` is switched to "Hi" and rendered.
 ```js
-titleText.addEventListener("click", function() {
+titleText.on("click", function() {
 	APP.Render("Hi");
 });
 ```
@@ -96,7 +106,7 @@ const homeController = APP.Controller("homeController");
 homeController.CreateVariable("data", "some data", ["out"]);
 const titleText = homeController.DOM("name", "title text");
 titleText.style.cursor = "pointer";
-titleText.addEventListener("click", function() {
+titleText.on("click", function() {
 	APP.Render("Hi");
 });
 ```
