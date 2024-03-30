@@ -1,6 +1,8 @@
 "use strict";
 
 const DOMLib = (function () {
+	HTMLElement.prototype.on = HTMLElement.prototype.addEventListener;
+	
 	function GET(url) {
 		return new Promise(function (res, rej) {
 			const request = new XMLHttpRequest();
