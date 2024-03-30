@@ -1,3 +1,5 @@
+"use strict";
+
 let $canvas, $ctx,
 	$previousFrame = 0,
 	$previousFrameReading = 0,
