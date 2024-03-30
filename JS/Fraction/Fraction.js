@@ -1,3 +1,5 @@
+"use strict";
+
 const Fraction = function (numerator, denominator) {
 	if (typeof numerator === "number" && typeof denominator === "number") {
 		if (numerator !== ~~numerator || denominator !== ~~denominator) {
