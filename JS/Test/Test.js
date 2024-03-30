@@ -1,3 +1,5 @@
+"use strict";
+
 const Test = (function () {
 	const equals = function (a, b, caseSensitive = true) {
 		if (a === null) {
