@@ -1,5 +1,5 @@
 # Fraction.js
-> A small and simple library which allows you to operate on/with fractions (which allows more precision than decimals).
+> A small, simple, lightweight library that allows you to operate on/with fractions (which allows a lot more precision than with decimals).
 
 ```js
 new Fraction(/* int */ numerator, /* int */ denominator);
@@ -39,6 +39,8 @@ Fraction.prototype.divide(/* int */ numerator, /* int */ denominator);
 ```
 Divides a `Fraction` by an the input `Fraction`.
 
+> All _above_ methods of `Fraction`s are **chainable**!
+
 ```js
 Fraction.prototype.toArray();
 ```
@@ -48,5 +50,3 @@ Returns a `Fraction` in array fromat: `[ numerator, denominator ]`.
 Fraction.prototype.toString();
 ```
 Returns a `Fraction` in string format: `"numerator/denominator"`.
-
-> All methods of `Fraction`s are **chainable**!
