@@ -1,3 +1,5 @@
+"use strict";
+
 class StringNumber {
 	constructor(n) {
 		this.n = StringNumber.CleanNumberString((n || "0").toString());
