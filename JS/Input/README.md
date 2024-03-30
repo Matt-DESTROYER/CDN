@@ -57,12 +57,12 @@ if (input.buttons.includes(2)) {
 ### Example:
 ```js
 // start listening to input
-const _docInput = Input.listenTo(document);
+const docInput = Input.listenTo(document);
 
 // ...
 
 // check if the shift key is being pressed
-if (_docInput[13]) {
+if (docInput[13]) {
 	// ...
 }
 
