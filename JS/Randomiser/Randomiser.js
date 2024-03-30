@@ -1,3 +1,5 @@
+"use strict";
+
 const Randomiser = (function () {
 	String.prototype.shuffle = function () {
 		const _temp = this.split("");
