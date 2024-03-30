@@ -1,3 +1,5 @@
+"use strict";
+
 const Input = (function () {
 	const listeners = [];
 
