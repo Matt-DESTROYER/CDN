@@ -4,6 +4,6 @@ homeController.CreateVariable("pi", Math.PI, ["out"]);
 
 const titleText = homeController.DOM("name", "title text");
 titleText.style.cursor = "pointer";
-titleText.addEventListener("click", function() {
+titleText.on("click", function() {
 	APP.Render("Hi");
 });
