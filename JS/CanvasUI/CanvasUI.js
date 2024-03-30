@@ -1,3 +1,5 @@
+"use strict";
+
 const InitCanvasUI = function(canvas) {
 	let rect = canvas.getBoundingClientRect();
 	const ui_components = [];
