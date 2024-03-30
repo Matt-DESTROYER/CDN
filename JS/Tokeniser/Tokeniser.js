@@ -1,5 +1,7 @@
+"use strict";
+
 const Tokeniser = (function () {
-	const numberRegex = /-?(\d+\.d+|\d+\.|\.\d+|\d+)((e|E)(\+|-)?\d+)?/g;
+	const numberRegex = /-?(\d+\.d+|\.\d+|\d+)(\s?(e|E)(\+|-)?\d+)?/g;
 	return {
 		settings: {
 			operators: ["<", ">", "=", "+", "-", "*", "/", "?", "!"],
