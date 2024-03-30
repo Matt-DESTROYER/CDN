@@ -1,3 +1,5 @@
+"use strict";
+
 const DOMLib = (function () {
 	function GET(url) {
 		return new Promise(function (res, rej) {
