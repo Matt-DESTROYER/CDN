@@ -1,3 +1,4 @@
+"use strict";
 let $canvas, $ctx, $player, $platformerRunning = true,
 	$lastLevel,
 	$previousFrame = 0,
