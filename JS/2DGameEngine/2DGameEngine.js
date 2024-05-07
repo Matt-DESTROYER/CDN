@@ -13,19 +13,20 @@ const Input = {
 	get mouseToWorldCoordinates() {
 		return new Vector2(this.mouseX - $canvas.width / 2 + $scenes[$currentScene].camera.x, this.mouseY - $canvas.height / 2 + $scenes[$currentScene].camera.y);
 	}
-},
-	Time = {
-		"startTime": 0,
-		"_dt": 0,
-		"deltaTime": 0,
-		get timeElapsed() {
-			return Date.now() - this.startTime;
-		},
-		get now() {
-			return Date.now();
-		}
-	};
-const getHead = () => document.head || document.querySelector("head"), getBody = () => document.body || document.querySelector("body");
+};
+const Time = {
+	startTime: 0,
+	_dt: 0,
+	deltaTime: 0,
+	get timeElapsed() {
+		return Date.now() - this.startTime;
+	},
+	get now() {
+		return Date.now();
+	}
+};
+const getHead = () => document.head || document.querySelector("head");
+const getBody = () => document.body || document.querySelector("body");
 let head, body;
 if (document.readyState === "complete" || document.readyState === "interactive") {
 	head = getHead();
@@ -42,7 +43,7 @@ const degreesToRadians = degrees => degrees * Math.PI / 180;
 const radiansToDegrees = radians => radians * 180 / Math.PI;
 const $ = _ => document.querySelector(_);
 const Randomiser = (function () { function a(c) { let d = []; for (let b = 0; b < c.length; b++)Array.isArray(c[b]) ? d.push(a(c[b])) : d.push(c[b]); return d } return String.prototype.shuffle = function () { let a = this.split(""), b = ""; for (; a.length > 0;)b += a.splice(~~(Math.random() * a.length), 1)[0]; return b }, Array.prototype.shuffle = function (e) { let a = [], d = []; if (e) for (let b = 0; b < this.length; b++)Array.isArray(this[b]) ? a.push(this[b].shuffle()) : a.push(this[b]); else for (let c = 0; c < this.length; c++)a.push(this[c]); for (; a.length > 0;)d.push(a.splice(~~(Math.random() * a.length), 1)[0]); return d }, String.prototype.pick = function () { return this[~~(Math.random() * this.length)] }, Array.prototype.pick = function (b) { let a = this; return b && (a = a.flat(1 / 0)), a[~~(Math.random() * a.length)] }, { int: function (a, b = null) { return null === b ? ~~(Math.random() * a) : a === b ? a : (a > b && ([a, b] = [b, a]), Math.round(Math.random() * (b - a)) + a) }, float: function (a, b = null) { return null === b ? Math.random() * a : a === b ? a : (a > b && ([a, b] = [b, a]), Math.random() * (b - a) + a) }, string: function (a, d) { let b = ""; for (let c = 0; c < d; c++)b += a[~~(Math.random() * a.length)]; return b }, array: function (a, d) { let b = []; for (let c = 0; c < d; c++)b.push(a[~~(Math.random() * a.length)]); return b }, shuffle: function i(b, j = !1) { if (Array.isArray(b)) { let c = []; if (j) for (let d = 0; d < b.length; d++)Array.isArray(b[d]) ? c.push(i(b[d])) : c.push(b[d]); else for (let e = 0; e < b.length; e++)Array.isArray(b[e]) ? c.push(a(b[e])) : c.push(b[e]); let g = []; for (; c.length > 0;)g.push(c.splice(~~(Math.random() * c.length), 1)[0]); return g } if ("string" == typeof b) { let f = b.split(""), h = ""; for (; f.length > 0;)h += f.splice(~~(Math.random() * f.length), 1)[0]; return h } return null }, pick: function (a, b = !0) { return "string" == typeof a ? a[~~(Math.random() * a.length)] : Array.isArray(a) ? (b && (a = a.flat(1 / 0)), a[~~(Math.random() * a.length)]) : null } } })(); console.log("Loaded Randomiser.js by Matthew James");
-const constrain = (num, min, max) => num < min ? min : num > max ? max : num;
+const constrain = (num, min, max) => num < min ? min : max;
 const clamp = constrain;
 function lerp(value1, value2, amount) {
 	if (amount < 0) {
@@ -556,38 +557,9 @@ class EventListener {
 		return new EventListener(this.name, this.func);
 	}
 }
-class GameObject {
-	constructor(x, y, polymesh, colour, collides) {
-		this.x = x;
-		this.y = y;
-		this.xVel = 0;
-		this.resistance = 0.8;
-		this.resistanceMultiplier = 1;
-		this.yVel = 0;
-		this.gravity = false;
-		this.gravityMultiplier = 1;
-		this.mesh = polymesh;
-		this.colour = colour;
-		this.rotation = 0;
-		this.layer = 1;
-		this.enabled = true;
-		this.tag = null;
-		this.collides = collides;
-		this.collidingWith = [];
+class EventDriven {
+	constructor() {
 		this.eventListeners = [];
-		this.children = [];
-	}
-	appendChild(child) {
-		if (!this.children.includes(child)) {
-			return this.children.push(child);
-		}
-		return null;
-	}
-	removeChild(child) {
-		if (this.children.indexOf(child) !== -1) {
-			return this.children.splice(this.children.indexOf(child), 1)[0];
-		}
-		return null;
 	}
 	addEventListener(eventListener, func) {
 		if (eventListener instanceof EventListener) {
@@ -596,6 +568,9 @@ class GameObject {
 			this.eventListeners.push(new EventListener(eventListener, func));
 		}
 		return this;
+	}
+	on(...args) {
+		this.addEventListener(...args);
 	}
 	removeEventListener(eventListener, removeAll = false) {
 		if (eventListener instanceof EventListener) {
@@ -629,6 +604,41 @@ class GameObject {
 				}
 			}
 		}
+		return null;
+	}
+}
+class GameObject extends EventDriven {
+	constructor(x, y, polymesh, colour, collides) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.xVel = 0;
+		this.resistance = 0.8;
+		this.resistanceMultiplier = 1;
+		this.yVel = 0;
+		this.gravity = false;
+		this.gravityMultiplier = 1;
+		this.mesh = polymesh;
+		this.colour = colour;
+		this.rotation = 0;
+		this.layer = 1;
+		this.enabled = true;
+		this.tag = null;
+		this.collides = collides;
+		this.collidingWith = [];
+		this.children = [];
+	}
+	appendChild(child) {
+		if (!this.children.includes(child)) {
+			return this.children.push(child);
+		}
+		return null;
+	}
+	removeChild(child) {
+		if (this.children.indexOf(child) !== -1) {
+			return this.children.splice(this.children.indexOf(child), 1)[0];
+		}
+		return null;
 	}
 	start() {
 		for (let i = 0; i < this.eventListeners.length; i++) {
@@ -811,52 +821,11 @@ class GameObject {
 		return res;
 	}
 }
-class Camera {
+class Camera extends EventDriven {
 	constructor(x, y) {
+		super();
 		this.x = x;
 		this.y = y;
-		this.eventListeners = [];
-	}
-	addEventListener(eventListener, func) {
-		if (eventListener instanceof EventListener) {
-			this.eventListeners.push(eventListener);
-		} else {
-			this.eventListeners.push(new EventListener(eventListener, func));
-		}
-		return this;
-	}
-	removeEventListener(eventListener, removeAll = false) {
-		if (eventListener instanceof EventListener) {
-			for (let i = 0; i < this.eventListeners.length; i++) {
-				if (this.eventListeners[i] === eventListener) {
-					if (removeAll) {
-						this.eventListeners.splice(i, 1);
-					} else {
-						return this.eventListeners.splice(i, 1)[0];
-					}
-				}
-			}
-		} else if (typeof eventListener === "function") {
-			for (let i = 0; i < this.eventListeners.length; i++) {
-				if (this.eventListeners[i].func === eventListener) {
-					if (removeAll) {
-						this.eventListeners.splice(i, 1);
-					} else {
-						return this.eventListeners.splice(i, 1)[0];
-					}
-				}
-			}
-		} else if (typeof eventListener === "string") {
-			for (let i = 0; i < this.eventListeners.length; i++) {
-				if (this.eventListeners[i].name === eventListener) {
-					if (removeAll) {
-						this.eventListeners.splice(i, 1);
-					} else {
-						return this.eventListeners.splice(i, 1)[0];
-					}
-				}
-			}
-		}
 	}
 	smoothMove(x, y, lerpAmount) {
 		this.x = lerp(this.x, x, lerpAmount);
@@ -866,54 +835,13 @@ class Camera {
 		return new Camera(this.x, this.y);
 	}
 }
-class Scene {
+class Scene extends EventDriven {
 	constructor(children, camera) {
+		super();
 		this.children = children;
 		this.camera = camera;
 		this.started = false;
-		this.eventListeners = [];
 		$scenes.push(this);
-	}
-	addEventListener(eventListener, func) {
-		if (eventListener instanceof EventListener) {
-			this.eventListeners.push(eventListener);
-		} else {
-			this.eventListeners.push(new EventListener(eventListener, func));
-		}
-		return this;
-	}
-	removeEventListener(eventListener, removeAll = false) {
-		if (eventListener instanceof EventListener) {
-			for (let i = 0; i < this.eventListeners.length; i++) {
-				if (this.eventListeners[i] === eventListener) {
-					if (removeAll) {
-						this.eventListeners.splice(i, 1);
-					} else {
-						return this.eventListeners.splice(i, 1)[0];
-					}
-				}
-			}
-		} else if (typeof eventListener === "function") {
-			for (let i = 0; i < this.eventListeners.length; i++) {
-				if (this.eventListeners[i].func === eventListener) {
-					if (removeAll) {
-						this.eventListeners.splice(i, 1);
-					} else {
-						return this.eventListeners.splice(i, 1)[0];
-					}
-				}
-			}
-		} else if (typeof eventListener === "string") {
-			for (let i = 0; i < this.eventListeners.length; i++) {
-				if (this.eventListeners[i].name === eventListener) {
-					if (removeAll) {
-						this.eventListeners.splice(i, 1);
-					} else {
-						return this.eventListeners.splice(i, 1)[0];
-					}
-				}
-			}
-		}
 	}
 	start() {
 		for (let i = 0; i < this.camera.eventListeners; i++) {
