@@ -356,7 +356,7 @@ class Vector2 {
 	static array(point) {
 		return [point.x, point.y];
 	}
-	static Zero() {
+	static zero() {
 		return new Vector2(0, 0);
 	}
 }
