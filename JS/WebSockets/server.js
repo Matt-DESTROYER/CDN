@@ -173,16 +173,16 @@ module.exports = function(server) {
 	return {
 		sockets,
 		rooms,
-		on: function(name, callback) {
+		on(name, callback) {
 			callbacks.push({ name, callback });
 		},
-		emit: function(name, data) {
+		emit(name, data) {
 			for (let i = 0; i < sockets.length; i++) {
 				sockets[i].emit(name, data);
 			}
 		},
 		Room,
-		room: function(name) {
+		room(name) {
 			return rooms[name] || null;
 		}
 	};
