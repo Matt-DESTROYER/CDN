@@ -90,10 +90,10 @@ class Socket {
 		});
 		this.#socket.addEventListener("error", (err) => {
 			for (let i = 0; i < this.#callbacks.length; i++) {
-				if (this.#callbacks[i].name === "error") {
-					const { once } = this.#callbacks[i];
-					this.#callbacks[i].callback(err);
-					if (this.#callbacks[i].once) {
+				const callback = this.#callbacks[i];
+				if (callback.name === "error") {
+					callback.callback(err);
+					if (callback.once) {
 						this.#callbacks.splice(i, 1);
 						i--;
 					}
@@ -108,9 +108,10 @@ class Socket {
 				this.#initSocket();
 			}
 			for (let i = 0; i < this.#callbacks.length; i++) {
-				if (this.#callbacks[i].name === "disconnect") {
-					this.#callbacks[i].callback();
-					if (this.#callbacks[i].once) {
+				const callback = this.#callbacks[i];
+				if (callback.name === "disconnect") {
+					callback.callback();
+					if (callback.once) {
 						this.#callbacks.splice(i, 1);
 						i--;
 					}
