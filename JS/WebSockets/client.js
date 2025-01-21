@@ -32,7 +32,7 @@ class Socket {
 		this.#callbacks = [];
 		this.#initSocket();
 	}
-	async #initSocket() {
+	#initSocket() {
 		this.#pings = [];
 		this.connected = false;
 		this.#socket = new WebSocket(this.url);
@@ -119,7 +119,7 @@ class Socket {
 			}
 		});
 	}
-	async #heartbeat() {
+	#heartbeat() {
 		if (this.connected) {
 			if (this.#socket.readyState === 1) {
 				this.connected = true;
@@ -131,24 +131,24 @@ class Socket {
 			}
 		}
 	}
-	async once(name, callback) {
+	once(name, callback) {
 		this.#callbacks.push({ name, callback: callback.bind(this), once: true });
 	}
-	async on(name, callback) {
+	on(name, callback) {
 		this.#callbacks.push({ name, callback: callback.bind(this), once: false });
 	}
-	async ping() {
+	ping() {
 		if (this.connected) {
 			this.#pings.push(Date.now());
 			this.#socket.send("ping");
 		}
 	}
-	async emit(name, data) {
+	emit(name, data) {
 		if (this.connected) {
 			this.#socket.send(new ClientRequest(name, data).toString());
 		}
 	}
-	async close(reason) {
+	close(reason) {
 		this.#socket.close(1000, reason);
 		this.#closed = true;
 	}
