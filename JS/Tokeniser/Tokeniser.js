@@ -2,14 +2,14 @@
 
 const Tokeniser = (function () {
 	const numberRegex = /-?(\d+\.d+|\.\d+|\d+)(\s?(e|E)(\+|-)?\d+)?/g;
-	return {
-		settings: {
+	return Object.freeze({
+		settings: Object.seal({
 			operators: ["<", ">", "=", "+", "-", "*", "/", "?", "!"],
 			separators: [",", ".", ";", ":", " ", "\t", "\n"],
 			groupers: ["(", ")", "[", "]", "{", "}", '"', '"', "'", "'"],
 			keepWhiteSpacesAsTokens: false,
 			trimTokens: true
-		},
+		}),
 		isNumber: function (value) {
 			if (typeof value === "number") {
 				return true;
@@ -19,24 +19,25 @@ const Tokeniser = (function () {
 			return false;
 		},
 		closeGrouper: function (grouper) {
-			if (this.settings.groupers.includes(grouper)) {
-				return this.settings.groupers[this.settings.groupers.indexOf(grouper) + 1];
+			const idx = this.settings.groupers.indexOf(grouper);
+			if (idx !== -1 && idx < this.settings.groupers.length - 1) {
+				return this.settings.groupers[idx + 1];
 			}
 			return null;
 		},
-		tokenType: function (char) {
-			if (this.settings.operators.includes(char)) {
+		tokenType: function (token) {
+			if (this.settings.operators.includes(token)) {
 				return "operator";
-			} else if (this.settings.separators.includes(char)) {
+			} else if (this.settings.separators.includes(token)) {
 				return "separator";
-			} else if (this.settings.groupers.includes(char)) {
+			} else if (this.settings.groupers.includes(token)) {
 				return "grouper";
 			}
 			return "other";
 		},
 		parseString: function (str) {
 			if (typeof str !== "string") {
-				if (str == null) {
+				if (str === null || str === "null") {
 					return "null";
 				} else if (typeof str === "object") {
 					str = JSON.stringify(str);
@@ -45,14 +46,14 @@ const Tokeniser = (function () {
 				}
 			}
 			let tokens = [], _tempToken = "";
-			for (let i = 0; i < str.length; i++) {
-				if (this.tokenType(_tempToken) !== this.tokenType(str[i]) || this.tokenType(str[i]) === "separator") {
+			for (const char of str) {
+				if (this.tokenType(_tempToken) !== this.tokenType(char) || this.tokenType(char) === "separator") {
 					if (_tempToken.trim() !== "") {
 						tokens.push(this.settings.trimTokens ? _tempToken.trim() : _tempToken);
 					} else if (this.settings.keepWhiteSpacesAsTokens) {
 						tokens.push(_tempToken);
 					}
-					_tempToken = str[i];
+					_tempToken = char;
 					if (this.tokenType(_tempToken) === "separator") {
 						if (_tempToken.trim() !== "") {
 							tokens.push(this.settings.trimTokens ? _tempToken.trim() : _tempToken);
@@ -62,7 +63,7 @@ const Tokeniser = (function () {
 						_tempToken = "";
 					}
 				} else {
-					_tempToken += str[i];
+					_tempToken += char;
 				}
 			}
 			if (_tempToken.trim() !== "") {
@@ -72,6 +73,6 @@ const Tokeniser = (function () {
 			}
 			return tokens.filter((token) => token !== "");
 		}
-	};
+	});
 })();
 console.log("Loaded Tokeniser.js by Matthew James");
